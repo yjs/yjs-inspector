@@ -55,7 +55,7 @@ export declare global {
      * [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/showOpenFilePicker)
      */
     showOpenFilePicker: (
-      options?: OpenFilePickerOptions
+      options?: OpenFilePickerOptions,
     ) => Promise<FileSystemFileHandle[]>;
   }
 }
