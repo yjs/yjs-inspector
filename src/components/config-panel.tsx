@@ -1,14 +1,23 @@
 import * as Y from "yjs";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
-import { useYDoc } from "../state";
+import { Config, useConfig, useYDoc } from "../state";
 import { ExportButton } from "./export-button";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "./ui/select";
 
 export function ConfigPanel() {
   const [yDoc, setYDoc] = useYDoc();
   const { toast } = useToast();
+  const [config, setConfig] = useConfig();
+
   return (
-    <div className="flex w-64 flex-col gap-2">
+    <div className="flex w-64 flex-col gap-4">
       <h2 className="text-xl">Configure</h2>
       <Button
         onClick={async () => {
@@ -39,6 +48,25 @@ export function ConfigPanel() {
       >
         {yDoc ? "Reselect YDoc" : "Select YDoc"}
       </Button>
+
+      <Select
+        value={config.view}
+        onValueChange={(value) => {
+          setConfig({ ...config, view: value as Config["view"] });
+        }}
+      >
+        <SelectTrigger>
+          <SelectValue placeholder="Select View" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value={"shared-types" satisfies Config["view"]}>
+            Inspect Data
+          </SelectItem>
+          <SelectItem value={"ydoc" satisfies Config["view"]}>
+            Inspect YDoc
+          </SelectItem>
+        </SelectContent>
+      </Select>
 
       <ExportButton />
     </div>

@@ -39,7 +39,18 @@ export function ExportButton() {
             downloadFile(blob, "ydoc-update");
           }}
         >
-          State Update
+          encodeStateAsUpdate
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            const encodedStateVector = Y.encodeStateVector(yDoc);
+            const blob = new Blob([encodedStateVector], {
+              type: "application/octet-stream",
+            });
+            downloadFile(blob, "ydoc-state-vector");
+          }}
+        >
+          encodeStateVector
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
@@ -52,17 +63,6 @@ export function ExportButton() {
           }}
         >
           Snapshot
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => {
-            const encodedStateVector = Y.encodeStateVector(yDoc);
-            const blob = new Blob([encodedStateVector], {
-              type: "application/octet-stream",
-            });
-            downloadFile(blob, "ydoc-state-vector");
-          }}
-        >
-          State Vector
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
