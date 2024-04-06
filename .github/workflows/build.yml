@@ -1,0 +1,59 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install node modules
+        run: pnpm install
+
+      - name: Type check
+        run: pnpm run typeCheck
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Format
+        run: pnpm run format
+
+      - name: Build
+        run: pnpm run build
+
+      # - name: Test
+      #   run: pnpm run test --coverage
+
+      # - name: Upload test coverage
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: coverage
+      #     path: ./coverage
+      #     if-no-files-found: ignore
+
+      - name: Upload pages artifacts
+        # https://github.com/actions/upload-pages-artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "dist/"
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        # https://github.com/actions/deploy-pages
+        uses: actions/deploy-pages@v4
