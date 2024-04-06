@@ -10,6 +10,8 @@ import {
   SelectContent,
   SelectItem,
 } from "./ui/select";
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
 
 export function ConfigPanel() {
   const [yDoc, setYDoc] = useYDoc();
@@ -46,7 +48,7 @@ export function ConfigPanel() {
           }
         }}
       >
-        {yDoc ? "Reselect YDoc" : "Select YDoc"}
+        Select YDoc
       </Button>
 
       <Select
@@ -67,6 +69,21 @@ export function ConfigPanel() {
           </SelectItem>
         </SelectContent>
       </Select>
+
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="show-delta"
+          checked={config.showDelta}
+          disabled={config.view !== "shared-types"}
+          onCheckedChange={(checked) =>
+            setConfig({
+              ...config,
+              showDelta: checked,
+            })
+          }
+        />
+        <Label htmlFor="show-delta">Show delta format for YText</Label>
+      </div>
 
       <ExportButton />
     </div>

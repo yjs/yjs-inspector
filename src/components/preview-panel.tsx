@@ -1,6 +1,7 @@
 import { JsonViewer, objectType } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
-import { valueTypes } from "../data-types";
+import { useMemo } from "react";
+import { dataTypes, yTextStringType } from "../data-types";
 import { useConfig, useYDoc } from "../state";
 import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
@@ -9,6 +10,18 @@ export function PreviewPanel() {
   const { theme, systemPreferenceTheme } = useTheme();
   const [yDoc] = useYDoc();
   const [config] = useConfig();
+  const valueTypes = useMemo(() => {
+    const arr =
+      config.view === "shared-types"
+        ? dataTypes.toReversed()
+        : dataTypes
+            .map((i) => ({ ...i, Component: objectType.Component }))
+            .toReversed();
+    if (!config.showDelta) {
+      arr.push(yTextStringType);
+    }
+    return arr;
+  }, [config.view, config.showDelta]);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -38,13 +51,7 @@ export function PreviewPanel() {
           theme={theme === "system" ? systemPreferenceTheme : theme}
           defaultInspectDepth={2}
           displaySize={false}
-          valueTypes={
-            config.view === "shared-types"
-              ? valueTypes.reverse()
-              : valueTypes
-                  .map((i) => ({ ...i, Component: objectType.Component }))
-                  .reverse()
-          }
+          valueTypes={valueTypes}
         />
       </div>
     </div>

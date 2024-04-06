@@ -1,4 +1,4 @@
-import { defineDataType, objectType } from "@textea/json-viewer";
+import { defineDataType, objectType, stringType } from "@textea/json-viewer";
 import * as Y from "yjs";
 import { Badge } from "./components/ui/badge";
 
@@ -147,6 +147,39 @@ const yTextType = defineDataType<object>({
   },
 });
 
+export const yTextStringType = defineDataType<object>({
+  ...objectType,
+  is(value) {
+    return typeof value === "object" && value instanceof Y.Text;
+  },
+  PreComponent: ({ ...props }) => {
+    const ObjPreComponent = objectType.PreComponent!;
+    return (
+      <span>
+        <TypeLabel>YText</TypeLabel>&nbsp;
+        <ObjPreComponent {...props}></ObjPreComponent>
+      </span>
+    );
+  },
+  Component: ({ value, prevValue, ...props }) => {
+    const StrComponent = stringType.Component!;
+    const yText = value as Y.Text;
+    const string = yText.toString();
+
+    const prevYText = prevValue as Y.Text | undefined;
+
+    return (
+      <span>
+        <StrComponent
+          value={string}
+          prevValue={prevYText?.toString() ?? ""}
+          {...props}
+        ></StrComponent>
+      </span>
+    );
+  },
+});
+
 const otherYType = defineDataType<object>({
   ...objectType,
   is(value) {
@@ -191,7 +224,7 @@ const yAbstractType = defineDataType<object>({
   },
 });
 
-export const valueTypes = [
+export const dataTypes = [
   yDocType,
   yMapType,
   yArrayType,
