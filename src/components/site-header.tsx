@@ -16,9 +16,9 @@ export function Header() {
             <img src={yjsLogo} className="mr-2 h-8 w-8" alt="Yjs logo" />
           </a>
 
-          <a href="/" className="hidden font-bold sm:inline-block">
+          <span className="hidden font-bold sm:inline-block">
             YDoc Playground
-          </a>
+          </span>
         </div>
         {/* Placeholder for right side of header */}
         <div className="ml-auto"></div>
