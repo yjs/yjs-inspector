@@ -12,6 +12,18 @@ import {
 } from "./ui/select";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
+import { FullScreenDropZone } from "./full-screen-drop-zone";
+
+async function fileToYDoc(file: File) {
+  // TODO handle base64 encoding
+  // https://docs.yjs.dev/api/document-updates#example-base64-encoding
+  const yDocUpdate = new Uint8Array(await file.arrayBuffer());
+  const newYDoc = new Y.Doc();
+  // For debugging
+  Y.logUpdate(yDocUpdate);
+  Y.applyUpdate(newYDoc, yDocUpdate);
+  return newYDoc;
+}
 
 export function ConfigPanel() {
   const [yDoc, setYDoc] = useYDoc();
@@ -29,15 +41,9 @@ export function ConfigPanel() {
             startIn: "downloads",
           });
           const file = await handles[0].getFile();
-          // TODO handle base64 encoding
-          // https://docs.yjs.dev/api/document-updates#example-base64-encoding
-          const yDocUpdate = new Uint8Array(await file.arrayBuffer());
-          const newYDoc = new Y.Doc();
           try {
-            Y.logUpdate(yDocUpdate);
-            Y.applyUpdate(newYDoc, yDocUpdate);
+            const newYDoc = await fileToYDoc(file);
             setYDoc(newYDoc);
-            console.log(newYDoc);
           } catch (error) {
             console.error(error);
             toast({
@@ -48,7 +54,7 @@ export function ConfigPanel() {
           }
         }}
       >
-        Select YDoc
+        Load YDoc
       </Button>
 
       <Select
@@ -86,6 +92,34 @@ export function ConfigPanel() {
       </div>
 
       <ExportButton />
+
+      <FullScreenDropZone
+        text="Drop YDoc file to load"
+        onDrop={async (fileList) => {
+          if (!fileList.length) {
+            console.error("No files dropped");
+            return;
+          }
+          if (fileList.length > 1) {
+            console.warn(
+              "Multiple files dropped, only the first file will be loaded",
+            );
+          }
+          const file = fileList[0];
+          yDoc.destroy();
+          try {
+            const newYDoc = await fileToYDoc(file);
+            setYDoc(newYDoc);
+          } catch (error) {
+            console.error(error);
+            toast({
+              variant: "destructive",
+              title: "Error",
+              description: "Failed to load YDoc",
+            });
+          }
+        }}
+      />
     </div>
   );
 }
