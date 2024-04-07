@@ -1,6 +1,7 @@
 import { defineDataType, objectType, stringType } from "@textea/json-viewer";
 import * as Y from "yjs";
 import { Badge } from "./components/ui/badge";
+import { useToast } from "./components/ui/use-toast";
 
 /**
  * Guess AbstractType
@@ -21,8 +22,31 @@ function guessType(abstractType: Y.AbstractType<any>) {
   return Y.AbstractType;
 }
 
-const TypeLabel = ({ children }: { children: string }) => {
-  return <Badge variant="outline">{children}</Badge>;
+const TypeLabel = ({
+  value,
+  children,
+}: {
+  value: unknown;
+  children: string;
+}) => {
+  const { toast } = useToast();
+
+  return (
+    <Badge
+      variant="outline"
+      className="cursor-pointer"
+      onClick={(e) => {
+        e.stopPropagation();
+        console.log(value);
+        toast({
+          duration: 2000,
+          description: "Check the console for the value",
+        });
+      }}
+    >
+      {children}
+    </Badge>
+  );
 };
 
 const yDocType = defineDataType<object>({
@@ -34,7 +58,7 @@ const yDocType = defineDataType<object>({
     const ObjPreComponent = objectType.PreComponent!;
     return (
       <span>
-        <TypeLabel>YDoc</TypeLabel>&nbsp;
+        <TypeLabel value={props.value}>YDoc</TypeLabel>&nbsp;
         <ObjPreComponent {...props}></ObjPreComponent>
       </span>
     );
@@ -69,7 +93,7 @@ const yMapType = defineDataType<object>({
     const ObjPreComponent = objectType.PreComponent!;
     return (
       <span>
-        <TypeLabel>YMap</TypeLabel>&nbsp;
+        <TypeLabel value={props.value}>YMap</TypeLabel>&nbsp;
         <ObjPreComponent {...props}></ObjPreComponent>
       </span>
     );
@@ -102,7 +126,7 @@ const yArrayType = defineDataType<object>({
     const ObjPreComponent = objectType.PreComponent!;
     return (
       <span>
-        <TypeLabel>YArray</TypeLabel>&nbsp;
+        <TypeLabel value={props.value}>YArray</TypeLabel>&nbsp;
         <ObjPreComponent {...props}></ObjPreComponent>
       </span>
     );
@@ -129,7 +153,7 @@ const yTextType = defineDataType<object>({
     const ObjPreComponent = objectType.PreComponent!;
     return (
       <span>
-        <TypeLabel>YText</TypeLabel>&nbsp;
+        <TypeLabel value={props.value}>YText</TypeLabel>&nbsp;
         <ObjPreComponent {...props}></ObjPreComponent>
       </span>
     );
@@ -156,7 +180,7 @@ export const yTextStringType = defineDataType<object>({
     const ObjPreComponent = objectType.PreComponent!;
     return (
       <span>
-        <TypeLabel>YText</TypeLabel>&nbsp;
+        <TypeLabel value={props.value}>YText</TypeLabel>&nbsp;
         <ObjPreComponent {...props}></ObjPreComponent>
       </span>
     );
