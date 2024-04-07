@@ -26,7 +26,7 @@ export const ThemeProviderContext =
 
 const query = "(prefers-color-scheme: dark)";
 
-export function useSystemPreferencePalette(): SystemTheme {
+export function useSystemPreferenceDark() {
   const [isDark, setIsDark] = useState<boolean>(false);
   useEffect(() => {
     const listener = (e: MediaQueryListEvent) => setIsDark(e.matches);
@@ -35,7 +35,7 @@ export function useSystemPreferencePalette(): SystemTheme {
     queryMedia.addEventListener("change", listener);
     return () => queryMedia.removeEventListener("change", listener);
   }, []);
-  return isDark ? "dark" : "light";
+  return isDark;
 }
 
 export function ThemeProvider({
@@ -47,24 +47,24 @@ export function ThemeProvider({
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
-  const systemPreferenceTheme = useSystemPreferencePalette();
+  const systemPreferenceDark = useSystemPreferenceDark();
+  const systemTheme: SystemTheme = systemPreferenceDark ? "dark" : "light";
   useEffect(() => {
     const root = window.document.documentElement;
 
     root.classList.remove("light", "dark");
 
     if (theme === "system") {
-      const systemTheme = systemPreferenceTheme;
       root.classList.add(systemTheme);
       return;
     }
 
     root.classList.add(theme);
-  }, [systemPreferenceTheme, theme]);
+  }, [systemTheme, theme]);
 
   const value = {
     theme,
-    systemPreferenceTheme,
+    systemPreferenceTheme: systemTheme,
     setTheme: (theme: Theme) => {
       localStorage.setItem(storageKey, theme);
       setTheme(theme);
