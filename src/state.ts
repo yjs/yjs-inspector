@@ -10,11 +10,13 @@ export const useYDoc = () => {
 export type Config = {
   view: "ydoc" | "shared-types";
   showDelta: boolean;
+  showSize: boolean;
 };
 
 const defaultConfig = {
   view: "shared-types",
   showDelta: true,
+  showSize: true,
 } satisfies Config;
 
 const configAtom = atom<Config>(defaultConfig);

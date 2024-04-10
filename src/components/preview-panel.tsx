@@ -1,13 +1,14 @@
 import { JsonViewer } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
 import { yDataType } from "../data-types";
-import { useYDoc } from "../state";
+import { useConfig, useYDoc } from "../state";
 import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
 
 export function PreviewPanel() {
   const { theme, systemPreferenceTheme } = useTheme();
   const [yDoc] = useYDoc();
+  const [config] = useConfig();
 
   return (
     <div className="flex flex-1 flex-col">
@@ -34,6 +35,7 @@ export function PreviewPanel() {
           // editable={true}
           // enableAdd={true}
           // enableDelete={true}
+          displaySize={config.showSize}
           theme={theme === "system" ? systemPreferenceTheme : theme}
           defaultInspectDepth={2}
           valueTypes={[yDataType]}

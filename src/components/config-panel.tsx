@@ -1,18 +1,18 @@
-import { useToast } from "./ui/use-toast";
 import { Config, useConfig, useYDoc } from "../state";
+import { fileToYDoc } from "../utils";
 import { ExportButton } from "./export-button";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "./ui/select";
-import { Switch } from "./ui/switch";
-import { Label } from "./ui/label";
 import { FullScreenDropZone } from "./full-screen-drop-zone";
 import { LoadButton } from "./load-button";
-import { fileToYDoc } from "../utils";
+import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Switch } from "./ui/switch";
+import { useToast } from "./ui/use-toast";
 
 export function ConfigPanel() {
   const [yDoc, setYDoc] = useYDoc();
@@ -56,6 +56,20 @@ export function ConfigPanel() {
           }
         />
         <Label htmlFor="show-delta">Show delta format for YText</Label>
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="show-size"
+          checked={config.showSize}
+          onCheckedChange={(checked) =>
+            setConfig({
+              ...config,
+              showSize: checked,
+            })
+          }
+        />
+        <Label htmlFor="show-size">Show item size</Label>
       </div>
 
       <ExportButton />
