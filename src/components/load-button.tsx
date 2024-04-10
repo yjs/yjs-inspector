@@ -29,28 +29,29 @@ function LoadFromUrlDialog({ children }: { children: React.ReactNode }) {
   const [url, setUrl] = useState("");
   const [, setYDoc] = useYDoc();
 
-  const handleLoadYDoc = () => {
+  const handleLoadYDoc = async () => {
     setLoading(true);
-    fetch(url)
-      .then((res) => res.arrayBuffer())
-      .then((buffer) => {
-        const uint8 = new Uint8Array(buffer);
-        const yDoc = new Y.Doc();
-        Y.applyUpdate(yDoc, uint8);
-        setYDoc(yDoc);
-        setOpen(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: "Failed to load YDoc",
-        });
-      })
-      .finally(() => {
-        setLoading(false);
+    try {
+      const resp = await fetch(url);
+      if (!resp.ok) {
+        throw new Error("Failed to fetch YDoc");
+      }
+      const buffer = await resp.arrayBuffer();
+      const uint8 = new Uint8Array(buffer);
+      const yDoc = new Y.Doc();
+      Y.applyUpdate(yDoc, uint8);
+      setYDoc(yDoc);
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to load YDoc",
       });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
