@@ -75,7 +75,6 @@ function LoadFromUrlDialog({ children }: { children: React.ReactNode }) {
               placeholder="https://example.com/ydoc"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  // Cancel the default action, if needed
                   e.preventDefault();
                   handleLoadYDoc();
                 }
