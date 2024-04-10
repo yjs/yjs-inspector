@@ -13,17 +13,8 @@ import {
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { FullScreenDropZone } from "./full-screen-drop-zone";
-
-async function fileToYDoc(file: File) {
-  // TODO handle base64 encoding
-  // https://docs.yjs.dev/api/document-updates#example-base64-encoding
-  const yDocUpdate = new Uint8Array(await file.arrayBuffer());
-  const newYDoc = new Y.Doc();
-  // For debugging
-  Y.logUpdate(yDocUpdate);
-  Y.applyUpdate(newYDoc, yDocUpdate);
-  return newYDoc;
-}
+import { LoadButton } from "./load-button";
+import { fileToYDoc } from "../utils";
 
 export function ConfigPanel() {
   const [yDoc, setYDoc] = useYDoc();
@@ -106,9 +97,9 @@ export function ConfigPanel() {
             );
           }
           const file = fileList[0];
-          yDoc.destroy();
           try {
             const newYDoc = await fileToYDoc(file);
+            yDoc.destroy();
             setYDoc(newYDoc);
           } catch (error) {
             console.error(error);
