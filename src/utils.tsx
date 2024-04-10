@@ -10,3 +10,13 @@ export async function fileToYDoc(file: File) {
   Y.applyUpdate(newYDoc, yDocUpdate);
   return newYDoc;
 }
+
+export const and =
+  <T extends (...args: any[]) => boolean>(...fnArray: NoInfer<T>[]) =>
+  (...args: Parameters<T>) =>
+    fnArray.every((fn) => fn(...args));
+
+export const or =
+  <T extends (...args: any[]) => boolean>(...fnArray: NoInfer<T>[]) =>
+  (...args: Parameters<T>) =>
+    fnArray.some((fn) => fn(...args));
