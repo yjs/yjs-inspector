@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { File, Link, RotateCw, Upload } from "lucide-react";
+import { File, FilePlus, Link, RotateCw, Upload } from "lucide-react";
 import { useState } from "react";
 import * as Y from "yjs";
 import { useYDoc } from "../state";
@@ -98,7 +98,7 @@ function LoadFromUrlDialog({ children }: { children: React.ReactNode }) {
 LoadFromUrlDialog.Trigger = DialogTrigger;
 
 export function LoadButton() {
-  const [yDoc, setYDoc] = useYDoc();
+  const [, setYDoc] = useYDoc();
 
   return (
     <LoadFromUrlDialog>
@@ -112,8 +112,6 @@ export function LoadButton() {
         <DropdownMenuContent>
           <DropdownMenuItem
             onClick={async () => {
-              yDoc.destroy();
-              setYDoc(new Y.Doc());
               const handles = await window.showOpenFilePicker({
                 startIn: "downloads",
               });
@@ -141,6 +139,15 @@ export function LoadButton() {
               Load from URL
             </DropdownMenuItem>
           </LoadFromUrlDialog.Trigger>
+
+          <DropdownMenuItem
+            onClick={() => {
+              setYDoc(new Y.Doc());
+            }}
+          >
+            <FilePlus className="mr-2 h-4 w-4" />
+            Create new YDoc
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </LoadFromUrlDialog>

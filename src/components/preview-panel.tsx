@@ -1,27 +1,13 @@
-import { JsonViewer, objectType } from "@textea/json-viewer";
+import { JsonViewer } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
-import { useMemo } from "react";
-import { dataTypes, yTextStringType } from "../data-types";
-import { useConfig, useYDoc } from "../state";
+import { yDataType } from "../data-types";
+import { useYDoc } from "../state";
 import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
 
 export function PreviewPanel() {
   const { theme, systemPreferenceTheme } = useTheme();
   const [yDoc] = useYDoc();
-  const [config] = useConfig();
-  const valueTypes = useMemo(() => {
-    const arr =
-      config.view === "shared-types"
-        ? dataTypes.toReversed()
-        : dataTypes
-            .map((i) => ({ ...i, Component: objectType.Component }))
-            .toReversed();
-    if (!config.showDelta) {
-      arr.push(yTextStringType);
-    }
-    return arr;
-  }, [config.view, config.showDelta]);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -50,8 +36,7 @@ export function PreviewPanel() {
           // enableDelete={true}
           theme={theme === "system" ? systemPreferenceTheme : theme}
           defaultInspectDepth={2}
-          displaySize={false}
-          valueTypes={valueTypes}
+          valueTypes={[yDataType]}
         />
       </div>
     </div>
