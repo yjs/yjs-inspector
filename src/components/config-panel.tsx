@@ -1,5 +1,3 @@
-import * as Y from "yjs";
-import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
 import { Config, useConfig, useYDoc } from "../state";
 import { ExportButton } from "./export-button";
@@ -24,29 +22,7 @@ export function ConfigPanel() {
   return (
     <div className="flex w-64 flex-col gap-4">
       <h2 className="text-xl">Configure</h2>
-      <Button
-        onClick={async () => {
-          yDoc.destroy();
-          setYDoc(new Y.Doc());
-          const handles = await window.showOpenFilePicker({
-            startIn: "downloads",
-          });
-          const file = await handles[0].getFile();
-          try {
-            const newYDoc = await fileToYDoc(file);
-            setYDoc(newYDoc);
-          } catch (error) {
-            console.error(error);
-            toast({
-              variant: "destructive",
-              title: "Error",
-              description: "Failed to load YDoc",
-            });
-          }
-        }}
-      >
-        Load YDoc
-      </Button>
+      <LoadButton />
 
       <Select
         value={config.view}
