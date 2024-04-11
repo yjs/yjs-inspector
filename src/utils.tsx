@@ -1,3 +1,4 @@
+import type { Path } from "@textea/json-viewer";
 import * as Y from "yjs";
 
 export async function fileToYDoc(file: File) {
@@ -9,6 +10,18 @@ export async function fileToYDoc(file: File) {
   Y.logUpdate(yDocUpdate);
   Y.applyUpdate(newYDoc, yDocUpdate);
   return newYDoc;
+}
+
+export function getPathValue<T = object, R = object>(
+  obj: T,
+  path: Path,
+  getter: (obj: T, key: string | number) => unknown = (obj, key) =>
+    (obj as any)[key],
+) {
+  return path.reduce(
+    (acc, key) => getter(acc, key) as any,
+    obj,
+  ) as unknown as R;
 }
 
 export const and =

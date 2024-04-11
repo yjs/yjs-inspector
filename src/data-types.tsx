@@ -9,8 +9,7 @@ import * as Y from "yjs";
 import { Badge } from "./components/ui/badge";
 import { toast } from "./components/ui/use-toast";
 import { useConfig } from "./state";
-import { or } from "./utils";
-import { getYTypeName, isYAbstractType, isYDoc, parseYType } from "./y-type";
+import { getYTypeName, isYType, parseYType } from "./y-type";
 
 const TypeLabel = ({ value }: { value: unknown }) => {
   const typeName = getYTypeName(value as Y.AbstractType<unknown>);
@@ -149,7 +148,7 @@ const YTypePostComponent: ComponentType<DataItemProps<any>> = ({
 };
 
 export const yDataType = defineDataType<unknown>({
-  is: or(isYDoc, isYAbstractType),
+  is: isYType,
   PreComponent: YTypePreComponent,
   PostComponent: YTypePostComponent,
   Component: YTypeComponent,

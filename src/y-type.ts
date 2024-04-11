@@ -1,4 +1,6 @@
+import type { Path } from "@textea/json-viewer";
 import * as Y from "yjs";
+import { getPathValue, or } from "./utils";
 
 /**
  * Guess AbstractType
@@ -19,7 +21,7 @@ export function guessType(abstractType: Y.AbstractType<unknown>) {
   return Y.AbstractType;
 }
 
-export function getYTypeName(value: Y.AbstractType<unknown>) {
+export function getYTypeName(value: Y.Doc | Y.AbstractType<unknown>) {
   if (value instanceof Y.Doc) {
     return "YDoc";
   }
@@ -69,8 +71,14 @@ export function isYXmlFragment(value: unknown): value is Y.XmlFragment {
   return value instanceof Y.XmlFragment;
 }
 
-export function isYAbstractType(value: unknown): value is Y.XmlFragment {
+export function isYAbstractType(
+  value: unknown,
+): value is Y.AbstractType<unknown> {
   return value instanceof Y.AbstractType;
+}
+
+export function isYType(value: unknown): value is Y.AbstractType<unknown> {
+  return or(isYDoc, isYAbstractType)(value);
 }
 
 export function parseYType(
@@ -119,4 +127,23 @@ export function parseYType(
   }
 
   return value;
+}
+
+export function getYTypeFromPath(yDoc: Y.Doc, path: Path): unknown {
+  return getPathValue(yDoc, path, (obj: unknown, key) => {
+    if (isYDoc(obj)) {
+      return obj.get(key + "");
+    }
+    if (isYMap(obj)) {
+      return obj.get(key + "");
+    }
+    if (isYArray(obj)) {
+      if (typeof key !== "number") {
+        console.error("Invalid key", path, key);
+        return undefined;
+      }
+      return obj.get(key);
+    }
+    return (obj as any)[key];
+  });
 }

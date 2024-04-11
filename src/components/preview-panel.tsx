@@ -1,7 +1,10 @@
-import { JsonViewer } from "@textea/json-viewer";
+import { JsonViewer, Path } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
+import { useState } from "react";
 import { yDataType } from "../data-types";
 import { useConfig, useYDoc } from "../state";
+import { getYTypeFromPath, isYDoc, isYMap, isYText } from "../y-type";
+import { AddDataDialog } from "./add-data-dialog";
 import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
 
@@ -9,6 +12,9 @@ export function PreviewPanel() {
   const { theme, systemPreferenceTheme } = useTheme();
   const [yDoc] = useYDoc();
   const [config] = useConfig();
+  const [open, setOpen] = useState(false);
+  const [path, setPath] = useState<Path>([]);
+  const [target, setTarget] = useState<unknown>(null);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -33,14 +39,38 @@ export function PreviewPanel() {
           className="p-2"
           value={yDoc}
           // editable={true}
-          // enableAdd={true}
-          // enableDelete={true}
+          enableAdd={(_, value) => {
+            return (
+              config.editable &&
+              config.view === "shared-types" &&
+              // TODO support YArray/YText
+              (isYDoc(value) || isYText(value) || isYMap(value))
+            );
+          }}
+          enableDelete={true}
+          onAdd={(path) => {
+            const target = getYTypeFromPath(yDoc, path);
+            if (!target) {
+              console.error("Invalid target", path, target);
+              return;
+            }
+            setTarget(target);
+            setPath(path);
+            setOpen(true);
+          }}
+          onDelete={() => {}}
           displaySize={config.showSize}
           theme={theme === "system" ? systemPreferenceTheme : theme}
           defaultInspectDepth={2}
           valueTypes={[yDataType]}
         />
       </div>
+      <AddDataDialog
+        target={target}
+        path={path}
+        open={open}
+        onOpenChange={setOpen}
+      />
     </div>
   );
 }

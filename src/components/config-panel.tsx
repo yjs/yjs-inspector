@@ -72,6 +72,21 @@ export function ConfigPanel() {
         <Label htmlFor="show-size">Show item size</Label>
       </div>
 
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="editable-switch"
+          disabled={config.view !== "shared-types"}
+          checked={config.editable}
+          onCheckedChange={(checked) =>
+            setConfig({
+              ...config,
+              editable: checked,
+            })
+          }
+        />
+        <Label htmlFor="editable-switch">Editable</Label>
+      </div>
+
       <ExportButton />
 
       <FullScreenDropZone
