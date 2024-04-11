@@ -18,6 +18,9 @@ export function guessType(abstractType: Y.AbstractType<unknown>) {
   if (abstractType._map.size) {
     return Y.Map;
   }
+  if (abstractType._length > 0) {
+    return Y.Array;
+  }
   return Y.AbstractType;
 }
 
@@ -40,10 +43,11 @@ export function getYTypeName(value: Y.Doc | Y.AbstractType<unknown>) {
   if (value instanceof Y.XmlFragment) {
     return "YXmlFragment";
   }
-  // if (value instanceof Y.AbstractType) {
-  //   return "YAbstractType";
-  // }
+  if (value instanceof Y.AbstractType) {
+    return "YAbstractType";
+  }
   // return "Y." + value.constructor.name;
+  console.error("Unknown Yjs type", value);
   throw new Error("Unknown Yjs type");
 }
 
