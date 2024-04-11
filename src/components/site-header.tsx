@@ -1,7 +1,7 @@
+import { Github } from "lucide-react";
+import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 import yjsLogo from "/yjs.png";
-import { ModeToggle } from "./mode-toggle";
-import { Github } from "lucide-react";
 
 export function Header() {
   return (
@@ -17,7 +17,7 @@ export function Header() {
           </a>
 
           <span className="hidden font-bold sm:inline-block">
-            YDoc Playground
+            Yjs Playground
           </span>
         </div>
         {/* Placeholder for right side of header */}
@@ -25,7 +25,7 @@ export function Header() {
         <ModeToggle />
         <Button variant="ghost" size="icon" asChild>
           <a
-            href="https://github.com/lawvs/ydoc-playground"
+            href="https://github.com/lawvs/yjs-playground"
             target="_blank"
             rel="noopener noreferrer"
           >

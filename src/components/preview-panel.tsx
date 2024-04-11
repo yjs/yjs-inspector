@@ -34,7 +34,7 @@ export function PreviewPanel() {
 
         <Button variant="secondary" size="sm" asChild>
           <a
-            href="https://github.com/lawvs/ydoc-playground/issues/new"
+            href="https://github.com/yjs/yjs/issues/new/choose"
             target="_blank"
             rel="noopener noreferrer"
           >

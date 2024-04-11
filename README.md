@@ -1,6 +1,6 @@
-# 🛝 YDoc Playground
+# 🛝 Yjs Playground
 
-[![Build](https://github.com/lawvs/ydoc-playground/actions/workflows/build.yml/badge.svg)](https://github.com/lawvs/ydoc-playground/actions/workflows/build.yml)
+[![Build](https://github.com/lawvs/yjs-playground/actions/workflows/build.yml/badge.svg)](https://github.com/lawvs/yjs-playground/actions/workflows/build.yml)
 
 The playground of [Yjs](https://docs.yjs.dev/).
 
