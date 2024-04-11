@@ -58,7 +58,6 @@ export function PreviewPanel() {
               (isYDoc(value) || isYText(value) || isYMap(value))
             );
           }}
-          enableDelete={true}
           onAdd={(path) => {
             const target = getYTypeFromPath(yDoc, path);
             if (!target) {
@@ -69,7 +68,8 @@ export function PreviewPanel() {
             setPath(path);
             setOpen(true);
           }}
-          onDelete={() => {}}
+          // enableDelete={true}
+          // onDelete={() => {}}
           displaySize={config.showSize}
           theme={theme === "system" ? systemPreferenceTheme : theme}
           defaultInspectDepth={2}
