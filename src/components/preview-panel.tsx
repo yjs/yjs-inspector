@@ -1,6 +1,6 @@
 import { JsonViewer, Path } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { yDataType } from "../data-types";
 import { useConfig, useYDoc } from "../state";
 import { getYTypeFromPath, isYDoc, isYMap, isYText } from "../y-type";
@@ -15,6 +15,17 @@ export function PreviewPanel() {
   const [open, setOpen] = useState(false);
   const [path, setPath] = useState<Path>([]);
   const [target, setTarget] = useState<unknown>(null);
+
+  const [, setCount] = useState(0);
+  useEffect(() => {
+    if (!yDoc) {
+      return;
+    }
+    yDoc.on("update", () => {
+      // Force re-render
+      setCount((count) => count + 1);
+    });
+  }, [yDoc]);
 
   return (
     <div className="flex flex-1 flex-col">
