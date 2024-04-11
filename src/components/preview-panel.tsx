@@ -21,10 +21,14 @@ export function PreviewPanel() {
     if (!yDoc) {
       return;
     }
-    yDoc.on("update", () => {
+    const callback = () => {
       // Force re-render
       setCount((count) => count + 1);
-    });
+    };
+    yDoc.on("update", callback);
+    return () => {
+      yDoc.off("update", callback);
+    };
   }, [yDoc]);
 
   return (
