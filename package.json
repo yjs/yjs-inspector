@@ -34,6 +34,7 @@
     "shiki": "^1.2.4",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "y-websocket": "^2.0.2",
     "yjs": "^13.6.14"
   },
   "devDependencies": {

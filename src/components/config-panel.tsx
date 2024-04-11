@@ -1,5 +1,6 @@
 import { Config, useConfig, useYDoc } from "../state";
 import { fileToYDoc } from "../utils";
+import { ConnectButton } from "./connect-button";
 import { ExportButton } from "./export-button";
 import { FullScreenDropZone } from "./full-screen-drop-zone";
 import { LoadButton } from "./load-button";
@@ -23,6 +24,7 @@ export function ConfigPanel() {
     <div className="flex w-64 flex-col gap-4">
       <h2 className="text-xl">Configure</h2>
       <LoadButton />
+      <ConnectButton />
 
       <Select
         value={config.view}
