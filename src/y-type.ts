@@ -19,7 +19,9 @@ export function guessType(abstractType: Y.AbstractType<unknown>) {
     return Y.Map;
   }
   if (abstractType._length > 0) {
-    return Y.Array;
+    // TODO distinguish between Y.Text and Y.Array
+    return Y.Text;
+    // return Y.Array;
   }
   return Y.AbstractType;
 }

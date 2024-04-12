@@ -1,9 +1,11 @@
-import { useConfig, useYDoc } from "../state";
+import { Redo, Undo } from "lucide-react";
+import { useConfig, useUndoManager, useYDoc } from "../state";
 import { fileToYDoc } from "../utils";
 import { ConnectButton } from "./connect-button";
 import { ExportButton } from "./export-button";
 import { FullScreenDropZone } from "./full-screen-drop-zone";
 import { LoadButton } from "./load-button";
+import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Switch } from "./ui/switch";
 import { useToast } from "./ui/use-toast";
@@ -12,6 +14,8 @@ export function ConfigPanel() {
   const [yDoc, setYDoc] = useYDoc();
   const { toast } = useToast();
   const [config, setConfig] = useConfig();
+  const { undoManager, canRedo, canUndo, undoStackSize, redoStackSize } =
+    useUndoManager();
 
   return (
     <div className="flex w-64 flex-col gap-4">
@@ -76,6 +80,41 @@ export function ConfigPanel() {
         />
         <Label htmlFor="editable-switch">Editable</Label>
       </div>
+
+      {config.editable && (
+        <div className="flex items-center space-x-2">
+          <Button
+            className="flex-1"
+            variant="outline"
+            disabled={!canUndo}
+            onClick={() => {
+              if (!undoManager.canUndo()) {
+                console.warn("Cannot undo", undoManager);
+                return;
+              }
+              undoManager.undo();
+            }}
+          >
+            <Undo className="mr-2 h-4 w-4" />
+            Undo({undoStackSize})
+          </Button>
+          <Button
+            className="flex-1"
+            variant="outline"
+            disabled={!canRedo}
+            onClick={() => {
+              if (!undoManager.canRedo()) {
+                console.warn("Cannot redo", undoManager);
+                return;
+              }
+              undoManager.redo();
+            }}
+          >
+            <Redo className="mr-2 h-4 w-4" />
+            Redo({redoStackSize})
+          </Button>
+        </div>
+      )}
 
       <ExportButton />
 
