@@ -45,7 +45,7 @@ const YTypePreComponent = ({
     showDelta: config.showDelta,
   });
   if (typeof parsedValue === "string") {
-    return null;
+    return <TypeLabel value={value} />;
   }
   return (
     <span>

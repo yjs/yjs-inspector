@@ -75,6 +75,10 @@ export function isYXmlFragment(value: unknown): value is Y.XmlFragment {
   return value instanceof Y.XmlFragment;
 }
 
+export function isYXmlText(value: unknown): value is Y.XmlText {
+  return value instanceof Y.XmlText;
+}
+
 export function isYAbstractType(
   value: unknown,
 ): value is Y.AbstractType<unknown> {
@@ -124,6 +128,25 @@ export function parseYType(
   }
 
   if (isYText(value)) {
+    if (showDelta) {
+      return value.toDelta();
+    }
+    return value.toString();
+  }
+
+  if (isYXmlElement(value)) {
+    return {
+      nodeName: value.nodeName,
+      attributes: value.getAttributes(),
+      "toString()": value.toString(),
+    };
+  }
+
+  if (isYXmlFragment(value)) {
+    return value.toJSON();
+  }
+
+  if (isYXmlText(value)) {
     if (showDelta) {
       return value.toDelta();
     }
