@@ -1,5 +1,5 @@
 import { Cable, Unplug } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { WebsocketProvider } from "y-websocket";
 import { useYDoc } from "../state";
 import { Button } from "./ui/button";
@@ -23,11 +23,26 @@ import {
 
 export function ConnectButton() {
   const [yDoc] = useYDoc();
+  const [preDoc, setPreDoc] = useState(yDoc);
   const [url, setUrl] = useState("wss://demos.yjs.dev/ws");
   const [room, setRoom] = useState("monaco-demo");
   const [provider, setProvider] = useState<WebsocketProvider>();
   const [connected, setConnected] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const disconnect = useCallback(() => {
+    if (!connected) return;
+    provider?.disconnect();
+    setProvider(undefined);
+    setConnected(false);
+  }, [connected, provider]);
+
+  useEffect(() => {
+    if (yDoc !== preDoc) {
+      setPreDoc(yDoc);
+      disconnect();
+    }
+  }, [yDoc, preDoc, provider, disconnect]);
 
   const onConnect = () => {
     if (connected) {
@@ -46,9 +61,7 @@ export function ConnectButton() {
         variant="secondary"
         onClick={() => {
           if (connected) {
-            provider?.disconnect();
-            setProvider(undefined);
-            setConnected(false);
+            disconnect();
             return;
           }
           setOpen(true);
