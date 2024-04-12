@@ -67,8 +67,8 @@ const YTypeComponent: ComponentType<DataItemProps<any>> = ({
   const StrComponent = stringType.Component!;
   const ObjComponent = objectType.Component!;
   const [config] = useConfig();
-  const inspectedYDoc = config.view === "ydoc";
-  if (inspectedYDoc) {
+
+  if (!config.parseYDoc) {
     if (typeof value === "string") {
       throw new Error("YDoc should not be a string");
     }
@@ -113,9 +113,8 @@ const YTypePostComponent: ComponentType<DataItemProps<any>> = ({
 }: DataItemProps<object>) => {
   const ObjPostComponent = objectType.PostComponent!;
   const [config] = useConfig();
-  const inspectedYDoc = config.view === "ydoc";
 
-  if (inspectedYDoc) {
+  if (!config.parseYDoc) {
     if (typeof value === "string") {
       throw new Error("YDoc should not be a string");
     }

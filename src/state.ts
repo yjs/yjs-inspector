@@ -8,14 +8,14 @@ export const useYDoc = () => {
 };
 
 export type Config = {
-  view: "ydoc" | "shared-types";
+  parseYDoc: boolean;
   showDelta: boolean;
   showSize: boolean;
   editable: boolean;
 };
 
 const defaultConfig = {
-  view: "shared-types",
+  parseYDoc: true,
   showDelta: true,
   showSize: true,
   editable: false,

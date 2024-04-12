@@ -1,17 +1,10 @@
-import { Config, useConfig, useYDoc } from "../state";
+import { useConfig, useYDoc } from "../state";
 import { fileToYDoc } from "../utils";
 import { ConnectButton } from "./connect-button";
 import { ExportButton } from "./export-button";
 import { FullScreenDropZone } from "./full-screen-drop-zone";
 import { LoadButton } from "./load-button";
 import { Label } from "./ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
 import { Switch } from "./ui/switch";
 import { useToast } from "./ui/use-toast";
 
@@ -26,30 +19,25 @@ export function ConfigPanel() {
       <LoadButton />
       <ConnectButton />
 
-      <Select
-        value={config.view}
-        onValueChange={(value) => {
-          setConfig({ ...config, view: value as Config["view"] });
-        }}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder="Select View" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value={"shared-types" satisfies Config["view"]}>
-            Inspect Data
-          </SelectItem>
-          <SelectItem value={"ydoc" satisfies Config["view"]}>
-            Inspect YDoc
-          </SelectItem>
-        </SelectContent>
-      </Select>
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="parse-y-doc-switch"
+          checked={config.parseYDoc}
+          onCheckedChange={(checked) =>
+            setConfig({
+              ...config,
+              parseYDoc: checked,
+            })
+          }
+        />
+        <Label htmlFor="parse-y-doc-switch">Parse YDoc</Label>
+      </div>
 
       <div className="flex items-center space-x-2">
         <Switch
           id="show-delta"
           checked={config.showDelta}
-          disabled={config.view !== "shared-types"}
+          disabled={!config.parseYDoc}
           onCheckedChange={(checked) =>
             setConfig({
               ...config,
@@ -77,7 +65,7 @@ export function ConfigPanel() {
       <div className="flex items-center space-x-2">
         <Switch
           id="editable-switch"
-          disabled={config.view !== "shared-types"}
+          disabled={!config.parseYDoc}
           checked={config.editable}
           onCheckedChange={(checked) =>
             setConfig({

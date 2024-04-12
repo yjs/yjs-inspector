@@ -57,7 +57,7 @@ export function PreviewPanel() {
           enableAdd={(_, value) => {
             return (
               config.editable &&
-              config.view === "shared-types" &&
+              config.parseYDoc &&
               // TODO support YArray/YText
               (isYDoc(value) || isYText(value) || isYMap(value))
             );
