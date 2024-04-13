@@ -1,7 +1,8 @@
-import { Cable, RotateCw, Unplug } from "lucide-react";
+import { Cable, RocketIcon, RotateCw, Unplug } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { WebsocketProvider } from "y-websocket";
 import { useYDoc } from "../state";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -16,7 +17,9 @@ import { Label } from "./ui/label";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
@@ -105,13 +108,59 @@ export function ConnectButton() {
   );
 }
 
+const officialDemos = [
+  {
+    name: "ProseMirror",
+    value: "prosemirror-demo",
+    url: "https://demos.yjs.dev/prosemirror/prosemirror.html",
+  },
+  {
+    name: "ProseMirror with Version History",
+    value: "prosemirror-versions-demo",
+    url: "https://demos.yjs.dev/prosemirror-versions/prosemirror-versions.html",
+  },
+  {
+    name: "Quill",
+    value: "quill-demo-5",
+    url: "https://demos.yjs.dev/quill/quill.html",
+  },
+  {
+    name: "Monaco",
+    value: "monaco-demo",
+    url: "https://demos.yjs.dev/monaco/monaco.html",
+  },
+  {
+    name: "CodeMirror",
+    value: "codemirror-demo",
+    url: "https://demos.yjs.dev/codemirror/codemirror.html",
+  },
+  {
+    name: "CodeMirror 6",
+    value: "codemirror.next-demo",
+    url: "https://demos.yjs.dev/codemirror.next/codemirror.next.html",
+  },
+] as const;
+
 function ConnectDialog({
   onConnect,
 }: {
   onConnect: (data: { url: string; room: string }) => void;
 }) {
   const [url, setUrl] = useState("wss://demos.yjs.dev/ws");
-  const [room, setRoom] = useState("monaco-demo");
+  const [room, setRoom] = useState("quill-demo-5");
+  const [provider, setProvider] = useState("quill-demo-5");
+  const officialDemo = officialDemos.find((demo) => demo.value === provider);
+
+  // This effect is unnecessary, but it's convenient
+  useEffect(() => {
+    if (officialDemo) {
+      const demo = officialDemos.find((demo) => demo.value === provider);
+      if (demo) {
+        setUrl("wss://demos.yjs.dev/ws");
+        setRoom(demo.value);
+      }
+    }
+  }, [officialDemo, provider]);
 
   return (
     <DialogContent>
@@ -127,12 +176,32 @@ function ConnectDialog({
             Provider
           </Label>
 
-          <Select value="y-websocket">
+          <Select
+            value={provider}
+            onValueChange={(value) => {
+              setProvider(value);
+            }}
+          >
             <SelectTrigger className="col-span-3">
-              <SelectValue placeholder="Provider" />
+              <SelectValue placeholder="Select a provider" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="y-websocket">y-websocket</SelectItem>
+              <SelectGroup>
+                <SelectLabel>Official Demos</SelectLabel>
+                {officialDemos.map((demo) => (
+                  <SelectItem key={demo.value} value={demo.value}>
+                    {demo.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+
+              <SelectGroup>
+                <SelectLabel>Customs</SelectLabel>
+                <SelectItem value="y-websocket">y-websocket</SelectItem>
+                <SelectItem value="y-webrtc" disabled>
+                  y-webrtc (coming soon)
+                </SelectItem>
+              </SelectGroup>
             </SelectContent>
           </Select>
         </div>
@@ -144,6 +213,7 @@ function ConnectDialog({
           <Input
             id="url-input"
             value={url}
+            disabled={!!officialDemo}
             onInput={(e) => setUrl(e.currentTarget.value)}
             placeholder="wss://demos.yjs.dev/ws"
             className="col-span-3"
@@ -157,11 +227,31 @@ function ConnectDialog({
           <Input
             id="room-input"
             className="col-span-3"
+            disabled={!!officialDemo}
             value={room}
             onInput={(e) => setRoom(e.currentTarget.value)}
             placeholder="room-name"
           />
         </div>
+
+        {officialDemo && (
+          <Alert>
+            <RocketIcon className="h-4 w-4" />
+            <AlertTitle>Heads up!</AlertTitle>
+            <AlertDescription>
+              Click here to access the&nbsp;
+              <a
+                className="text-primary underline"
+                href={officialDemo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {officialDemo.name}
+              </a>
+              &nbsp;demo.
+            </AlertDescription>
+          </Alert>
+        )}
       </div>
       <DialogFooter>
         <Button onClick={() => onConnect({ url, room })}>Connect</Button>
