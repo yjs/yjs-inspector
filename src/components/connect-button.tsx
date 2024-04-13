@@ -30,49 +30,45 @@ export function ConnectButton() {
   const [yDoc, setYDoc] = useYDoc();
   const [open, setOpen] = useState(false);
   const [provider, setProvider] = useState<WebsocketProvider>();
-  const [connected, setConnected] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [connectState, setConnectState] = useState<
     "connecting" | "connected" | "disconnected"
   >("disconnected");
 
   const disconnect = useCallback(() => {
-    if (!connected) return;
+    if (connectState === "disconnected") return;
     provider?.disconnect();
     provider?.destroy();
     setProvider(undefined);
-    setConnected(false);
-    setLoading(false);
-  }, [connected, provider]);
+    setConnectState("disconnected");
+  }, [connectState, provider]);
 
   // This effect is for convenience, it is evil.
   useEffect(() => {
     // Disconnect when the yDoc changes
-    if (!connected) return;
+    if (connectState === "disconnected") return;
     if (!provider) {
       console.error(
-        "Provider is not set, but connected is true",
+        "Provider should be defined when connectState is not disconnected",
         provider,
-        connected,
-        yDoc,
+        connectState,
       );
       return;
     }
     if (yDoc !== provider.doc) {
       disconnect();
     }
-  }, [yDoc, disconnect, connected, provider]);
+  }, [yDoc, disconnect, provider, connectState]);
 
   const onConnect = useCallback(
     ({ doc, url, room }: { doc: Y.Doc; url: string; room: string }) => {
-      if (connected) {
+      if (connectState !== "disconnected") {
         throw new Error("Should not be able to connect when already connected");
       }
       provider?.disconnect();
       const wsProvider = new WebsocketProvider(url, room, doc);
       wsProvider.on("sync", (isSynced: boolean) => {
         if (isSynced) {
-          setLoading(false);
+          setConnectState("connected");
         }
       });
       // wsProvider.on(
@@ -80,24 +76,24 @@ export function ConnectButton() {
       //   ({ status }: { status: "connected" | "disconnected" | string }) => {},
       // );
       wsProvider.connect();
-      setLoading(true);
+      setConnectState("connecting");
       setYDoc(doc);
       setProvider(wsProvider);
-      setConnected(true);
       setOpen(false);
     },
-    [connected, provider, setYDoc],
+    [connectState, provider, setYDoc],
   );
 
   const handleClick = () => {
-    if (connected) {
-      disconnect();
+    if (connectState === "disconnected") {
+      setOpen(true);
       return;
     }
-    setOpen(true);
+    disconnect();
+    return;
   };
 
-  if (loading) {
+  if (connectState === "connecting") {
     return (
       <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
         <Button variant="secondary" onClick={handleClick}>
@@ -109,7 +105,7 @@ export function ConnectButton() {
     );
   }
 
-  if (connected) {
+  if (connectState === "connected") {
     return (
       <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
         <Button variant="secondary" onClick={handleClick}>
@@ -120,6 +116,7 @@ export function ConnectButton() {
       </Dialog>
     );
   }
+
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <Button variant="secondary" onClick={handleClick}>
