@@ -19,9 +19,24 @@ export function guessType(abstractType: Y.AbstractType<unknown>) {
     return Y.Map;
   }
   if (abstractType._length > 0) {
-    // TODO distinguish between Y.Text and Y.Array
-    return Y.Text;
-    // return Y.Array;
+    const firstItem = abstractType._first;
+    if (!firstItem) {
+      console.error(
+        "The length is greater than 0 but _first is not set",
+        abstractType,
+      );
+      return Y.AbstractType;
+    }
+
+    // Try distinguish between Y.Text and Y.Array
+    // Only check the first element, it's unreliable!
+    if (
+      firstItem.content instanceof Y.ContentString ||
+      firstItem.content instanceof Y.ContentFormat
+    ) {
+      return Y.Text;
+    }
+    return Y.Array;
   }
   return Y.AbstractType;
 }
