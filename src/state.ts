@@ -52,6 +52,7 @@ export const useUndoManager = () => {
     redoStackSize: undoManager.redoStack.length,
   });
 
+  // TODO use useSyncExternalStore
   useEffect(() => {
     const callback = () => {
       setState({
@@ -69,7 +70,7 @@ export const useUndoManager = () => {
       undoManager.off("stack-item-added", callback);
       undoManager.off("stack-item-popped", callback);
     };
-  }, [state, undoManager]);
+  }, [undoManager]);
 
   return {
     undoManager,
