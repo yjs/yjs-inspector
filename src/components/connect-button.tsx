@@ -1,4 +1,4 @@
-import { Cable, Unplug } from "lucide-react";
+import { Cable, RotateCw, Unplug } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { WebsocketProvider } from "y-websocket";
 import { useYDoc } from "../state";
@@ -27,15 +27,18 @@ export function ConnectButton() {
   const [provider, setProvider] = useState<WebsocketProvider>();
   const [connected, setConnected] = useState(false);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const disconnect = useCallback(() => {
     if (!connected) return;
     provider?.disconnect();
+    provider?.destroy();
     setProvider(undefined);
     setConnected(false);
   }, [connected, provider]);
 
   useEffect(() => {
+    // Disconnect when the yDoc changes
     if (yDoc !== preDoc) {
       setPreDoc(yDoc);
       disconnect();
@@ -47,37 +50,56 @@ export function ConnectButton() {
       throw new Error("Should not be able to connect when already connected");
     }
     provider?.disconnect();
-    const newProvider = new WebsocketProvider(url, room, yDoc);
-    newProvider.connect();
-    setProvider(newProvider);
+    const wsProvider = new WebsocketProvider(url, room, yDoc);
+    wsProvider.on("sync", (isSynced: boolean) => {
+      if (isSynced) {
+        setLoading(false);
+      }
+    });
+    wsProvider.connect();
+    setLoading(true);
+    setProvider(wsProvider);
     setConnected(true);
     setOpen(false);
   };
+
+  const handleClick = () => {
+    if (connected) {
+      disconnect();
+      return;
+    }
+    setOpen(true);
+  };
+
+  if (loading) {
+    return (
+      <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+        <Button variant="secondary" onClick={handleClick}>
+          <RotateCw className="mr-2 h-4 w-4 animate-spin" />
+          Connecting
+        </Button>
+        <ConnectDialog onConnect={onConnect} />
+      </Dialog>
+    );
+  }
+
+  if (connected) {
+    return (
+      <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+        <Button variant="secondary" onClick={handleClick}>
+          <Unplug className="mr-2 h-4 w-4" />
+          Disconnect
+        </Button>
+        <ConnectDialog onConnect={onConnect} />
+      </Dialog>
+    );
+  }
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <Button
-        variant="secondary"
-        onClick={() => {
-          if (connected) {
-            disconnect();
-            return;
-          }
-          setOpen(true);
-        }}
-      >
-        {connected ? (
-          <>
-            <Unplug className="mr-2 h-4 w-4" />
-            Disconnect
-          </>
-        ) : (
-          <>
-            <Cable className="mr-2 h-4 w-4" />
-            Connect
-          </>
-        )}
+      <Button variant="secondary" onClick={handleClick}>
+        <Cable className="mr-2 h-4 w-4" />
+        Connect
       </Button>
-
       <ConnectDialog onConnect={onConnect} />
     </Dialog>
   );
