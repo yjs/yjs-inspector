@@ -24,8 +24,6 @@ import {
 export function ConnectButton() {
   const [yDoc] = useYDoc();
   const [preDoc, setPreDoc] = useState(yDoc);
-  const [url, setUrl] = useState("wss://demos.yjs.dev/ws");
-  const [room, setRoom] = useState("monaco-demo");
   const [provider, setProvider] = useState<WebsocketProvider>();
   const [connected, setConnected] = useState(false);
   const [open, setOpen] = useState(false);
@@ -44,7 +42,7 @@ export function ConnectButton() {
     }
   }, [yDoc, preDoc, provider, disconnect]);
 
-  const onConnect = () => {
+  const onConnect = ({ url, room }: { url: string; room: string }) => {
     if (connected) {
       throw new Error("Should not be able to connect when already connected");
     }
@@ -80,59 +78,72 @@ export function ConnectButton() {
         )}
       </Button>
 
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Connect</DialogTitle>
-          <DialogDescription>
-            Collaborate with others by connecting to a shared YDoc
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="provider-input" className="text-right">
-              Provider
-            </Label>
-
-            <Select value="y-websocket">
-              <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Provider" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="y-websocket">y-websocket</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="url-input" className="text-right">
-              URL
-            </Label>
-            <Input
-              id="url-input"
-              value={url}
-              onInput={(e) => setUrl(e.currentTarget.value)}
-              placeholder="wss://demos.yjs.dev/ws"
-              className="col-span-3"
-            />
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="room-input" className="text-right">
-              Room
-            </Label>
-            <Input
-              id="room-input"
-              className="col-span-3"
-              value={room}
-              onInput={(e) => setRoom(e.currentTarget.value)}
-              placeholder="room-name"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button onClick={onConnect}>Connect</Button>
-        </DialogFooter>
-      </DialogContent>
+      <ConnectDialog onConnect={onConnect} />
     </Dialog>
+  );
+}
+
+function ConnectDialog({
+  onConnect,
+}: {
+  onConnect: (data: { url: string; room: string }) => void;
+}) {
+  const [url, setUrl] = useState("wss://demos.yjs.dev/ws");
+  const [room, setRoom] = useState("monaco-demo");
+
+  return (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Connect</DialogTitle>
+        <DialogDescription>
+          Collaborate with others by connecting to a shared YDoc
+        </DialogDescription>
+      </DialogHeader>
+      <div className="grid gap-4 py-4">
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="provider-input" className="text-right">
+            Provider
+          </Label>
+
+          <Select value="y-websocket">
+            <SelectTrigger className="col-span-3">
+              <SelectValue placeholder="Provider" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="y-websocket">y-websocket</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="url-input" className="text-right">
+            URL
+          </Label>
+          <Input
+            id="url-input"
+            value={url}
+            onInput={(e) => setUrl(e.currentTarget.value)}
+            placeholder="wss://demos.yjs.dev/ws"
+            className="col-span-3"
+          />
+        </div>
+
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="room-input" className="text-right">
+            Room
+          </Label>
+          <Input
+            id="room-input"
+            className="col-span-3"
+            value={room}
+            onInput={(e) => setRoom(e.currentTarget.value)}
+            placeholder="room-name"
+          />
+        </div>
+      </div>
+      <DialogFooter>
+        <Button onClick={() => onConnect({ url, room })}>Connect</Button>
+      </DialogFooter>
+    </DialogContent>
   );
 }
