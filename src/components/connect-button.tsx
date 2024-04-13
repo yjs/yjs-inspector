@@ -1,6 +1,7 @@
 import { Cable, RocketIcon, RotateCw, Unplug } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { WebsocketProvider } from "y-websocket";
+import * as Y from "yjs";
 import { useYDoc } from "../state";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
@@ -23,14 +24,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { Switch } from "./ui/switch";
 
 export function ConnectButton() {
-  const [yDoc] = useYDoc();
-  const [preDoc, setPreDoc] = useState(yDoc);
+  const [yDoc, setYDoc] = useYDoc();
+  const [open, setOpen] = useState(false);
   const [provider, setProvider] = useState<WebsocketProvider>();
   const [connected, setConnected] = useState(false);
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [connectState, setConnectState] = useState<
+    "connecting" | "connected" | "disconnected"
+  >("disconnected");
 
   const disconnect = useCallback(() => {
     if (!connected) return;
@@ -38,33 +42,52 @@ export function ConnectButton() {
     provider?.destroy();
     setProvider(undefined);
     setConnected(false);
+    setLoading(false);
   }, [connected, provider]);
 
+  // This effect is for convenience, it is evil.
   useEffect(() => {
     // Disconnect when the yDoc changes
-    if (yDoc !== preDoc) {
-      setPreDoc(yDoc);
+    if (!connected) return;
+    if (!provider) {
+      console.error(
+        "Provider is not set, but connected is true",
+        provider,
+        connected,
+        yDoc,
+      );
+      return;
+    }
+    if (yDoc !== provider.doc) {
       disconnect();
     }
-  }, [yDoc, preDoc, provider, disconnect]);
+  }, [yDoc, disconnect, connected, provider]);
 
-  const onConnect = ({ url, room }: { url: string; room: string }) => {
-    if (connected) {
-      throw new Error("Should not be able to connect when already connected");
-    }
-    provider?.disconnect();
-    const wsProvider = new WebsocketProvider(url, room, yDoc);
-    wsProvider.on("sync", (isSynced: boolean) => {
-      if (isSynced) {
-        setLoading(false);
+  const onConnect = useCallback(
+    ({ doc, url, room }: { doc: Y.Doc; url: string; room: string }) => {
+      if (connected) {
+        throw new Error("Should not be able to connect when already connected");
       }
-    });
-    wsProvider.connect();
-    setLoading(true);
-    setProvider(wsProvider);
-    setConnected(true);
-    setOpen(false);
-  };
+      provider?.disconnect();
+      const wsProvider = new WebsocketProvider(url, room, doc);
+      wsProvider.on("sync", (isSynced: boolean) => {
+        if (isSynced) {
+          setLoading(false);
+        }
+      });
+      // wsProvider.on(
+      //   "status",
+      //   ({ status }: { status: "connected" | "disconnected" | string }) => {},
+      // );
+      wsProvider.connect();
+      setLoading(true);
+      setYDoc(doc);
+      setProvider(wsProvider);
+      setConnected(true);
+      setOpen(false);
+    },
+    [connected, provider, setYDoc],
+  );
 
   const handleClick = () => {
     if (connected) {
@@ -144,11 +167,13 @@ const officialDemos = [
 function ConnectDialog({
   onConnect,
 }: {
-  onConnect: (data: { url: string; room: string }) => void;
+  onConnect: (data: { doc: Y.Doc; url: string; room: string }) => void;
 }) {
+  const [yDoc] = useYDoc();
   const [url, setUrl] = useState("wss://demos.yjs.dev/ws");
   const [room, setRoom] = useState("quill-demo-5");
   const [provider, setProvider] = useState("quill-demo-5");
+  const [needCreateNewDoc, setNeedCreateNewDoc] = useState(true);
   const officialDemo = officialDemos.find((demo) => demo.value === provider);
 
   // This effect is unnecessary, but it's convenient
@@ -234,6 +259,18 @@ function ConnectDialog({
           />
         </div>
 
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Switch
+            id="create-new-doc"
+            className="justify-self-end"
+            checked={needCreateNewDoc}
+            onCheckedChange={(value) => setNeedCreateNewDoc(value)}
+          />
+          <Label htmlFor="create-new-doc" className="col-span-3">
+            Create a new YDoc before connecting
+          </Label>
+        </div>
+
         {officialDemo && (
           <Alert>
             <RocketIcon className="h-4 w-4" />
@@ -254,7 +291,17 @@ function ConnectDialog({
         )}
       </div>
       <DialogFooter>
-        <Button onClick={() => onConnect({ url, room })}>Connect</Button>
+        <Button
+          onClick={() => {
+            if (needCreateNewDoc) {
+              onConnect({ url, room, doc: new Y.Doc() });
+              return;
+            }
+            onConnect({ url, room, doc: yDoc });
+          }}
+        >
+          Connect
+        </Button>
       </DialogFooter>
     </DialogContent>
   );
