@@ -1,5 +1,7 @@
 import { Github } from "lucide-react";
+import packageJSON from "../../package.json";
 import { ModeToggle } from "./mode-toggle";
+import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import yjsLogo from "/yjs.png";
 
@@ -22,6 +24,9 @@ export function Header() {
         </div>
         {/* Placeholder for right side of header */}
         <div className="ml-auto"></div>
+        <Badge variant="default">
+          Yjs Version: {packageJSON.dependencies.yjs}
+        </Badge>
         <ModeToggle />
         <Button variant="ghost" size="icon" asChild>
           <a

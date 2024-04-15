@@ -69,7 +69,7 @@ dependencies:
     specifier: ^2.0.2
     version: 2.0.2(yjs@13.6.14)
   yjs:
-    specifier: ^13.6.14
+    specifier: 13.6.14
     version: 13.6.14
 
 devDependencies:
