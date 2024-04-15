@@ -1,6 +1,6 @@
 import type { Path } from "@textea/json-viewer";
 import * as Y from "yjs";
-import { getPathValue, or } from "./utils";
+import { getPathValue, or, unreachable } from "./utils";
 
 /**
  * Guess AbstractType
@@ -114,7 +114,9 @@ export function isYAbstractType(
  *
  * See also {@link isYAbstractType}
  */
-export function isYShape(value: unknown): value is Y.AbstractType<unknown> {
+export function isYShape(
+  value: unknown,
+): value is Y.AbstractType<unknown> | Y.Doc {
   return or(isYDoc, isYAbstractType)(value);
 }
 
@@ -183,6 +185,79 @@ export function parseYShape(
   }
 
   return value;
+}
+
+export const NATIVE_UNIQ_IDENTIFIER = "$yjs:internal:native$";
+
+export function yShapeToJSON(
+  value: any,
+): object | string | number | boolean | null | undefined {
+  if (!isYShape(value)) {
+    return value;
+  }
+  const typeName = getYTypeName(value);
+
+  if (isYDoc(value)) {
+    const yDoc = value;
+    const keys = Array.from(yDoc.share.keys());
+    const obj = keys.reduce(
+      (acc, key) => {
+        const val = yDoc.get(key);
+        const type = guessType(val);
+        acc[key] = yShapeToJSON(yDoc.get(key, type));
+        return acc;
+      },
+      {
+        [NATIVE_UNIQ_IDENTIFIER]: typeName,
+      } as Record<string, unknown>,
+    );
+    return obj;
+  }
+  if (isYMap(value)) {
+    const yMap = value;
+    const keys = Array.from(yMap.keys());
+    const obj = keys.reduce(
+      (acc, key) => {
+        acc[key] = yShapeToJSON(yMap.get(key));
+        return acc;
+      },
+      {
+        [NATIVE_UNIQ_IDENTIFIER]: typeName,
+      } as Record<string, unknown>,
+    );
+    return obj;
+  }
+  if (isYArray(value)) {
+    return {
+      [NATIVE_UNIQ_IDENTIFIER]: typeName,
+      value: value.toArray().map((value) => yShapeToJSON(value)),
+    };
+  }
+  if (isYText(value)) {
+    return {
+      [NATIVE_UNIQ_IDENTIFIER]: typeName,
+      delta: value.toDelta(),
+    };
+  }
+  if (isYXmlElement(value)) {
+    return {
+      [NATIVE_UNIQ_IDENTIFIER]: typeName,
+      nodeName: value.nodeName,
+      attributes: value.getAttributes(),
+    };
+  }
+  if (isYXmlFragment(value)) {
+    return {
+      [NATIVE_UNIQ_IDENTIFIER]: typeName,
+      value: value.toJSON(),
+    };
+  }
+  if (isYAbstractType(value)) {
+    console.error("Unsupported Yjs type: " + typeName, value);
+    throw new Error("Unsupported Yjs type: " + typeName);
+  }
+  console.error("Unknown Yjs type", value);
+  unreachable(value, "Unknown Yjs type");
 }
 
 export function getYTypeFromPath(yDoc: Y.Doc, path: Path): unknown {

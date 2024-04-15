@@ -8,6 +8,7 @@ import {
 import { Download } from "lucide-react";
 import * as Y from "yjs";
 import { useYDoc } from "../state";
+import { yShapeToJSON } from "../y-shape";
 
 function downloadFile(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
@@ -63,6 +64,18 @@ export function ExportButton() {
           }}
         >
           Snapshot
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            const json = yShapeToJSON(yDoc);
+            const jsonStr = JSON.stringify(json, null, 2);
+            const blob = new Blob([jsonStr], {
+              type: "application/json",
+            });
+            downloadFile(blob, "ydoc-json");
+          }}
+        >
+          JSON(unofficial)
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

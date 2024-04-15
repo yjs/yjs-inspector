@@ -37,3 +37,26 @@ export const or =
 export function getHumanReadablePath(path: Path) {
   return ["root", ...path].join(".");
 }
+
+/**
+ * This function should never be called. If it is called, it means that the
+ * code has reached a point that should be unreachable.
+ *
+ * @example
+ * ```ts
+ * function f(val: 'a' | 'b') {
+ *  if (val === 'a') {
+ *   return 1;
+ * } else if (val === 'b') {
+ *  return 2;
+ * }
+ * unreachable(val);
+ * ```
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function unreachable(
+  _val: never,
+  message = "Unreachable code reached",
+): never {
+  throw new Error(message);
+}
