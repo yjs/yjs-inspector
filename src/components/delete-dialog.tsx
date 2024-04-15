@@ -6,8 +6,8 @@ import {
   getYTypeName,
   isYArray,
   isYMap,
-  isYType,
-} from "../y-type";
+  isYShape,
+} from "../y-shape";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -53,7 +53,7 @@ export function DeleteDialog({
     }
     onOpenChange(false);
   };
-  const targetName = isYType(value) ? getYTypeName(value) : "object";
+  const targetName = isYShape(value) ? getYTypeName(value) : "object";
   const humanReadablePath = getHumanReadablePath(path);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

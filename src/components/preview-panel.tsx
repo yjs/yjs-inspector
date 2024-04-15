@@ -3,7 +3,7 @@ import { Bug } from "lucide-react";
 import { useEffect, useState } from "react";
 import { yDataType } from "../data-types";
 import { useConfig, useYDoc } from "../state";
-import { getYTypeFromPath, isYArray, isYDoc, isYMap } from "../y-type";
+import { getYTypeFromPath, isYArray, isYDoc, isYMap } from "../y-shape";
 import { AddDataDialog } from "./add-data-dialog";
 import { DeleteDialog } from "./delete-dialog";
 import { useTheme } from "./theme-provider";

@@ -3,7 +3,7 @@ import { Braces, Brackets, Type } from "lucide-react";
 import { ComponentProps, useState } from "react";
 import * as Y from "yjs";
 import { getHumanReadablePath } from "../utils";
-import { getYTypeName, isYDoc, isYMap, isYType } from "../y-type";
+import { getYTypeName, isYDoc, isYMap, isYShape } from "../y-shape";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -36,7 +36,7 @@ export function AddDataDialog({
       });
       return;
     }
-    if (!isYType(target)) {
+    if (!isYShape(target)) {
       toast({
         variant: "destructive",
         description: "Invalid target",
@@ -84,11 +84,18 @@ export function AddDataDialog({
 
   const KeyField = (
     <div className="space-y-1">
-      <Label htmlFor="name">Key</Label>
+      <Label htmlFor="add-dialog-name-input">Key</Label>
       <Input
-        id="name"
+        id="add-dialog-name-input"
+        autoFocus
         placeholder="key"
         value={key}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            handleAdd();
+          }
+        }}
         onChange={(e) => {
           setKey(e.target.value);
         }}
@@ -104,7 +111,7 @@ export function AddDataDialog({
           <DialogDescription>
             Add a new YType to&nbsp;
             <code className="rounded-md bg-secondary p-1 font-mono text-sm">
-              {isYType(target) ? getYTypeName(target) : "object"}
+              {isYShape(target) ? getYTypeName(target) : "object"}
             </code>
             &nbsp;at&nbsp;
             <code className="rounded-md bg-secondary p-1 font-mono text-sm">

@@ -101,7 +101,7 @@ export function isYXmlText(value: unknown): value is Y.XmlText {
  *
  * **Note: Y.Doc is not a Y.AbstractType.**
  *
- * See also {@link isYType}
+ * See also {@link isYShape}
  */
 export function isYAbstractType(
   value: unknown,
@@ -114,12 +114,12 @@ export function isYAbstractType(
  *
  * See also {@link isYAbstractType}
  */
-export function isYType(value: unknown): value is Y.AbstractType<unknown> {
+export function isYShape(value: unknown): value is Y.AbstractType<unknown> {
   return or(isYDoc, isYAbstractType)(value);
 }
 
-export function parseYType(
-  value: Y.AbstractType<unknown>,
+export function parseYShape(
+  value: Y.AbstractType<unknown> | Y.Doc,
   { showDelta }: { showDelta: boolean } = { showDelta: true },
 ): object | string {
   if (isYDoc(value)) {

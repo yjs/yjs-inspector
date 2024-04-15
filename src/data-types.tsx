@@ -9,7 +9,7 @@ import * as Y from "yjs";
 import { Badge } from "./components/ui/badge";
 import { toast } from "./components/ui/use-toast";
 import { useConfig } from "./state";
-import { getYTypeName, isYType, parseYType } from "./y-type";
+import { getYTypeName, isYShape, parseYShape } from "./y-shape";
 
 const TypeLabel = ({ value }: { value: unknown }) => {
   const typeName = getYTypeName(value as Y.AbstractType<unknown>);
@@ -38,10 +38,10 @@ const YTypePreComponent = ({
 }: DataItemProps<unknown>) => {
   const ObjPreComponent = objectType.PreComponent!;
   const [config] = useConfig();
-  const parsedValue = parseYType(value as Y.AbstractType<unknown>, {
+  const parsedValue = parseYShape(value as Y.AbstractType<unknown>, {
     showDelta: config.showDelta,
   });
-  const parsedPrevValue = parseYType(prevValue as Y.AbstractType<unknown>, {
+  const parsedPrevValue = parseYShape(prevValue as Y.AbstractType<unknown>, {
     showDelta: config.showDelta,
   });
   if (typeof parsedValue === "string") {
@@ -81,10 +81,10 @@ const YTypeComponent: ComponentType<DataItemProps<any>> = ({
     );
   }
 
-  const parsedValue = parseYType(value as Y.AbstractType<unknown>, {
+  const parsedValue = parseYShape(value as Y.AbstractType<unknown>, {
     showDelta: config.showDelta,
   });
-  const parsedPrevValue = parseYType(prevValue as Y.AbstractType<unknown>, {
+  const parsedPrevValue = parseYShape(prevValue as Y.AbstractType<unknown>, {
     showDelta: config.showDelta,
   });
   if (typeof parsedValue === "string") {
@@ -127,10 +127,10 @@ const YTypePostComponent: ComponentType<DataItemProps<any>> = ({
     );
   }
 
-  const parsedValue = parseYType(value as Y.AbstractType<unknown>, {
+  const parsedValue = parseYShape(value as Y.AbstractType<unknown>, {
     showDelta: config.showDelta,
   });
-  const parsedPrevValue = parseYType(prevValue as Y.AbstractType<unknown>, {
+  const parsedPrevValue = parseYShape(prevValue as Y.AbstractType<unknown>, {
     showDelta: config.showDelta,
   });
   if (typeof parsedValue === "string") {
@@ -147,7 +147,7 @@ const YTypePostComponent: ComponentType<DataItemProps<any>> = ({
 };
 
 export const yDataType = defineDataType<unknown>({
-  is: isYType,
+  is: isYShape,
   PreComponent: YTypePreComponent,
   PostComponent: YTypePostComponent,
   Component: YTypeComponent,
