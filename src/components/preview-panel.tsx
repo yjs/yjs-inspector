@@ -3,8 +3,9 @@ import { Bug } from "lucide-react";
 import { useEffect, useState } from "react";
 import { yDataType } from "../data-types";
 import { useConfig, useYDoc } from "../state";
-import { getYTypeFromPath, isYDoc, isYMap, isYText } from "../y-type";
+import { getYTypeFromPath, isYArray, isYDoc, isYMap } from "../y-type";
 import { AddDataDialog } from "./add-data-dialog";
+import { DeleteDialog } from "./delete-dialog";
 import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
 
@@ -12,7 +13,8 @@ export function PreviewPanel() {
   const { theme, systemPreferenceTheme } = useTheme();
   const [yDoc] = useYDoc();
   const [config] = useConfig();
-  const [open, setOpen] = useState(false);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [path, setPath] = useState<Path>([]);
   const [target, setTarget] = useState<unknown>(null);
 
@@ -59,7 +61,7 @@ export function PreviewPanel() {
               config.editable &&
               config.parseYDoc &&
               // TODO support YArray/YText
-              (isYDoc(value) || isYText(value) || isYMap(value))
+              (isYDoc(value) || isYMap(value))
             );
           }}
           onAdd={(path) => {
@@ -70,10 +72,21 @@ export function PreviewPanel() {
             }
             setTarget(target);
             setPath(path);
-            setOpen(true);
+            setAddDialogOpen(true);
           }}
-          // enableDelete={true}
-          // onDelete={() => {}}
+          enableDelete={(path) => {
+            const parent = getYTypeFromPath(yDoc, path.slice(0, -1));
+            return (
+              config.editable &&
+              config.parseYDoc &&
+              (isYMap(parent) || isYArray(parent))
+            );
+          }}
+          onDelete={(path, value) => {
+            setTarget(value);
+            setPath(path);
+            setDeleteDialogOpen(true);
+          }}
           displaySize={config.showSize}
           theme={theme === "system" ? systemPreferenceTheme : theme}
           defaultInspectDepth={2}
@@ -83,8 +96,14 @@ export function PreviewPanel() {
       <AddDataDialog
         target={target}
         path={path}
-        open={open}
-        onOpenChange={setOpen}
+        open={addDialogOpen}
+        onOpenChange={setAddDialogOpen}
+      />
+      <DeleteDialog
+        value={target}
+        path={path}
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
       />
     </div>
   );

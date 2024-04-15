@@ -33,3 +33,7 @@ export const or =
   <T extends (...args: any[]) => boolean>(...fnArray: NoInfer<T>[]) =>
   (...args: Parameters<T>) =>
     fnArray.some((fn) => fn(...args));
+
+export function getHumanReadablePath(path: Path) {
+  return ["root", ...path].join(".");
+}
