@@ -53,7 +53,6 @@ export function getHumanReadablePath(path: Path) {
  * unreachable(val);
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function unreachable(
   _val: never,
   message = "Unreachable code reached",
