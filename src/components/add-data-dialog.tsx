@@ -2,6 +2,7 @@ import { Path } from "@textea/json-viewer";
 import { Braces, Brackets, Type } from "lucide-react";
 import { ComponentProps, useState } from "react";
 import * as Y from "yjs";
+import { getHumanReadablePath } from "../utils";
 import { getYTypeName, isYDoc, isYMap, isYType } from "../y-type";
 import { Button } from "./ui/button";
 import {
@@ -22,7 +23,7 @@ export function AddDataDialog({
   path,
   ...props
 }: { target: unknown; path: Path } & ComponentProps<typeof Dialog>) {
-  const humanReadablePath = ["root", ...path].join(".");
+  const humanReadablePath = getHumanReadablePath(path);
   const [tab, setTab] = useState<"yMap" | "yArray" | "yText">("yMap");
   const [key, setKey] = useState<string>("");
 
@@ -77,6 +78,8 @@ export function AddDataDialog({
       setKey("");
       return;
     }
+    console.error("Invalid add target", path, target);
+    throw new Error("Invalid add target");
   };
 
   const KeyField = (

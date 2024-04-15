@@ -96,12 +96,24 @@ export function isYXmlText(value: unknown): value is Y.XmlText {
   return value instanceof Y.XmlText;
 }
 
+/**
+ * Check if the value is a Y.AbstractType.
+ *
+ * **Note: Y.Doc is not a Y.AbstractType.**
+ *
+ * See also {@link isYType}
+ */
 export function isYAbstractType(
   value: unknown,
 ): value is Y.AbstractType<unknown> {
   return value instanceof Y.AbstractType;
 }
 
+/**
+ * Check if the value is a Yjs type. It includes Y.Doc and Y.AbstractType.
+ *
+ * See also {@link isYAbstractType}
+ */
 export function isYType(value: unknown): value is Y.AbstractType<unknown> {
   return or(isYDoc, isYAbstractType)(value);
 }
