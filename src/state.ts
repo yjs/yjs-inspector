@@ -1,4 +1,5 @@
 import { atom, useAtom, useAtomValue } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 import { useEffect, useState } from "react";
 import * as Y from "yjs";
 
@@ -94,7 +95,10 @@ const defaultConfig = {
   editable: false,
 } satisfies Config;
 
-const configAtom = atom<Config>(defaultConfig);
+const configAtom = atomWithStorage<Config>(
+  "yjs-playground-config",
+  defaultConfig,
+);
 
 export const useConfig = () => {
   return useAtom(configAtom);
