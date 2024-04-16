@@ -263,6 +263,10 @@ export function yShapeToJSON(
 export function getYTypeFromPath(yDoc: Y.Doc, path: Path): unknown {
   return getPathValue(yDoc, path, (obj: unknown, key) => {
     if (isYDoc(obj)) {
+      const keyExists = obj.share.has(key + "");
+      if (!keyExists) {
+        return undefined;
+      }
       return obj.get(key + "");
     }
     if (isYMap(obj)) {
@@ -274,6 +278,9 @@ export function getYTypeFromPath(yDoc: Y.Doc, path: Path): unknown {
         return undefined;
       }
       return obj.get(key);
+    }
+    if (obj === undefined) {
+      return undefined;
     }
     return (obj as any)[key];
   });

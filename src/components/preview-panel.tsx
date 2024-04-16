@@ -75,12 +75,11 @@ export function PreviewPanel() {
             setAddDialogOpen(true);
           }}
           enableDelete={(path) => {
+            if (!config.editable || !config.parseYDoc) {
+              return false;
+            }
             const parent = getYTypeFromPath(yDoc, path.slice(0, -1));
-            return (
-              config.editable &&
-              config.parseYDoc &&
-              (isYMap(parent) || isYArray(parent))
-            );
+            return isYMap(parent) || isYArray(parent);
           }}
           onDelete={(path, value) => {
             setTarget(value);
