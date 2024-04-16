@@ -38,6 +38,21 @@ const YTypePreComponent = ({
 }: DataItemProps<unknown>) => {
   const ObjPreComponent = objectType.PreComponent!;
   const [config] = useConfig();
+  if (!config.parseYDoc) {
+    if (typeof value === "string") {
+      throw new Error("YDoc should not be a string");
+    }
+    return (
+      <span>
+        <TypeLabel value={value} />
+        <ObjPreComponent
+          value={value as object}
+          prevValue={prevValue as object}
+          {...props}
+        ></ObjPreComponent>
+      </span>
+    );
+  }
   const parsedValue = parseYShape(value as Y.AbstractType<unknown>, {
     showDelta: config.showDelta,
   });
