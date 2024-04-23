@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-type SystemTheme = "dark" | "light";
-type Theme = SystemTheme | "system";
+type ResolvedTheme = "dark" | "light";
+type Theme = ResolvedTheme | "system";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -11,13 +11,13 @@ type ThemeProviderProps = {
 
 type ThemeProviderState = {
   theme: Theme;
-  systemPreferenceTheme: SystemTheme;
+  resolvedTheme: ResolvedTheme;
   setTheme: (theme: Theme) => void;
 };
 
 const initialState: ThemeProviderState = {
   theme: "system",
-  systemPreferenceTheme: "light",
+  resolvedTheme: "light",
   setTheme: () => null,
 };
 
@@ -47,24 +47,18 @@ export function ThemeProvider({
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
-  const systemPreferenceDark = useSystemPreferenceDark();
-  const systemTheme: SystemTheme = systemPreferenceDark ? "dark" : "light";
+  const systemPreferenceTheme = useSystemPreferenceDark() ? "dark" : "light";
+  const resolvedTheme: ResolvedTheme =
+    theme === "system" ? systemPreferenceTheme : theme;
   useEffect(() => {
     const root = window.document.documentElement;
-
     root.classList.remove("light", "dark");
-
-    if (theme === "system") {
-      root.classList.add(systemTheme);
-      return;
-    }
-
-    root.classList.add(theme);
-  }, [systemTheme, theme]);
+    root.classList.add(resolvedTheme);
+  }, [resolvedTheme, theme]);
 
   const value = {
     theme,
-    systemPreferenceTheme: systemTheme,
+    resolvedTheme: resolvedTheme,
     setTheme: (theme: Theme) => {
       localStorage.setItem(storageKey, theme);
       setTheme(theme);

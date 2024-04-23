@@ -10,7 +10,7 @@ import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
 
 export function PreviewPanel() {
-  const { theme, systemPreferenceTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [yDoc] = useYDoc();
   const [config] = useConfig();
   const [addDialogOpen, setAddDialogOpen] = useState(false);
@@ -87,7 +87,7 @@ export function PreviewPanel() {
             setDeleteDialogOpen(true);
           }}
           displaySize={config.showSize}
-          theme={theme === "system" ? systemPreferenceTheme : theme}
+          theme={resolvedTheme}
           defaultInspectDepth={2}
           valueTypes={[yDataType]}
         />
