@@ -131,32 +131,32 @@ export function ConnectButton() {
 const officialDemos = [
   {
     name: "ProseMirror",
-    value: "prosemirror-demo",
+    value: "prosemirror-demo-2024/06",
     url: "https://demos.yjs.dev/prosemirror/prosemirror.html",
   },
   {
     name: "ProseMirror with Version History",
-    value: "prosemirror-versions-demo",
+    value: "prosemirror-versions-demo-2024/06",
     url: "https://demos.yjs.dev/prosemirror-versions/prosemirror-versions.html",
   },
   {
     name: "Quill",
-    value: "quill-demo-5",
+    value: "quill-demo-2024/06",
     url: "https://demos.yjs.dev/quill/quill.html",
   },
   {
     name: "Monaco",
-    value: "monaco-demo",
+    value: "monaco-demo-2024/06",
     url: "https://demos.yjs.dev/monaco/monaco.html",
   },
   {
     name: "CodeMirror",
-    value: "codemirror-demo",
+    value: "codemirror-demo-2024/06",
     url: "https://demos.yjs.dev/codemirror/codemirror.html",
   },
   {
     name: "CodeMirror 6",
-    value: "codemirror.next-demo",
+    value: "codemirror.next-demo-2024/06",
     url: "https://demos.yjs.dev/codemirror.next/codemirror.next.html",
   },
 ] as const;
@@ -168,8 +168,8 @@ function ConnectDialog({
 }) {
   const [yDoc] = useYDoc();
   const [url, setUrl] = useState("wss://demos.yjs.dev/ws");
-  const [room, setRoom] = useState("quill-demo-5");
-  const [provider, setProvider] = useState("quill-demo-5");
+  const [room, setRoom] = useState("quill-demo-2024/06");
+  const [provider, setProvider] = useState("quill-demo-2024/06");
   const [needCreateNewDoc, setNeedCreateNewDoc] = useState(true);
   const officialDemo = officialDemos.find((demo) => demo.value === provider);
 
