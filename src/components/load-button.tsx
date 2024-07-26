@@ -16,7 +16,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { File, FilePlus, Link, RotateCw, Upload } from "lucide-react";
+import {
+  File as FileIcon,
+  FilePlus,
+  Link,
+  RotateCw,
+  Upload,
+} from "lucide-react";
 import { useState } from "react";
 import * as Y from "yjs";
 import { useYDoc } from "../state";
@@ -39,11 +45,8 @@ function LoadFromUrlDialog({ children }: { children: React.ReactNode }) {
       if (!resp.ok) {
         throw new Error("Failed to fetch YDoc");
       }
-      const buffer = await resp.arrayBuffer();
-      const uint8 = new Uint8Array(buffer);
-      const yDoc = new Y.Doc();
-      Y.applyUpdate(yDoc, uint8);
-      setYDoc(yDoc);
+      const newYDoc = await fileToYDoc(new File([await resp.blob()], "ydoc"));
+      setYDoc(newYDoc);
       setOpen(false);
     } catch (error) {
       console.error(error);
@@ -76,7 +79,7 @@ function LoadFromUrlDialog({ children }: { children: React.ReactNode }) {
               id="load-from-url-input"
               type="url"
               placeholder="https://example.com/ydoc"
-defaultValue={ExampleYDocUrl}
+              defaultValue={ExampleYDocUrl}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -133,7 +136,7 @@ export function LoadButton() {
               }
             }}
           >
-            <File className="mr-2 h-4 w-4" />
+            <FileIcon className="mr-2 h-4 w-4" />
             Load from file
           </DropdownMenuItem>
 
