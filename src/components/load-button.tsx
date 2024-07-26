@@ -35,7 +35,7 @@ const ExampleYDocUrl =
 function LoadFromUrlDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(ExampleYDocUrl);
   const [, setYDoc] = useYDoc();
 
   const handleLoadYDoc = async () => {
