@@ -23,6 +23,9 @@ import { useYDoc } from "../state";
 import { fileToYDoc } from "../utils";
 import { toast } from "./ui/use-toast";
 
+const ExampleYDocUrl =
+  "https://insider.affine.pro/api/workspaces/af3478a2-9c9c-4d16-864d-bffa1eb10eb6/docs/-3bEQPBoOEkNH13ULW9Ed";
+
 function LoadFromUrlDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -73,6 +76,7 @@ function LoadFromUrlDialog({ children }: { children: React.ReactNode }) {
               id="load-from-url-input"
               type="url"
               placeholder="https://example.com/ydoc"
+defaultValue={ExampleYDocUrl}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
