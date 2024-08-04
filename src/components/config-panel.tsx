@@ -3,6 +3,7 @@ import { useConfig, useUndoManager, useYDoc } from "../state";
 import { fileToYDoc } from "../utils";
 import { ConnectButton } from "./connect-button";
 import { ExportButton } from "./export-button";
+import { FilterButton } from "./filter-button";
 import { FullScreenDropZone } from "./full-screen-drop-zone";
 import { LoadButton } from "./load-button";
 import { Button } from "./ui/button";
@@ -115,6 +116,7 @@ export function ConfigPanel() {
           </Button>
         </div>
       )}
+      <FilterButton />
 
       <ExportButton />
 
