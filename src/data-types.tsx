@@ -117,6 +117,9 @@ const YTypeComponent: ComponentType<DataItemProps<any>> = ({
   }
 
   const filteredValue = removeMismatchedValues(parsedValue, filterSet);
+  if (!filteredValue) {
+    return null;
+  }
 
   return (
     <ObjComponent

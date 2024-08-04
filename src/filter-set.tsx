@@ -93,7 +93,13 @@ export function queryFilterSet(
 export function removeMismatchedValues<T = unknown>(
   obj: T,
   matchSet: Set<Y.AbstractType<unknown> | Y.Doc>,
-): T {
+): T | null {
+  if (isYAbstractType(obj)) {
+    if (!matchSet.has(obj)) {
+      return null;
+    }
+    return obj;
+  }
   if (isPureObject(obj)) {
     for (const key in obj) {
       const value = obj[key];
@@ -109,8 +115,12 @@ export function removeMismatchedValues<T = unknown>(
       if (matchSet.has(element as Y.AbstractType<unknown> | Y.Doc)) {
         continue;
       }
-      obj.splice(index, 1);
-      index--;
+      // Only remove the element if it is a Y.AbstractType
+      // Fix show delta format for Y.Text
+      if (isYAbstractType(element)) {
+        obj.splice(index, 1);
+        index--;
+      }
     }
   }
   return obj;
