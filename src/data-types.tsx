@@ -8,7 +8,8 @@ import { ComponentType } from "react";
 import * as Y from "yjs";
 import { Badge } from "./components/ui/badge";
 import { toast } from "./components/ui/use-toast";
-import { useConfig } from "./state";
+import { removeMismatchedValues } from "./filter-set";
+import { useConfig, useFilterSet } from "./state";
 import { getYTypeName, isYShape, parseYShape } from "./y-shape";
 
 const TypeLabel = ({ value }: { value: unknown }) => {
@@ -19,6 +20,8 @@ const TypeLabel = ({ value }: { value: unknown }) => {
       className="mr-1 cursor-pointer"
       onClick={(e) => {
         e.stopPropagation();
+        // This logs is expected to be used for user debugging
+        // Do not remove this log!
         console.log(value);
         toast({
           duration: 2000,
@@ -82,6 +85,7 @@ const YTypeComponent: ComponentType<DataItemProps<any>> = ({
   const StrComponent = stringType.Component!;
   const ObjComponent = objectType.Component!;
   const [config] = useConfig();
+  const [filterSet] = useFilterSet();
 
   if (!config.parseYDoc) {
     if (typeof value === "string") {
@@ -112,9 +116,11 @@ const YTypeComponent: ComponentType<DataItemProps<any>> = ({
     );
   }
 
+  const filteredValue = removeMismatchedValues(parsedValue, filterSet);
+
   return (
     <ObjComponent
-      value={parsedValue}
+      value={filteredValue}
       prevValue={parsedPrevValue as object}
       {...props}
     ></ObjComponent>

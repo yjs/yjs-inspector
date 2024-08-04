@@ -103,3 +103,16 @@ const configAtom = atomWithStorage<Config>(
 export const useConfig = () => {
   return useAtom(configAtom);
 };
+
+const filterSetAtom = atom<Set<Y.AbstractType<unknown> | Y.Doc>>(
+  new Set<Y.AbstractType<unknown> | Y.Doc>(),
+);
+
+// const filterPredicateAtom = atom((get) => {
+//   const rule = get(filterRuleAtom);
+//   return rule;
+// });
+
+export const useFilterSet = () => {
+  return useAtom(filterSetAtom);
+};

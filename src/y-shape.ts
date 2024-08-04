@@ -123,7 +123,7 @@ export function isYShape(
 export function parseYShape(
   value: Y.AbstractType<unknown> | Y.Doc,
   { showDelta }: { showDelta: boolean } = { showDelta: true },
-): object | string {
+): unknown[] | Record<string, unknown> | string | Y.AbstractType<unknown> {
   if (isYDoc(value)) {
     const yDoc = value;
     const keys = Array.from(yDoc.share.keys());
