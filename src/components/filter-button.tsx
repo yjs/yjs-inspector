@@ -5,8 +5,7 @@ import {
 } from "@fn-sphere/filter";
 import { Filter } from "lucide-react";
 import { useState } from "react";
-import { queryFilterSet } from "../filter-set";
-import { useConfig, useFilterSet, useYDoc } from "../state";
+import { useConfig, useFilterCount, useUpdateFilterPredicate } from "../state";
 import { createFlattenFilterGroup, schema, themeSpec } from "./filter-sphere";
 import { Button } from "./ui/button";
 import {
@@ -21,14 +20,13 @@ import {
 export function FilterButton() {
   const [config] = useConfig();
   const [open, setOpen] = useState(false);
-  const [yDoc] = useYDoc();
-  const [, setFilterSet] = useFilterSet();
+  const updateFilterPredicate = useUpdateFilterPredicate();
+  const countOfFilterData = useFilterCount();
   const { context, getPredicate } = useFilterSphere({
     schema,
     defaultRule: createFlattenFilterGroup(),
   });
-  const [countOfRule, setCountOfRule] = useState(0);
-
+  
   const handleClick = () => {
     setOpen(true);
     return;
@@ -36,17 +34,7 @@ export function FilterButton() {
 
   const updateFilter = () => {
     const predicate = getPredicate();
-    let count = 0;
-    const filterSet = queryFilterSet(yDoc, (data) => {
-      console.log("data", data);
-      const ret = predicate(data);
-      if (ret) {
-        count++;
-      }
-      return ret;
-    });
-    setCountOfRule(count);
-    setFilterSet(filterSet);
+    updateFilterPredicate({ fn: predicate });
   };
 
   return (
@@ -67,7 +55,7 @@ export function FilterButton() {
           onClick={handleClick}
         >
           <Filter className="mr-2 h-4 w-4" />
-          Filter {countOfRule > 0 ? `(${countOfRule})` : ""}
+          Filter {countOfFilterData > 0 ? `(${countOfFilterData})` : ""}
         </Button>
         <FilterDialog
           onConfirm={() => {
