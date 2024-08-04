@@ -22,7 +22,7 @@ export function FilterButton() {
   const [open, setOpen] = useState(false);
   const updateFilterPredicate = useUpdateFilterPredicate();
   const countOfFilterData = useFilterCount();
-  const { context, getPredicate } = useFilterSphere({
+  const { getPredicate, reset, context } = useFilterSphere({
     schema,
     defaultRule: createFlattenFilterGroup(),
   });
@@ -62,13 +62,22 @@ export function FilterButton() {
             setOpen(false);
             updateFilter();
           }}
+onReset={() => {
+            reset();
+          }}
         />
       </Dialog>
     </FilterSphereProvider>
   );
 }
 
-function FilterDialog({ onConfirm }: { onConfirm: () => void }) {
+function FilterDialog({
+onConfirm,
+  onReset,
+}: {
+onConfirm: () => void;
+  onReset: () => void;
+}) {
   return (
     <DialogContent>
       <DialogHeader>
@@ -79,6 +88,14 @@ function FilterDialog({ onConfirm }: { onConfirm: () => void }) {
         <FilterBuilder />
       </div>
       <DialogFooter>
+<Button
+          variant="secondary"
+          onClick={() => {
+            onReset();
+          }}
+        >
+          Reset
+        </Button>
         <Button
           onClick={() => {
             onConfirm();
