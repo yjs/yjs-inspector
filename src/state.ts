@@ -1,7 +1,9 @@
-import { atom, useAtom, useAtomValue } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useEffect, useState } from "react";
 import * as Y from "yjs";
+import { YShapeItem } from "./components/filter-sphere";
+import { queryFilterSet } from "./filter-set";
 
 const TRACK_ALL_ORIGINS = Symbol();
 
@@ -104,15 +106,41 @@ export const useConfig = () => {
   return useAtom(configAtom);
 };
 
-const filterSetAtom = atom<Set<Y.AbstractType<unknown> | Y.Doc>>(
-  new Set<Y.AbstractType<unknown> | Y.Doc>(),
-);
+const filterPredicateAtom = atom<{ fn: (data: YShapeItem) => boolean }>({
+  fn: () => true,
+});
 
-// const filterPredicateAtom = atom((get) => {
-//   const rule = get(filterRuleAtom);
-//   return rule;
-// });
+export const useUpdateFilterPredicate = () => {
+  const set = useSetAtom(filterPredicateAtom);
+  return set;
+};
+
+const filterSetAtom = atom((get) => {
+  const yDoc = get(yDocAtom);
+  const predicate = get(filterPredicateAtom).fn;
+  let count = 0;
+  const filterSet = queryFilterSet(yDoc, (data) => {
+    const ret = predicate(data);
+    if (ret) {
+      count++;
+    }
+    return ret;
+  });
+  return { filterSet, count };
+});
 
 export const useFilterSet = () => {
-  return useAtom(filterSetAtom);
+  const [data] = useAtom(filterSetAtom);
+  return data.filterSet;
+};
+
+export const useFilterCount = () => {
+  const [data] = useAtom(filterSetAtom);
+  return data.count;
+};
+
+export const useIsFilterEnable = () => {
+  const set = useFilterSet();
+  const [config] = useAtom(configAtom);
+  return config.parseYDoc && set.size > 0;
 };
