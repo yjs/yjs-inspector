@@ -53,7 +53,7 @@ const componentsSpec = {
     );
     return <Input className="min-w-32" onChange={handleChange} {...props} />;
   },
-  Select: ({ value, onChange, options = [] }) => {
+  Select: ({ value, onChange, options = [], className, disabled }) => {
     const selectedIdx = options.findIndex((option) => option.value === value);
     const handleChange = useCallback(
       (value: string) => {
@@ -63,9 +63,13 @@ const componentsSpec = {
       [options, onChange],
     );
     return (
-      <Select value={String(selectedIdx)} onValueChange={handleChange}>
+      <Select
+        value={String(selectedIdx)}
+        onValueChange={handleChange}
+        disabled={disabled}
+      >
         <SelectTrigger>
-          <SelectValue placeholder="Theme" />
+          <SelectValue className={className} />
         </SelectTrigger>
         <SelectContent>
           {options?.map((option, index) => (
