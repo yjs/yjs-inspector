@@ -110,6 +110,17 @@ function FilterDialog({
           Confirm
         </Button>
       </DialogFooter>
+      <span className="absolute bottom-2 left-2 text-xs text-muted-foreground opacity-70">
+        Powered by&nbsp;
+        <a
+          href="https://www.npmjs.com/package/@fn-sphere/filter"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          Filter Sphere
+        </a>
+      </span>
     </DialogContent>
   );
 }
