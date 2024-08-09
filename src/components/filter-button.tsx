@@ -26,7 +26,7 @@ export function FilterButton() {
     schema,
     defaultRule: createFlattenFilterGroup(),
   });
-  
+
   const handleClick = () => {
     setOpen(true);
     return;
@@ -62,7 +62,7 @@ export function FilterButton() {
             setOpen(false);
             updateFilter();
           }}
-onReset={() => {
+          onReset={() => {
             reset();
           }}
         />
@@ -72,10 +72,10 @@ onReset={() => {
 }
 
 function FilterDialog({
-onConfirm,
+  onConfirm,
   onReset,
 }: {
-onConfirm: () => void;
+  onConfirm: () => void;
   onReset: () => void;
 }) {
   return (
@@ -88,7 +88,7 @@ onConfirm: () => void;
         <FilterBuilder />
       </div>
       <DialogFooter>
-<Button
+        <Button
           variant="secondary"
           onClick={() => {
             onReset();
