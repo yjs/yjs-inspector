@@ -161,7 +161,28 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
 
 const templatesSpec = {
   SingleFilter: SingleFilterView,
-  FilterGroupContainer: ({ children }) => <div>{children}</div>,
+  FilterGroupContainer: ({ children }) => (
+    <div className="flex flex-col items-start">{children}</div>
+  ),
+  RuleJoiner: ({ joinBetween: [before, after], parent }) => {
+    const op = parent.op === "and" ? "And" : "Or";
+    if (before.type === "Filter" && after.type === "Filter") {
+      return (
+        <div className="flex flex-col items-center justify-center">
+          <div className="h-3 w-0.5 rounded-md bg-accent" />
+          <Button variant="outline" size="sm" disabled>
+            {op}
+          </Button>
+          <div className="h-3 w-0.5 rounded-md bg-accent" />
+        </div>
+      );
+    }
+    return (
+      <Button variant="outline" size="sm" disabled className="my-4">
+        {op}
+      </Button>
+    );
+  },
 } satisfies Partial<ThemeSpec["templates"]>;
 
 export const themeSpec: FilterThemeInput = {
