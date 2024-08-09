@@ -98,20 +98,30 @@ export const createFlattenFilterGroup = () =>
     conditions: [
       createFilterGroup({
         op: "and",
-        conditions: [createSingleFilter()],
+        conditions: [
+          createSingleFilter({
+            name: "Equals",
+            path: ["type"],
+          }),
+        ],
       }),
     ],
   });
 
 const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
   const {
-    ruleState: { isLastRule, isValid },
+    ruleState: { isLastRule, isValid, parentGroup },
     removeRule,
     appendRule,
   } = useFilterRule(rule);
   const { numberOfRules, getRootRule, updateRootRule } = useRootRule();
   const { Button: ButtonView } = useView("components");
   const { FieldSelect, FilterSelect, FilterDataInput } = useView("templates");
+  const rootRule = getRootRule();
+
+  const isLastRuleInGroup =
+    isLastRule &&
+    rootRule.conditions[rootRule.conditions.length - 1]?.id === parentGroup.id;
 
   return (
     <div className="flex items-center gap-2">
@@ -126,10 +136,9 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
       >
         And
       </ButtonView>
-      {isLastRule && (
+      {isLastRuleInGroup && (
         <ButtonView
           onClick={() => {
-            const rootRule = getRootRule();
             rootRule.conditions.push(
               createFilterGroup({
                 op: "and",
