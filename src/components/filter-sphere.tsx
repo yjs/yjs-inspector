@@ -22,19 +22,24 @@ import {
 } from "./ui/select";
 
 export const schema = z.object({
-  path: z.string().describe("Path"),
   type: z
     .union([
-      z.literal("YDoc"),
+      z.literal("YText"),
       z.literal("YMap"),
       z.literal("YArray"),
-      z.literal("YText"),
       z.literal("YXmlElement"),
       z.literal("YXmlFragment"),
       z.literal("YAbstractType"),
+      z.literal("YDoc"),
+      z.literal("Object"),
+      z.literal("Boolean"),
+      z.literal("String"),
+      z.literal("Number"),
+      z.literal("Uint8Array"),
     ])
     .describe("Type"),
   key: z.string().describe("Key"),
+  path: z.string().describe("Path"),
   value: z.unknown(),
 });
 
