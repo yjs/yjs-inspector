@@ -2,7 +2,7 @@ import { JsonViewer, Path } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
 import { useEffect, useState } from "react";
 import { yDataType } from "../data-types";
-import { useConfig, useYDoc } from "../state";
+import { useConfig, useFilterMap, useIsFilterEnable, useYDoc } from "../state";
 import { getYTypeFromPath, isYArray, isYDoc, isYMap } from "../y-shape";
 import { AddDataDialog } from "./add-data-dialog";
 import { DeleteDialog } from "./delete-dialog";
@@ -17,6 +17,11 @@ export function PreviewPanel() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [path, setPath] = useState<Path>([]);
   const [target, setTarget] = useState<unknown>(null);
+
+  const filterMap = useFilterMap();
+  const filterEnable = useIsFilterEnable();
+  const inspectDepth = filterEnable ? 1 : 3;
+  const jsonViewerValue = filterEnable ? filterMap : yDoc;
 
   const [, setCount] = useState(0);
   useEffect(() => {
@@ -54,7 +59,7 @@ export function PreviewPanel() {
         {/* See https://viewer.textea.io/apis */}
         <JsonViewer
           className="p-2"
-          value={yDoc}
+          value={jsonViewerValue}
           // editable={true}
           enableAdd={(_, value) => {
             return (
@@ -88,7 +93,7 @@ export function PreviewPanel() {
           }}
           displaySize={config.showSize}
           theme={resolvedTheme}
-          defaultInspectDepth={2}
+          defaultInspectDepth={inspectDepth}
           valueTypes={[yDataType]}
         />
       </div>

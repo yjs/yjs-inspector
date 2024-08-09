@@ -5,7 +5,12 @@ import {
 } from "@fn-sphere/filter";
 import { Filter } from "lucide-react";
 import { useState } from "react";
-import { useConfig, useFilterCount, useUpdateFilterPredicate } from "../state";
+import {
+  useConfig,
+  useFilterCount,
+  useIsFilterEnable,
+  useUpdateFilterPredicate,
+} from "../state";
 import { createFlattenFilterGroup, schema, themeSpec } from "./filter-sphere";
 import { Button } from "./ui/button";
 import {
@@ -21,6 +26,7 @@ export function FilterButton() {
   const [config] = useConfig();
   const [open, setOpen] = useState(false);
   const updateFilterPredicate = useUpdateFilterPredicate();
+  const filterEnable = useIsFilterEnable();
   const countOfFilterData = useFilterCount();
   const { getPredicate, reset, context } = useFilterSphere({
     schema,
@@ -55,7 +61,7 @@ export function FilterButton() {
           onClick={handleClick}
         >
           <Filter className="mr-2 h-4 w-4" />
-          Filter {countOfFilterData > 0 ? `(${countOfFilterData})` : ""}
+          Filter {filterEnable ? `(${countOfFilterData})` : ""}
         </Button>
         <FilterDialog
           onConfirm={() => {

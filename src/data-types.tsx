@@ -8,8 +8,7 @@ import { ComponentType } from "react";
 import * as Y from "yjs";
 import { Badge } from "./components/ui/badge";
 import { toast } from "./components/ui/use-toast";
-import { removeMismatchedValues } from "./filter-set";
-import { useConfig, useFilterSet, useIsFilterEnable } from "./state";
+import { useConfig } from "./state";
 import { getYTypeName, isYShape, parseYShape } from "./y-shape";
 
 const TypeLabel = ({ value }: { value: unknown }) => {
@@ -85,8 +84,6 @@ const YTypeComponent: ComponentType<DataItemProps<any>> = ({
   const StrComponent = stringType.Component!;
   const ObjComponent = objectType.Component!;
   const [config] = useConfig();
-  const filterSet = useFilterSet();
-  const isFilterEnable = useIsFilterEnable();
 
   if (!config.parseYDoc) {
     if (typeof value === "string") {
@@ -117,16 +114,9 @@ const YTypeComponent: ComponentType<DataItemProps<any>> = ({
     );
   }
 
-  const filteredValue = isFilterEnable
-    ? removeMismatchedValues(parsedValue, filterSet)
-    : parsedValue;
-  if (!filteredValue) {
-    return null;
-  }
-
   return (
     <ObjComponent
-      value={filteredValue}
+      value={parsedValue}
       prevValue={parsedPrevValue as object}
       {...props}
     ></ObjComponent>
