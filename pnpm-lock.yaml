@@ -15,8 +15,8 @@ importers:
         specifier: ^11.13.0
         version: 11.13.0(@emotion/react@11.13.0(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
       '@fn-sphere/filter':
-        specifier: ^0.3.2
-        version: 0.3.2(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)
+        specifier: ^0.4.0
+        version: 0.4.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)
       '@mui/material':
         specifier: ^5.16.6
         version: 5.16.6(@emotion/react@11.13.0(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.0(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -486,13 +486,13 @@ packages:
   '@floating-ui/utils@0.2.2':
     resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
 
-  '@fn-sphere/core@0.3.2':
-    resolution: {integrity: sha512-WuHqpOaBtlyPA3GirU+YNrXOcnfR5iCbS4k4gvlw8ZiQOXX2pVkaHB2bvpNAnv0uynqCdtrDOiPgPGzWs8Cc6w==}
+  '@fn-sphere/core@0.4.0':
+    resolution: {integrity: sha512-r0OqUQMPpGkhOoVhWI8lKCzjHLs8F/2+qW85mGZBqyO/9Yvatavmg6D2js/NxGP2Tp9wU5/TRmmZGWMKrUYYEg==}
     peerDependencies:
       zod: ^3.0.0
 
-  '@fn-sphere/filter@0.3.2':
-    resolution: {integrity: sha512-7VPvzxnx0kUhcZDBwTz8Oi5Ly3txM6dH65CPgxhM1Y+9Tg23DGJbTrcUTWbYPslnlWfpuiYPF0C6ORdguIVjSA==}
+  '@fn-sphere/filter@0.4.0':
+    resolution: {integrity: sha512-hkCwO2ISGD1kgf5Do0xLY6TtI4VqTFpOv0ccJJaZ6Djcj4LFkeqnrvuh+5cCExsxNNymWeavaNgi1C02+rrRrg==}
     peerDependencies:
       '@types/react': ^17.0.0 || ^18.0.0
       react: ^17.0.0 || ^18.0.0
@@ -2870,14 +2870,14 @@ snapshots:
 
   '@floating-ui/utils@0.2.2': {}
 
-  '@fn-sphere/core@0.3.2(zod@3.23.8)':
+  '@fn-sphere/core@0.4.0(zod@3.23.8)':
     dependencies:
       zod: 3.23.8
       zod-compare: 0.3.1(zod@3.23.8)
 
-  '@fn-sphere/filter@0.3.2(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)':
+  '@fn-sphere/filter@0.4.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)':
     dependencies:
-      '@fn-sphere/core': 0.3.2(zod@3.23.8)
+      '@fn-sphere/core': 0.4.0(zod@3.23.8)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       zod: 3.23.8

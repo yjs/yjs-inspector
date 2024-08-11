@@ -15,7 +15,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "@fn-sphere/filter": "^0.3.2",
+    "@fn-sphere/filter": "^0.4.0",
     "@mui/material": "^5.16.6",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
