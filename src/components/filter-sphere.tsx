@@ -1,7 +1,7 @@
 import {
   createFilterGroup,
+  createFilterTheme,
   createSingleFilter,
-  FilterThemeInput,
   SingleFilter,
   ThemeSpec,
   useFilterRule,
@@ -194,7 +194,7 @@ const templatesSpec = {
   },
 } satisfies Partial<ThemeSpec["templates"]>;
 
-export const themeSpec: FilterThemeInput = {
+export const themeSpec = createFilterTheme({
   components: componentsSpec,
   templates: templatesSpec,
-};
+});

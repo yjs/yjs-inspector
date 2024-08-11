@@ -2,7 +2,7 @@ import { JsonViewer, Path } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
 import { useEffect, useState } from "react";
 import { yDataType } from "../data-types";
-import { useConfig, useFilterMap, useIsFilterEnable, useYDoc } from "../state";
+import { useConfig, useFilterMap, useIsFilterEnabled, useYDoc } from "../state";
 import { getYTypeFromPath, isYArray, isYDoc, isYMap } from "../y-shape";
 import { AddDataDialog } from "./add-data-dialog";
 import { DeleteDialog } from "./delete-dialog";
@@ -19,7 +19,7 @@ export function PreviewPanel() {
   const [target, setTarget] = useState<unknown>(null);
 
   const filterMap = useFilterMap();
-  const filterEnable = useIsFilterEnable();
+  const filterEnable = useIsFilterEnabled();
   const inspectDepth = filterEnable ? 1 : 3;
   const jsonViewerValue = filterEnable ? filterMap : yDoc;
 

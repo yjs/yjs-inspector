@@ -7,8 +7,9 @@ import { Filter } from "lucide-react";
 import { useState } from "react";
 import {
   useConfig,
-  useFilterCount,
-  useIsFilterEnable,
+  useFilterDataCount,
+  useIsFilterEnabled,
+  useSetHasValidFilterRule,
   useUpdateFilterPredicate,
 } from "../state";
 import { createFlattenFilterGroup, schema, themeSpec } from "./filter-sphere";
@@ -26,12 +27,13 @@ export function FilterButton() {
   const [config] = useConfig();
   const [open, setOpen] = useState(false);
   const updateFilterPredicate = useUpdateFilterPredicate();
-  const filterEnable = useIsFilterEnable();
-  const countOfFilterData = useFilterCount();
-  const { getPredicate, reset, context } = useFilterSphere({
+  const { predicate, validRuleCount, reset, context } = useFilterSphere({
     schema,
     defaultRule: createFlattenFilterGroup(),
   });
+  const isFilterEnabled = useIsFilterEnabled();
+  const setHasValidFilterRule = useSetHasValidFilterRule();
+  const countOfFilterData = useFilterDataCount();
 
   const handleClick = () => {
     setOpen(true);
@@ -39,8 +41,8 @@ export function FilterButton() {
   };
 
   const updateFilter = () => {
-    const predicate = getPredicate();
     updateFilterPredicate({ fn: predicate });
+    setHasValidFilterRule(validRuleCount > 0);
   };
 
   return (
@@ -56,12 +58,12 @@ export function FilterButton() {
         }}
       >
         <Button
-          variant="secondary"
+          variant={isFilterEnabled ? "default" : "secondary"}
           disabled={!config.parseYDoc}
           onClick={handleClick}
         >
           <Filter className="mr-2 h-4 w-4" />
-          Filter {filterEnable ? `(${countOfFilterData})` : ""}
+          Filter {isFilterEnabled ? `(${countOfFilterData})` : ""}
         </Button>
         <FilterDialog
           onConfirm={() => {
