@@ -116,29 +116,38 @@ export const useUpdateFilterPredicate = () => {
   return set;
 };
 
+const hasValidFilterRuleAtom = atom(false);
+
 const filteredYDocAtom = atom((get) => {
-  const yDoc = get(yDocAtom);
-  const predicate = get(filterPredicateAtom).fn;
-  if (predicate === falseFn) {
+  const hasValidFilterRule = get(hasValidFilterRuleAtom);
+  if (!hasValidFilterRule) {
     return {};
   }
+  const yDoc = get(yDocAtom);
+  const predicate = get(filterPredicateAtom).fn;
   const filterMap = filterYDoc(yDoc, predicate);
   return filterMap;
 });
 
-export const useFilterMap = () => {
-  const [data] = useAtom(filteredYDocAtom);
-  return data;
-};
-
-export const useFilterCount = () => {
-  const [data] = useAtom(filteredYDocAtom);
+const filterCountAtom = atom((get) => {
+  const data = get(filteredYDocAtom);
   return Object.keys(data).length;
+});
+
+export const useSetHasValidFilterRule = () => {
+  return useSetAtom(hasValidFilterRuleAtom);
 };
 
-export const useIsFilterEnable = () => {
-  const count = useFilterCount();
-  const [config] = useAtom(configAtom);
-  // Fix use number of filter rules
-  return config.parseYDoc && count > 0;
+export const useFilterMap = () => {
+  return useAtomValue(filteredYDocAtom);
+};
+
+export const useFilterDataCount = () => {
+  return useAtomValue(filterCountAtom);
+};
+
+export const useIsFilterEnabled = () => {
+  const hasValidFilterRule = useAtomValue(hasValidFilterRuleAtom);
+  const config = useAtomValue(configAtom);
+  return config.parseYDoc && hasValidFilterRule;
 };
