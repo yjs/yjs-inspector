@@ -1,6 +1,6 @@
 import { BlocksuiteWebsocketProvider } from "@/providers/blocksuite/provider";
 import { WebSocketConnectProvider } from "@/providers/websocket";
-import { RocketIcon } from "lucide-react";
+import { RocketIcon, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 import * as Y from "yjs";
 import { ConnectProvider } from "../providers/types";
@@ -191,6 +191,17 @@ export function ConnectDialog({
             Create a new YDoc before connecting
           </Label>
         </div>
+
+        {!needCreateNewDoc && (
+          <Alert variant="destructive">
+            <TriangleAlert className="h-4 w-4" />
+            <AlertTitle>Caution!</AlertTitle>
+            <AlertDescription>
+              This may contaminate the remote YDoc. Make sure you know what you
+              are doing.
+            </AlertDescription>
+          </Alert>
+        )}
 
         {officialDemo && (
           <Alert>
