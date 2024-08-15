@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@blocksuite/sync':
+        specifier: ^0.16.0
+        version: 0.16.0(yjs@13.6.18)
       '@emotion/react':
         specifier: ^11.13.0
         version: 11.13.0(@types/react@18.3.3)(react@18.3.1)
@@ -257,6 +260,14 @@ packages:
   '@babel/types@7.24.9':
     resolution: {integrity: sha512-xm8XrMKz0IlUdocVbYJe0Z9xEgidU7msskG8BbhnTPK/HZ2z/7FP7ykqPgrUH+C+r414mNfNWam1f2vqOjqjYQ==}
     engines: {node: '>=6.9.0'}
+
+  '@blocksuite/global@0.16.0':
+    resolution: {integrity: sha512-e42EJYB4ILIioAiNoh88w42iIvRMI8APLXEaiqbrfs8QYalFCdWtPvJogzfbOHCYRMXAPB+jm1J7NBEk7QGgSQ==}
+
+  '@blocksuite/sync@0.16.0':
+    resolution: {integrity: sha512-lcEL8ZrpcQ6CVEUOiCtC2tWujcPaJDMXBfsUf9YqTahGR8T+SSFnwHEk1GbOXkWA3b/N4F/6Kq0abNGaSoTWng==}
+    peerDependencies:
+      yjs: ^13.6.15
 
   '@emotion/babel-plugin@11.12.0':
     resolution: {integrity: sha512-y2WQb+oP8Jqvvclh8Q55gLUyb7UFvgv7eJfsj7td5TToBrIUtPay2kMrZi4xjq9qw2vD0ZR5fSho0yqoFgX7Rw==}
@@ -1620,6 +1631,12 @@ packages:
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
+  idb-keyval@6.2.1:
+    resolution: {integrity: sha512-8Sb3veuYCyrZL+VBt9LJfZjLUPWVvqn8tG28VqYNFCo43KHcKuq+b4EiXGeuaLAQWL2YmyDgMp2aSpH9JHsEQg==}
+
+  idb@8.0.0:
+    resolution: {integrity: sha512-l//qvlAKGmQO31Qn7xdzagVPPaHTxXx199MhrAFuVBTPqydcPYBWjkrbv4Y0ktB+GmWOiwHl237UUOrLmQxLvw==}
+
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
@@ -1784,6 +1801,11 @@ packages:
 
   lib0@0.2.94:
     resolution: {integrity: sha512-hZ3p54jL4Wpu7IOg26uC7dnEWiMyNlUrb9KoG7+xYs45WkQwpVvKFndVq2+pqLYKe1u8Fp3+zAfZHVvTK34PvQ==}
+    engines: {node: '>=16'}
+    hasBin: true
+
+  lib0@0.2.97:
+    resolution: {integrity: sha512-Q4d1ekgvufi9FiHkkL46AhecfNjznSL9MRNoJRQ76gBHS9OqU2ArfQK0FvBpuxgWeJeNI0LVgAYMIpsGeX4gYg==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -2675,6 +2697,19 @@ snapshots:
       '@babel/helper-string-parser': 7.24.8
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
+
+  '@blocksuite/global@0.16.0':
+    dependencies:
+      lib0: 0.2.97
+      zod: 3.23.8
+
+  '@blocksuite/sync@0.16.0(yjs@13.6.18)':
+    dependencies:
+      '@blocksuite/global': 0.16.0
+      idb: 8.0.0
+      idb-keyval: 6.2.1
+      y-protocols: 1.0.6(yjs@13.6.18)
+      yjs: 13.6.18
 
   '@emotion/babel-plugin@11.12.0':
     dependencies:
@@ -4074,6 +4109,10 @@ snapshots:
     dependencies:
       react-is: 16.13.1
 
+  idb-keyval@6.2.1: {}
+
+  idb@8.0.0: {}
+
   ieee754@1.2.1:
     optional: true
 
@@ -4233,6 +4272,10 @@ snapshots:
       type-check: 0.4.0
 
   lib0@0.2.94:
+    dependencies:
+      isomorphic.js: 0.2.5
+
+  lib0@0.2.97:
     dependencies:
       isomorphic.js: 0.2.5
 

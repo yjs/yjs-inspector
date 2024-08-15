@@ -13,6 +13,7 @@
     "typeCheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@blocksuite/sync": "^0.16.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@fn-sphere/filter": "^0.4.0",
