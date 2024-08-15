@@ -75,7 +75,7 @@ export const filterYDoc = (
     const result = predicate(item);
     if (result) {
       const path = context.path.join(".");
-      if (path !== "root") {
+      if (path.length) {
         // Skip the root node
         selectedMap[path] = data;
       }
@@ -108,7 +108,7 @@ export const filterYDoc = (
   }
 
   traverseYDoc(yDoc, {
-    path: ["root"],
+    path: [],
   });
 
   return selectedMap;
