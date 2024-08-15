@@ -1,16 +1,15 @@
 import { Cable, RotateCw, Unplug } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { WebsocketProvider } from "y-websocket";
-import * as Y from "yjs";
+import { ConnectProvider } from "../providers/types";
 import { useYDoc } from "../state";
 import { ConnectDialog } from "./connect-dialog";
 import { Button } from "./ui/button";
 import { Dialog } from "./ui/dialog";
 
 export function ConnectButton() {
-  const [yDoc, setYDoc] = useYDoc();
+  const [yDoc] = useYDoc();
   const [open, setOpen] = useState(false);
-  const [provider, setProvider] = useState<WebsocketProvider>();
+  const [provider, setProvider] = useState<ConnectProvider>();
   const [connectState, setConnectState] = useState<
     "connecting" | "connected" | "disconnected"
   >("disconnected");
@@ -18,12 +17,11 @@ export function ConnectButton() {
   const disconnect = useCallback(() => {
     if (connectState === "disconnected") return;
     provider?.disconnect();
-    provider?.destroy();
     setProvider(undefined);
     setConnectState("disconnected");
   }, [connectState, provider]);
 
-  // This effect is for convenience, it is evil.
+  // This effect is for convenience, it is evil. We should add the connect logic to global state and handle it there.
   useEffect(() => {
     // Disconnect when the yDoc changes
     if (connectState === "disconnected") return;
@@ -41,28 +39,19 @@ export function ConnectButton() {
   }, [yDoc, disconnect, provider, connectState]);
 
   const onConnect = useCallback(
-    ({ doc, url, room }: { doc: Y.Doc; url: string; room: string }) => {
+    (provider: ConnectProvider) => {
       if (connectState !== "disconnected") {
         throw new Error("Should not be able to connect when already connected");
       }
-      provider?.disconnect();
-      const wsProvider = new WebsocketProvider(url, room, doc);
-      wsProvider.on("sync", (isSynced: boolean) => {
-        if (isSynced) {
-          setConnectState("connected");
-        }
-      });
-      // wsProvider.on(
-      //   "status",
-      //   ({ status }: { status: "connected" | "disconnected" | string }) => {},
-      // );
-      wsProvider.connect();
+      provider.connect();
       setConnectState("connecting");
-      setYDoc(doc);
-      setProvider(wsProvider);
+      provider.waitForSynced().then(() => {
+        setConnectState("connected");
+      });
+      setProvider(provider);
       setOpen(false);
     },
-    [connectState, provider, setYDoc],
+    [connectState],
   );
 
   const handleClick = () => {
