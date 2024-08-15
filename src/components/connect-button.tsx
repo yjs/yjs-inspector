@@ -173,17 +173,6 @@ function ConnectDialog({
   const [needCreateNewDoc, setNeedCreateNewDoc] = useState(true);
   const officialDemo = officialDemos.find((demo) => demo.value === provider);
 
-  // This effect is unnecessary, but it's convenient
-  useEffect(() => {
-    if (officialDemo) {
-      const demo = officialDemos.find((demo) => demo.value === provider);
-      if (demo) {
-        setUrl("wss://demos.yjs.dev/ws");
-        setRoom(demo.value);
-      }
-    }
-  }, [officialDemo, provider]);
-
   return (
     <DialogContent>
       <DialogHeader>
@@ -202,6 +191,14 @@ function ConnectDialog({
             value={provider}
             onValueChange={(value) => {
               setProvider(value);
+              const demo = officialDemos.find(
+                (demo) => demo.value === provider,
+              );
+              if (demo) {
+                setUrl("wss://demos.yjs.dev/ws");
+                setRoom(demo.value);
+                return;
+              }
             }}
           >
             <SelectTrigger className="col-span-3">
