@@ -37,6 +37,7 @@ const defaultUndoManager = createUndoManager(defaultYDoc);
 const undoManagerAtom = atom<Y.UndoManager>(defaultUndoManager);
 
 const yDocAtom = atom(defaultYDoc, (get, set, newDoc: Y.Doc) => {
+  if (newDoc === get(yDocAtom)) return;
   get(undoManagerAtom).destroy();
   const undoManager = createUndoManager(newDoc);
   set(undoManagerAtom, undoManager);
