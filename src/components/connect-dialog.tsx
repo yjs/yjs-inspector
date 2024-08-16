@@ -224,6 +224,7 @@ export function ConnectDialog({
       </div>
       <DialogFooter>
         <Button
+          disabled={!url || !room}
           onClick={async () => {
             const doc = needCreateNewDoc
               ? new Y.Doc({ guid: BLOCKSUITE_PLAYGROUND_DOC_GUID })
