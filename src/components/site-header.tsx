@@ -15,7 +15,7 @@ export function Header() {
           </a>
 
           <span className="hidden font-bold sm:inline-block">
-            Yjs Playground
+            Yjs Inspector
           </span>
         </div>
         {/* Placeholder for right side of header */}
@@ -31,7 +31,7 @@ export function Header() {
         <ModeToggle />
         <Button variant="ghost" size="icon" asChild>
           <a
-            href="https://github.com/yjs/yjs-playground"
+            href="https://github.com/yjs/yjs-inspector"
             target="_blank"
             rel="noopener noreferrer"
           >
