@@ -12,7 +12,12 @@ import {
   useSetHasValidFilterRule,
   useUpdateFilterPredicate,
 } from "../state";
-import { createFlattenFilterGroup, schema, themeSpec } from "./filter-sphere";
+import {
+  createFlattenFilterGroup,
+  filterFnList,
+  schema,
+  themeSpec,
+} from "./filter-sphere";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -29,6 +34,7 @@ export function FilterButton() {
   const updateFilterPredicate = useUpdateFilterPredicate();
   const { predicate, validRuleCount, reset, context } = useFilterSphere({
     schema,
+    filterFnList,
     defaultRule: createFlattenFilterGroup(),
   });
   const isFilterEnabled = useIsFilterEnabled();

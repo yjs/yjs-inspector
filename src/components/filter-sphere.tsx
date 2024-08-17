@@ -2,6 +2,8 @@ import {
   createFilterGroup,
   createFilterTheme,
   createSingleFilter,
+  defineTypedFn,
+  presetFilter,
   SingleFilter,
   ThemeSpec,
   useFilterRule,
@@ -11,6 +13,7 @@ import {
 import { CircleAlert, X } from "lucide-react";
 import { ChangeEvent, useCallback } from "react";
 import { z } from "zod";
+import { isYText, isYXmlText } from "../y-shape";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
@@ -40,10 +43,32 @@ export const schema = z.object({
     .describe("Type"),
   key: z.string().describe("Key"),
   path: z.string().describe("Path"),
-  value: z.unknown(),
+  value: z.unknown().describe("Value"),
 });
 
 export type YShapeItem = z.infer<typeof schema>;
+
+const likeFn = defineTypedFn({
+  name: "Likes",
+  define: z.function().args(z.unknown(), z.string()).returns(z.boolean()),
+  implement: (value, string) => {
+    if (typeof value === "string") {
+      return value.includes(string);
+    }
+    if (typeof value === "number") {
+      return value.toString().includes(string);
+    }
+    if (isYText(value)) {
+      return value.toString().includes(string);
+    }
+    if (isYXmlText(value)) {
+      return value.toString().includes(string);
+    }
+    return false;
+  },
+});
+
+export const filterFnList = [likeFn, ...presetFilter];
 
 const componentsSpec = {
   Button: (props) => {
