@@ -1,7 +1,7 @@
 import { Github } from "lucide-react";
 import packageJSON from "../../package.json";
 import { ModeToggle } from "./mode-toggle";
-import { Badge } from "./ui/badge";
+import { badgeVariants } from "./ui/badge";
 import { Button } from "./ui/button";
 import yjsLogo from "/yjs.png";
 
@@ -10,11 +10,7 @@ export function Header() {
     <header className="w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center gap-2">
         <div className="mr-6 flex items-center space-x-2">
-          <a
-            href="https://docs.yjs.dev/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="/">
             <img src={yjsLogo} className="mr-2 h-8 w-8" alt="Yjs logo" />
           </a>
 
@@ -24,9 +20,14 @@ export function Header() {
         </div>
         {/* Placeholder for right side of header */}
         <div className="ml-auto"></div>
-        <Badge variant="default">
+        <a
+          className={badgeVariants({ variant: "default" })}
+          href="https://docs.yjs.dev/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Yjs Version: {packageJSON.dependencies.yjs}
-        </Badge>
+        </a>
         <ModeToggle />
         <Button variant="ghost" size="icon" asChild>
           <a
