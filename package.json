@@ -29,18 +29,18 @@
     "@textea/json-viewer": "^3.4.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "jotai": "^2.9.2",
-    "lucide-react": "^0.427.0",
+    "jotai": "^2.9.3",
+    "lucide-react": "^0.428.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwind-merge": "^2.5.0",
+    "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "y-websocket": "^2.0.4",
     "yjs": "13.6.18",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^22.2.0",
+    "@types/node": "^22.4.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -53,10 +53,10 @@
     "postcss": "^8.4.41",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
-    "tailwindcss": "^3.4.9",
+    "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4",
     "unplugin-info": "^1.1.0",
-    "vite": "^5.4.0"
+    "vite": "^5.4.1"
   },
   "engines": {
     "node": ">=18.19.0"
