@@ -53,6 +53,8 @@ export function FilterButton() {
 
   return (
     <Dialog
+      // Workaround https://github.com/shadcn-ui/ui/issues/235
+      modal={false}
       open={open}
       onOpenChange={(open) => {
         setOpen(open);
@@ -93,6 +95,7 @@ function FilterDialog({
   onReset: () => void;
 }) {
   return (
+    // See https://github.com/shadcn-ui/ui/issues/16
     <DialogContent className={"max-h-[90vh] max-w-xl overflow-y-auto"}>
       <DialogHeader>
         <DialogTitle>Filter</DialogTitle>

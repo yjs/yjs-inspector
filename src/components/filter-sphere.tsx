@@ -16,6 +16,7 @@ import { z } from "zod";
 import { isYText, isYXmlText } from "../y-shape";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { MultiSelect } from "./ui/multi-select";
 import {
   Select,
   SelectContent,
@@ -109,6 +110,34 @@ const componentsSpec = {
           ))}
         </SelectContent>
       </Select>
+    );
+  },
+  MultipleSelect: ({ value = [], options = [], onChange }) => {
+    const selectedIndices = value.map((val) =>
+      String(options.findIndex((option) => option.value === val)),
+    );
+    const handleChange = useCallback(
+      (newVal: string[]) => {
+        const selectedOptions = Array.from(newVal, (option) => {
+          const index = Number(option);
+          const selectedOption = options[index];
+          if (!selectedOption) return;
+          return selectedOption.value;
+        }).filter((i) => i !== undefined);
+        onChange?.(selectedOptions);
+      },
+      [options, onChange],
+    );
+
+    return (
+      <MultiSelect
+        options={options.map((option, index) => ({
+          label: option.label,
+          value: String(index),
+        }))}
+        selected={selectedIndices}
+        onChange={handleChange}
+      />
     );
   },
 } satisfies Partial<FilterTheme["components"]>;
