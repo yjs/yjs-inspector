@@ -3,9 +3,9 @@ import {
   createFilterTheme,
   createSingleFilter,
   defineTypedFn,
+  FilterTheme,
   presetFilter,
   SingleFilter,
-  ThemeSpec,
   useFilterRule,
   useRootRule,
   useView,
@@ -98,7 +98,7 @@ const componentsSpec = {
         onValueChange={handleChange}
         disabled={disabled}
       >
-        <SelectTrigger>
+        <SelectTrigger className="min-w-24">
           <SelectValue className={className} />
         </SelectTrigger>
         <SelectContent>
@@ -111,7 +111,7 @@ const componentsSpec = {
       </Select>
     );
   },
-} satisfies Partial<ThemeSpec["components"]>;
+} satisfies Partial<FilterTheme["components"]>;
 
 export type SingleFilterRuleProps = {
   rule: SingleFilter;
@@ -217,9 +217,9 @@ const templatesSpec = {
       </Button>
     );
   },
-} satisfies Partial<ThemeSpec["templates"]>;
+} satisfies Partial<FilterTheme["templates"]>;
 
-export const themeSpec = createFilterTheme({
+export const filterTheme = createFilterTheme({
   components: componentsSpec,
   templates: templatesSpec,
 });

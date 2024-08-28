@@ -15,8 +15,8 @@ import {
 import {
   createFlattenFilterGroup,
   filterFnList,
+  filterTheme,
   schema,
-  themeSpec,
 } from "./filter-sphere";
 import { Button } from "./ui/button";
 import {
@@ -52,25 +52,25 @@ export function FilterButton() {
   };
 
   return (
-    <FilterSphereProvider theme={themeSpec} context={context}>
-      <Dialog
-        open={open}
-        onOpenChange={(open) => {
-          setOpen(open);
-          if (open) {
-            return;
-          }
-          updateFilter();
-        }}
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        setOpen(open);
+        if (open) {
+          return;
+        }
+        updateFilter();
+      }}
+    >
+      <Button
+        variant={isFilterEnabled ? "default" : "secondary"}
+        disabled={!config.parseYDoc}
+        onClick={handleClick}
       >
-        <Button
-          variant={isFilterEnabled ? "default" : "secondary"}
-          disabled={!config.parseYDoc}
-          onClick={handleClick}
-        >
-          <Filter className="mr-2 h-4 w-4" />
-          Filter {isFilterEnabled ? `(${countOfFilterData})` : ""}
-        </Button>
+        <Filter className="mr-2 h-4 w-4" />
+        Filter {isFilterEnabled ? `(${countOfFilterData})` : ""}
+      </Button>
+      <FilterSphereProvider theme={filterTheme} context={context}>
         <FilterDialog
           onConfirm={() => {
             setOpen(false);
@@ -80,8 +80,8 @@ export function FilterButton() {
             reset();
           }}
         />
-      </Dialog>
-    </FilterSphereProvider>
+      </FilterSphereProvider>
+    </Dialog>
   );
 }
 
@@ -93,7 +93,7 @@ function FilterDialog({
   onReset: () => void;
 }) {
   return (
-    <DialogContent>
+    <DialogContent className={"max-h-[90vh] max-w-xl overflow-y-auto"}>
       <DialogHeader>
         <DialogTitle>Filter</DialogTitle>
         <DialogDescription></DialogDescription>
@@ -101,7 +101,7 @@ function FilterDialog({
       <div className="grid grid-cols-4 items-center gap-4">
         <FilterBuilder />
       </div>
-      <DialogFooter>
+      <DialogFooter className="relative">
         <Button
           variant="secondary"
           onClick={() => {
@@ -117,18 +117,21 @@ function FilterDialog({
         >
           Confirm
         </Button>
-      </DialogFooter>
-      <span className="absolute bottom-2 left-2 text-xs text-muted-foreground opacity-70">
-        Powered by&nbsp;
-        <a
-          href="https://www.npmjs.com/package/@fn-sphere/filter"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:underline"
+        <span
+          className="absolute bottom-0 left-0 text-xs text-muted-foreground opacity-70"
+          style={{ marginLeft: 0 }}
         >
-          Filter Sphere
-        </a>
-      </span>
+          Powered by&nbsp;
+          <a
+            href="https://www.npmjs.com/package/@fn-sphere/filter"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            Filter Sphere
+          </a>
+        </span>
+      </DialogFooter>
     </DialogContent>
   );
 }
