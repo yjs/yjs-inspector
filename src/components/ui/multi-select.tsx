@@ -51,10 +51,15 @@ function MultiSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={`w-full min-w-32 justify-between ${selected.length > 1 ? "h-full" : "h-10"}`}
+          className={`w-32 justify-between ${selected.length > 1 ? "h-full" : "h-10"}`}
           onClick={() => setOpen(!open)}
         >
-          <p className="flex gap-1 overflow-hidden">{selected.join(", ")}</p>
+          <p className="flex gap-1 overflow-hidden">
+            {options
+              .filter((option) => selected.includes(option.value))
+              .map((option) => option.label)
+              .join(", ")}
+          </p>
           <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
