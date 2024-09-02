@@ -126,7 +126,7 @@ function FilterDialog({
         >
           Powered by&nbsp;
           <a
-            href="https://www.npmjs.com/package/@fn-sphere/filter"
+            href="https://github.com/lawvs/fn-sphere"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline"
