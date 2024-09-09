@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import * as Y from "yjs";
-import { useYDoc } from "../state";
+import { useYDoc } from "../state/index";
 import { fileToYDoc } from "../utils";
 import { toast } from "./ui/use-toast";
 

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Download } from "lucide-react";
 import * as Y from "yjs";
-import { useYDoc } from "../state";
+import { useYDoc } from "../state/index";
 import { yShapeToJSON } from "../y-shape";
 
 function downloadFile(blob: Blob, filename: string) {

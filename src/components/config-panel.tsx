@@ -1,5 +1,5 @@
 import { Redo, Undo } from "lucide-react";
-import { useConfig, useUndoManager, useYDoc } from "../state";
+import { useConfig, useUndoManager, useYDoc } from "../state/index";
 import { fileToYDoc } from "../utils";
 import { ConnectButton } from "./connect-button";
 import { ExportButton } from "./export-button";

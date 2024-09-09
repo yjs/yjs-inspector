@@ -2,7 +2,12 @@ import { JsonViewer, Path } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
 import { useEffect, useState } from "react";
 import { yDataType } from "../data-types";
-import { useConfig, useFilterMap, useIsFilterEnabled, useYDoc } from "../state";
+import {
+  useConfig,
+  useFilterMap,
+  useIsFilterEnabled,
+  useYDoc,
+} from "../state/index";
 import { getYTypeFromPath, isYArray, isYDoc, isYMap } from "../y-shape";
 import { AddDataDialog } from "./add-data-dialog";
 import { DeleteDialog } from "./delete-dialog";

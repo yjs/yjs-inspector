@@ -8,7 +8,7 @@ import { ComponentType } from "react";
 import * as Y from "yjs";
 import { Badge } from "./components/ui/badge";
 import { toast } from "./components/ui/use-toast";
-import { useConfig } from "./state";
+import { useConfig } from "./state/index";
 import { getYTypeName, isYShape, parseYShape } from "./y-shape";
 
 const TypeLabel = ({ value }: { value: unknown }) => {

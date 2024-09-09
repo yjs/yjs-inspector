@@ -4,7 +4,7 @@ import { RocketIcon, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 import * as Y from "yjs";
 import { ConnectProvider } from "../providers/types";
-import { useYDoc } from "../state";
+import { useYDoc } from "../state/index";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 import {

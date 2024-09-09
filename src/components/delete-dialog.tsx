@@ -1,5 +1,5 @@
 import { Path } from "@textea/json-viewer";
-import { useYDoc } from "../state";
+import { useYDoc } from "../state/index";
 import { getHumanReadablePath } from "../utils";
 import {
   getYTypeFromPath,

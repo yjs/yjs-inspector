@@ -1,6 +1,6 @@
 import { CloudDownload, CloudUpload, Unplug } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useDownloadListener, useUploadListener } from "../state";
+import { useDownloadListener, useUploadListener } from "../state/index";
 
 export function StatusIndicator({ className }: { className?: string }) {
   const [status, setStatus] = useState<"download" | "upload" | "none">("none");

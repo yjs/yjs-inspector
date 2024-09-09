@@ -1,7 +1,7 @@
 import { Cable, RotateCw } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { ConnectProvider } from "../providers/types";
-import { useYDoc } from "../state";
+import { useYDoc } from "../state/index";
 import { ConnectDialog } from "./connect-dialog";
 import { StatusIndicator } from "./status-indicator";
 import { Button } from "./ui/button";

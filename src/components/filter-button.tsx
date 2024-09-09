@@ -11,7 +11,7 @@ import {
   useIsFilterEnabled,
   useSetHasValidFilterRule,
   useUpdateFilterPredicate,
-} from "../state";
+} from "../state/index";
 import {
   createFlattenFilterGroup,
   filterFnList,
