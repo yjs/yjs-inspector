@@ -227,7 +227,11 @@ export function ConnectDialog({
           disabled={!url || !room}
           onClick={async () => {
             const doc = needCreateNewDoc
-              ? new Y.Doc({ guid: BLOCKSUITE_PLAYGROUND_DOC_GUID })
+              ? new Y.Doc(
+                  provider === BLOCKSUITE_NAME
+                    ? { guid: BLOCKSUITE_PLAYGROUND_DOC_GUID }
+                    : undefined,
+                )
               : yDoc;
             setYDoc(doc);
             if (provider === BLOCKSUITE_NAME) {
