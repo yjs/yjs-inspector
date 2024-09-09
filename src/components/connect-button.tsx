@@ -1,8 +1,9 @@
-import { Cable, RotateCw, Unplug } from "lucide-react";
+import { Cable, RotateCw } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { ConnectProvider } from "../providers/types";
 import { useYDoc } from "../state";
 import { ConnectDialog } from "./connect-dialog";
+import { StatusIndicator } from "./status-indicator";
 import { Button } from "./ui/button";
 import { Dialog } from "./ui/dialog";
 
@@ -79,7 +80,7 @@ export function ConnectButton() {
     return (
       <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
         <Button variant="secondary" onClick={handleClick}>
-          <Unplug className="mr-2 h-4 w-4" />
+          <StatusIndicator className="mr-2 h-4 w-4" />
           Disconnect
         </Button>
         <ConnectDialog onConnect={onConnect} />

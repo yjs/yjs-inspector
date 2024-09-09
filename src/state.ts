@@ -1,7 +1,8 @@
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { atom, Setter, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useEffect, useState } from "react";
 import * as Y from "yjs";
+import { atomWithListeners } from "./atom-with-listeners";
 import { YShapeItem } from "./components/filter-sphere";
 import { filterYDoc } from "./filter-map";
 
@@ -21,14 +22,34 @@ function createUndoManager(doc: Y.Doc) {
     undoManager.addToScope(scope);
     // undoManager.addTrackedOrigin(origin);
   };
+  // see https://github.com/yjs/yjs/blob/7422b18e87cb41ac675c17ea09dfa832253b6cd2/src/utils/UndoManager.js#L268
   doc.on("beforeTransaction", (transaction) => {
     // Try to track all origins
     // Workaround for https://github.com/yjs/yjs/issues/624
+    // @ts-expect-error backup origin
+    transaction.__origin = transaction.origin;
     transaction.origin = TRACK_ALL_ORIGINS;
     // Track all shared types before running UndoManager.afterTransactionHandler
     updateScope();
   });
   return undoManager;
+}
+
+const [uploadAtom, useUploadListener] = atomWithListeners(0);
+const [downloadAtom, useDownloadListener] = atomWithListeners(0);
+export { useDownloadListener, useUploadListener };
+
+function connectStatusIndicator(yDoc: Y.Doc, set: Setter) {
+  yDoc.on("beforeTransaction", (tr) => {
+    // Cation: The origin will be overwritten by the UndoManager to `TRACK_ALL_ORIGINS`
+    const origin = tr.origin;
+    console.log("origin", origin, tr);
+    if (origin === null || origin instanceof Y.UndoManager) {
+      set(uploadAtom, (prev) => prev + 1);
+    } else {
+      set(downloadAtom, (prev) => prev + 1);
+    }
+  });
 }
 
 const defaultYDoc = new Y.Doc();
@@ -39,6 +60,7 @@ const undoManagerAtom = atom<Y.UndoManager>(defaultUndoManager);
 const yDocAtom = atom(defaultYDoc, (get, set, newDoc: Y.Doc) => {
   if (newDoc === get(yDocAtom)) return;
   get(undoManagerAtom).destroy();
+  connectStatusIndicator(newDoc, set);
   const undoManager = createUndoManager(newDoc);
   set(undoManagerAtom, undoManager);
   get(yDocAtom).destroy();
