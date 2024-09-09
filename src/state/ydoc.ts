@@ -11,7 +11,6 @@ function connectStatusIndicator(yDoc: Y.Doc, set: Setter) {
   yDoc.on("beforeTransaction", (tr) => {
     // Cation: The origin will be overwritten by the UndoManager to `TRACK_ALL_ORIGINS`
     const origin = tr.origin;
-    console.log("origin", origin, tr);
     if (origin === null || origin instanceof Y.UndoManager) {
       set(uploadAtom, (prev) => prev + 1);
     } else {
