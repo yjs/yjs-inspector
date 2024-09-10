@@ -1,6 +1,7 @@
 import { JsonViewer, Path } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
 import { useEffect, useState } from "react";
+import * as Y from "yjs";
 import { yDataType } from "../data-types";
 import {
   useConfig,
@@ -13,6 +14,30 @@ import { AddDataDialog } from "./add-data-dialog";
 import { DeleteDialog } from "./delete-dialog";
 import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
+
+function useYDocUpdates(yDoc: Y.Doc) {
+  const [, setCount] = useState(0);
+
+  useEffect(() => {
+    const callback = () => {
+      // Force re-render
+      setCount((count) => count + 1);
+    };
+    yDoc.on("update", callback);
+    yDoc.on("subdocs", ({ added }) => {
+      for (const subDoc of added) {
+        subDoc.on("update", callback);
+      }
+    });
+    return () => {
+      yDoc.off("update", callback);
+      yDoc.off("subdocs", callback);
+      yDoc.subdocs.forEach((subDoc) => {
+        subDoc.off("update", callback);
+      });
+    };
+  }, [yDoc]);
+}
 
 export function PreviewPanel() {
   const { resolvedTheme } = useTheme();
@@ -28,25 +53,7 @@ export function PreviewPanel() {
   const inspectDepth = filterEnable ? 1 : 3;
   const jsonViewerValue = filterEnable ? filterMap : yDoc;
 
-  const [, setCount] = useState(0);
-  useEffect(() => {
-    if (!yDoc) {
-      return;
-    }
-    const callback = () => {
-      // Force re-render
-      setCount((count) => count + 1);
-    };
-    yDoc.on("update", callback);
-    yDoc.on("subdocs", ({ added }) => {
-      for (const subDoc of added) {
-        subDoc.on("update", callback);
-      }
-    });
-    return () => {
-      yDoc.off("update", callback);
-    };
-  }, [yDoc]);
+  useYDocUpdates(yDoc);
 
   return (
     <div className="flex flex-1 flex-col">
