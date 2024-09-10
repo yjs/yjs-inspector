@@ -38,6 +38,11 @@ export function PreviewPanel() {
       setCount((count) => count + 1);
     };
     yDoc.on("update", callback);
+    yDoc.on("subdocs", ({ added }) => {
+      for (const subDoc of added) {
+        subDoc.on("update", callback);
+      }
+    });
     return () => {
       yDoc.off("update", callback);
     };
