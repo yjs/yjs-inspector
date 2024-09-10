@@ -9,25 +9,34 @@ export function createUndoManager(doc: Y.Doc) {
     doc,
     trackedOrigins: new Set([TRACK_ALL_ORIGINS]),
   });
-  const updateScope = () => {
+  const updateScope = (d: Y.Doc) => {
     // The UndoManager can only track shared types that are created
     // See https://discuss.yjs.dev/t/global-document-undo-manager/2555
-    const keys = Array.from(doc.share.keys());
+    const keys = Array.from(d.share.keys());
     if (!keys.length) return;
-    const scope = keys.map((key) => doc.get(key));
+    const scope = keys.map((key) => d.get(key));
     undoManager.addToScope(scope);
     // undoManager.addTrackedOrigin(origin);
   };
-  // see https://github.com/yjs/yjs/blob/7422b18e87cb41ac675c17ea09dfa832253b6cd2/src/utils/UndoManager.js#L268
-  doc.on("beforeTransaction", (transaction) => {
+  const beforeTransactionCallback = (transaction: Y.Transaction) => {
     // Try to track all origins
     // Workaround for https://github.com/yjs/yjs/issues/624
     // @ts-expect-error backup origin
     transaction.__origin = transaction.origin;
     transaction.origin = TRACK_ALL_ORIGINS;
     // Track all shared types before running UndoManager.afterTransactionHandler
-    updateScope();
-  });
+    updateScope(transaction.doc);
+  };
+
+  // see https://github.com/yjs/yjs/blob/7422b18e87cb41ac675c17ea09dfa832253b6cd2/src/utils/UndoManager.js#L268
+  doc.on("beforeTransaction", beforeTransactionCallback);
+
+  // Fix undo manager not tracking subdocs
+  // doc.on("subdocs", ({ added }) => {
+  //   for (const subDoc of added) {
+  //     subDoc.on("beforeTransaction", beforeTransactionCallback);
+  //   }
+  // });
   return undoManager;
 }
 
