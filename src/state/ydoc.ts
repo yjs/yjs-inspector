@@ -19,8 +19,8 @@ function connectStatusIndicator(yDoc: Y.Doc, set: Setter) {
   });
 
   yDoc.on("subdocs", ({ added }) => {
-    for (const doc of added) {
-      doc.on("beforeTransaction", (tr) => {
+    for (const subDoc of added) {
+      subDoc.on("beforeTransaction", (tr) => {
         const origin = tr.origin;
         if (origin === null || origin instanceof Y.UndoManager) {
           set(uploadAtom, (prev) => prev + 1);

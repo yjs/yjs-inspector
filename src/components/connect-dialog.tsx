@@ -147,6 +147,9 @@ export function ConnectDialog({
                 <SelectItem value="liveblocks" disabled>
                   LiveblocksProvider (coming soon)
                 </SelectItem>
+                <SelectItem value="hocuspocus" disabled>
+                  HocuspocusProvider (coming soon)
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
