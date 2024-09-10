@@ -17,6 +17,19 @@ function connectStatusIndicator(yDoc: Y.Doc, set: Setter) {
       set(downloadAtom, (prev) => prev + 1);
     }
   });
+
+  yDoc.on("subdocs", ({ added }) => {
+    for (const doc of added) {
+      doc.on("beforeTransaction", (tr) => {
+        const origin = tr.origin;
+        if (origin === null || origin instanceof Y.UndoManager) {
+          set(uploadAtom, (prev) => prev + 1);
+        } else {
+          set(downloadAtom, (prev) => prev + 1);
+        }
+      });
+    }
+  });
 }
 
 const defaultYDoc = new Y.Doc();
