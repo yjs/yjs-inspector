@@ -146,18 +146,19 @@ export type SingleFilterRuleProps = {
   rule: SingleFilter;
 };
 
+const createFilterWithPreset = () =>
+  createSingleFilter({
+    name: "equals",
+    path: ["type"],
+  });
+
 export const createFlattenFilterGroup = () =>
   createFilterGroup({
     op: "or",
     conditions: [
       createFilterGroup({
         op: "and",
-        conditions: [
-          createSingleFilter({
-            name: "Equals",
-            path: ["type"],
-          }),
-        ],
+        conditions: [createFilterWithPreset()],
       }),
     ],
   });
@@ -168,10 +169,9 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
     removeRule,
     appendRule,
   } = useFilterRule(rule);
-  const { numberOfRules, getRootRule, updateRootRule } = useRootRule();
+  const { rootRule, numberOfRules, setRootRule } = useRootRule();
   const { Button: ButtonView } = useView("components");
   const { FieldSelect, FilterSelect, FilterDataInput } = useView("templates");
-  const rootRule = getRootRule();
 
   const isLastRuleInGroup =
     isLastRule &&
@@ -196,10 +196,10 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
             rootRule.conditions.push(
               createFilterGroup({
                 op: "and",
-                conditions: [createSingleFilter()],
+                conditions: [createFilterWithPreset()],
               }),
             );
-            updateRootRule(rootRule);
+            setRootRule(rootRule);
           }}
         >
           Or
