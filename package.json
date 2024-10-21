@@ -13,7 +13,7 @@
     "typeCheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@blocksuite/sync": "^0.17.18",
+    "@blocksuite/sync": "^0.17.19",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fn-sphere/filter": "^0.6.0",
@@ -31,34 +31,34 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
-    "jotai": "^2.10.0",
-    "lucide-react": "^0.452.0",
+    "jotai": "^2.10.1",
+    "lucide-react": "^0.453.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwind-merge": "^2.5.3",
+    "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "y-websocket": "^2.0.4",
     "yjs": "13.6.20",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^22.7.5",
+    "@types/node": "^22.7.7",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "@vitejs/plugin-react": "^4.3.2",
+    "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.12",
+    "eslint-plugin-react-refresh": "^0.4.13",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
-    "tailwindcss": "^3.4.13",
+    "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3",
     "unplugin-info": "^1.2.1",
-    "vite": "^5.4.8"
+    "vite": "^5.4.9"
   },
   "engines": {
     "node": ">=18.19.0"
