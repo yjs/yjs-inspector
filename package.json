@@ -13,7 +13,7 @@
     "typeCheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@blocksuite/sync": "^0.17.25",
+    "@blocksuite/sync": "^0.17.28",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fn-sphere/filter": "^0.6.0",
@@ -32,7 +32,7 @@
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
     "jotai": "^2.10.1",
-    "lucide-react": "^0.454.0",
+    "lucide-react": "^0.456.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwind-merge": "^2.5.4",
@@ -42,7 +42,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^22.8.7",
+    "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -52,7 +52,7 @@
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
-    "postcss": "^8.4.47",
+    "postcss": "^8.4.48",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "tailwindcss": "^3.4.14",
