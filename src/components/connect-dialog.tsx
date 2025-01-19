@@ -28,8 +28,8 @@ import {
 import { Switch } from "./ui/switch";
 
 // Hardcoded in the playground of blocksuite
-// See https://github.com/toeverything/blocksuite/blob/9203e1c39651e40d33b1d724ef0261bdcabf6ca8/packages/playground/apps/default/utils/collection.ts#L65
-const BLOCKSUITE_PLAYGROUND_DOC_GUID = "quickEdgeless";
+// See https://github.com/toeverything/blocksuite/blob/db6e9d278e4d821e1d5aea912681e8fd1692b39e/packages/playground/apps/default/utils/collection.ts#L66
+const BLOCKSUITE_PLAYGROUND_DOC_GUID = "collabPlayground";
 const BLOCKSUITE_NAME = "Blocksuite Playground";
 
 const officialDemos = [
