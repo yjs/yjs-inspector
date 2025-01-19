@@ -22,7 +22,7 @@ export class WebSocketConnectProvider implements ConnectProvider {
 
   async waitForSynced() {
     return new Promise<void>((resolve) => {
-      this.provider.once("synced", () => resolve());
+      this.provider.once("sync", () => resolve());
     });
   }
 }
