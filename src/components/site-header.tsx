@@ -7,7 +7,7 @@ import yjsLogo from "/yjs.png";
 
 export function Header() {
   return (
-    <header className="w-full border-b border-border/40 bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
+    <header className="border-border/40 bg-background/95 supports-backdrop-filter:bg-background/60 w-full border-b backdrop-blur-sm">
       <div className="container flex h-14 max-w-(--breakpoint-2xl) items-center gap-2">
         <div className="mr-6 flex items-center space-x-2">
           <a href="/">

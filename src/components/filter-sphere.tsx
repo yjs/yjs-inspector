@@ -206,13 +206,13 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
         </ButtonView>
       )}
       {isValid ? null : (
-        <div className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+        <div className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
           <CircleAlert className="h-4 w-4" />
         </div>
       )}
       {numberOfRules > 1 && (
         <button
-          className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+          className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none"
           onClick={() => removeRule(true)}
         >
           <X className="h-4 w-4" />
@@ -232,11 +232,11 @@ const templatesSpec = {
     if (before.type === "Filter" && after.type === "Filter") {
       return (
         <div className="flex flex-col items-center justify-center">
-          <div className="h-3 w-0.5 rounded-md bg-accent" />
+          <div className="bg-accent h-3 w-0.5 rounded-md" />
           <Button variant="outline" size="sm" disabled>
             {op}
           </Button>
-          <div className="h-3 w-0.5 rounded-md bg-accent" />
+          <div className="bg-accent h-3 w-0.5 rounded-md" />
         </div>
       );
     }

@@ -110,11 +110,11 @@ export function AddDataDialog({
           <DialogTitle>Add YType</DialogTitle>
           <DialogDescription>
             Add a new YType to&nbsp;
-            <code className="rounded-md bg-secondary p-1 font-mono text-sm">
+            <code className="bg-secondary rounded-md p-1 font-mono text-sm">
               {isYShape(target) ? getYTypeName(target) : "object"}
             </code>
             &nbsp;at&nbsp;
-            <code className="rounded-md bg-secondary p-1 font-mono text-sm">
+            <code className="bg-secondary rounded-md p-1 font-mono text-sm">
               {humanReadablePath}
             </code>
           </DialogDescription>

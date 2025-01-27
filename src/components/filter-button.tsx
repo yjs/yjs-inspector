@@ -121,7 +121,7 @@ function FilterDialog({
           Confirm
         </Button>
         <span
-          className="absolute bottom-0 left-0 text-xs text-muted-foreground opacity-70"
+          className="text-muted-foreground absolute bottom-0 left-0 text-xs opacity-70"
           style={{ marginLeft: 0 }}
         >
           Powered by&nbsp;

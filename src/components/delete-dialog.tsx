@@ -62,11 +62,11 @@ export function DeleteDialog({
           <DialogTitle>Delete</DialogTitle>
           <DialogDescription>
             Are you sure you want to delete&nbsp;
-            <code className="rounded-md bg-secondary p-1 font-mono text-sm">
+            <code className="bg-secondary rounded-md p-1 font-mono text-sm">
               {targetName}
             </code>
             &nbsp;from&nbsp;
-            <code className="rounded-md bg-secondary p-1 font-mono text-sm">
+            <code className="bg-secondary rounded-md p-1 font-mono text-sm">
               {humanReadablePath}
             </code>
             ?
