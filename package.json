@@ -13,7 +13,7 @@
     "typeCheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@blocksuite/sync": "^0.19.5",
+    "@blocksuite/sync": "^0.20.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fn-sphere/filter": "^0.7.2",
@@ -30,9 +30,9 @@
     "@textea/json-viewer": "^4.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cmdk": "1.0.4",
-    "jotai": "^2.12.1",
-    "lucide-react": "^0.479.0",
+    "cmdk": "1.1.1",
+    "jotai": "^2.12.2",
+    "lucide-react": "^0.482.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.2",
@@ -42,7 +42,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.12",
+    "@tailwindcss/postcss": "^4.0.14",
     "@types/node": "^22.13.10",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
@@ -55,10 +55,10 @@
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "tailwindcss": "^4.0.12",
+    "tailwindcss": "^4.0.14",
     "typescript": "^5.8.2",
     "unplugin-info": "^1.2.1",
-    "vite": "^6.2.1"
+    "vite": "^6.2.2"
   },
   "engines": {
     "node": ">=20.0.0"
