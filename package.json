@@ -37,7 +37,7 @@
     "react-dom": "^19.1.0",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
-    "y-websocket": "^2.1.0",
+    "y-websocket": "^3.0.0",
     "yjs": "13.6.24",
     "zod": "^3.24.2"
   },
