@@ -58,7 +58,7 @@
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
     "unplugin-info": "^1.2.2",
-    "vite": "^6.3.5"
+    "vite": "^7.0.2"
   },
   "engines": {
     "node": ">=20.0.0"
