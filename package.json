@@ -13,11 +13,11 @@
     "typeCheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@blocksuite/sync": "^0.21.0",
+    "@blocksuite/sync": "^0.22.4",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fn-sphere/filter": "^0.7.2",
-    "@mui/material": "^7.1.2",
+    "@mui/material": "^7.2.0",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@radix-ui/react-label": "^2.1.7",
@@ -39,7 +39,7 @@
     "tailwindcss-animate": "^1.0.7",
     "y-websocket": "^3.0.0",
     "yjs": "13.6.27",
-    "zod": "^3.25.67"
+    "zod": "^3.25.74"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",
