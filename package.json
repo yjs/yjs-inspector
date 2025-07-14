@@ -39,7 +39,7 @@
     "tailwindcss-animate": "^1.0.7",
     "y-websocket": "^3.0.0",
     "yjs": "13.6.27",
-    "zod": "^3.25.74"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",

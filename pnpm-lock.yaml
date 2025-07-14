@@ -19,7 +19,7 @@ importers:
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0))(@types/react@19.1.8)(react@19.1.0)
       '@fn-sphere/filter':
         specifier: ^0.7.2
-        version: 0.7.2(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@3.25.74)
+        version: 0.7.2(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@3.25.76)
       '@mui/material':
         specifier: ^7.2.0
         version: 7.2.0(@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.8)(react@19.1.0))(@types/react@19.1.8)(react@19.1.0))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -87,8 +87,8 @@ importers:
         specifier: 13.6.27
         version: 13.6.27
       zod:
-        specifier: ^3.25.74
-        version: 3.25.74
+        specifier: ^3.25.76
+        version: 3.25.76
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.11
@@ -2536,8 +2536,8 @@ packages:
     peerDependencies:
       zod: ^3.22.4
 
-  zod@3.25.74:
-    resolution: {integrity: sha512-J8poo92VuhKjNknViHRAIuuN6li/EwFbAC8OedzI8uxpEPGiXHGQu9wemIAioIpqgfB4SySaJhdk0mH5Y4ICBg==}
+  zod@3.25.76:
+    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
   zustand@4.5.5:
     resolution: {integrity: sha512-+0PALYNJNgK6hldkgDq2vLrw5f6g/jCInz52n9RTpropGgeAf/ioFUCdtsjCqu4gNhW9D01rUQBROoRjdzyn2Q==}
@@ -2708,7 +2708,7 @@ snapshots:
       lib0: 0.2.109
       lit: 3.3.0
       rxjs: 7.8.2
-      zod: 3.25.74
+      zod: 3.25.76
 
   '@blocksuite/sync@0.22.4(yjs@13.6.27)':
     dependencies:
@@ -2919,17 +2919,17 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@fn-sphere/core@0.6.0(zod@3.25.74)':
+  '@fn-sphere/core@0.6.0(zod@3.25.76)':
     dependencies:
-      zod: 3.25.74
-      zod-compare: 0.3.1(zod@3.25.74)
+      zod: 3.25.76
+      zod-compare: 0.3.1(zod@3.25.76)
 
-  '@fn-sphere/filter@0.7.2(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@3.25.74)':
+  '@fn-sphere/filter@0.7.2(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@3.25.76)':
     dependencies:
-      '@fn-sphere/core': 0.6.0(zod@3.25.74)
+      '@fn-sphere/core': 0.6.0(zod@3.25.76)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
-      zod: 3.25.74
+      zod: 3.25.76
     optionalDependencies:
       '@types/react': 19.1.8
 
@@ -4772,11 +4772,11 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-compare@0.3.1(zod@3.25.74):
+  zod-compare@0.3.1(zod@3.25.76):
     dependencies:
-      zod: 3.25.74
+      zod: 3.25.76
 
-  zod@3.25.74: {}
+  zod@3.25.76: {}
 
   zustand@4.5.5(@types/react@19.1.8)(react@19.1.0):
     dependencies:
