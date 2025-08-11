@@ -1,5 +1,6 @@
 import type { Path } from "@textea/json-viewer";
 import * as Y from "yjs";
+import { fromBase64, fromHexString } from "lib0/buffer";
 
 const decoders = [
   {
@@ -17,8 +18,20 @@ const decoders = [
       return Uint8Array.from(text, (c) => c.charCodeAt(0));
     },
   },
-  // TODO handle base64 encoding
-  // https://docs.yjs.dev/api/document-updates#example-base64-encoding
+  {
+    name: "base64",
+    decode: async (file: File) => {
+      const text = await file.text();
+      return fromBase64(text);
+    },
+  },
+  {
+    name: "hex",
+    decode: async (file: File) => {
+      const text = await file.text();
+      return fromHexString(text.trim());
+    },
+  },
 ];
 
 export async function fileToYDoc(file: File) {
