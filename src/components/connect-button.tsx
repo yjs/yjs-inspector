@@ -18,7 +18,9 @@ export function ConnectButton() {
   const disconnect = useCallback(() => {
     if (connectState === "disconnected") return;
     provider?.disconnect();
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect -- shameful ignore for now
     setProvider(undefined);
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect -- shameful ignore for now
     setConnectState("disconnected");
   }, [connectState, provider]);
 

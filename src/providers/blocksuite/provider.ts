@@ -16,7 +16,6 @@ export class BlocksuiteWebsocketProvider implements ConnectProvider {
 
   connect() {
     this.docEngine.start();
-    this.docEngine;
   }
 
   disconnect() {

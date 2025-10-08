@@ -1,5 +1,5 @@
 import react from "@vitejs/plugin-react";
-import path from "path";
+import { fileURLToPath } from "node:url";
 import Info from "unplugin-info/vite";
 import { defineConfig } from "vite";
 
@@ -9,7 +9,7 @@ export default defineConfig({
   base: "./",
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
   build: {

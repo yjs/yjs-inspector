@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, use, useEffect, useMemo, useState } from "react";
 
 type ResolvedTheme = "dark" | "light";
 type Theme = ResolvedTheme | "system";
@@ -30,6 +30,7 @@ export function useSystemPreferenceDark() {
   const [isDark, setIsDark] = useState<boolean>(false);
   useEffect(() => {
     const listener = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect -- shameful ignore for now
     setIsDark(window.matchMedia(query).matches);
     const queryMedia = window.matchMedia(query);
     queryMedia.addEventListener("change", listener);
@@ -56,14 +57,17 @@ export function ThemeProvider({
     root.classList.add(resolvedTheme);
   }, [resolvedTheme, theme]);
 
-  const value = {
-    theme,
-    resolvedTheme: resolvedTheme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
-  };
+  const value = useMemo(
+    () => ({
+      theme,
+      resolvedTheme: resolvedTheme,
+      setTheme: (theme: Theme) => {
+        localStorage.setItem(storageKey, theme);
+        setTheme(theme);
+      },
+    }),
+    [theme, resolvedTheme, storageKey],
+  );
 
   return (
     <ThemeProviderContext {...props} value={value}>
@@ -73,7 +77,7 @@ export function ThemeProvider({
 }
 
 export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
+  const context = use(ThemeProviderContext);
 
   if (context === undefined)
     throw new Error("useTheme must be used within a ThemeProvider");
