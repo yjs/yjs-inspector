@@ -32,41 +32,44 @@ import { Switch } from "./ui/switch";
 const BLOCKSUITE_PLAYGROUND_DOC_GUID = "collabPlayground";
 const BLOCKSUITE_NAME = "Blocksuite Playground";
 
+const dailyRoomSuffix = new Date().toLocaleDateString("en-CA");
+const createDailyRoom = (prefix: string) => `${prefix}-${dailyRoomSuffix}`;
+
 const officialDemos = [
   {
     name: "ProseMirror",
-    room: "prosemirror-demo-2024/06",
+    room: createDailyRoom("prosemirror-demo"),
     url: "wss://demos.yjs.dev/ws",
     demoUrl: "https://demos.yjs.dev/prosemirror/prosemirror.html",
   },
   {
     name: "ProseMirror with Version History",
-    room: "prosemirror-versions-demo-2024/06",
+    room: createDailyRoom("prosemirror-versions-demo"),
     url: "wss://demos.yjs.dev/ws",
     demoUrl:
       "https://demos.yjs.dev/prosemirror-versions/prosemirror-versions.html",
   },
   {
     name: "Quill",
-    room: "quill-demo-2024/06",
+    room: createDailyRoom("quill-demo"),
     url: "wss://demos.yjs.dev/ws",
     demoUrl: "https://demos.yjs.dev/quill/quill.html",
   },
   {
     name: "Monaco",
-    room: "monaco-demo-2024/06",
+    room: createDailyRoom("monaco-demo"),
     url: "wss://demos.yjs.dev/ws",
     demoUrl: "https://demos.yjs.dev/monaco/monaco.html",
   },
   {
     name: "CodeMirror",
-    room: "codemirror-demo-2024/06",
+    room: createDailyRoom("codemirror-demo"),
     url: "wss://demos.yjs.dev/ws",
     demoUrl: "https://demos.yjs.dev/codemirror/codemirror.html",
   },
   {
     name: "CodeMirror 6",
-    room: "codemirror.next-demo-2024/06",
+    room: createDailyRoom("codemirror.next-demo"),
     url: "wss://demos.yjs.dev/ws",
     demoUrl: "https://demos.yjs.dev/codemirror.next/codemirror.next.html",
   },
@@ -86,7 +89,7 @@ export function ConnectDialog({
 }) {
   const [yDoc, setYDoc] = useYDoc();
   const [url, setUrl] = useState("wss://demos.yjs.dev/ws");
-  const [room, setRoom] = useState("quill-demo-2024/06");
+  const [room, setRoom] = useState(() => createDailyRoom("quill-demo"));
   const [provider, setProvider] = useState("Quill");
   const [needCreateNewDoc, setNeedCreateNewDoc] = useState(true);
   const officialDemo = officialDemos.find((demo) => demo.name === provider);
