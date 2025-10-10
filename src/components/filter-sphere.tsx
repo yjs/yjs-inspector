@@ -53,7 +53,10 @@ const EMPTY_ARRAY = [] as const;
 
 const likeFn = defineTypedFn({
   name: "Likes",
-  define: z.function().args(z.unknown(), z.string()).returns(z.boolean()),
+  define: z.function({
+    input: [z.unknown(), z.string()],
+    output: z.boolean(),
+  }),
   implement: (value, string) => {
     if (typeof value === "string") {
       return value.includes(string);

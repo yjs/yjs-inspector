@@ -18,8 +18,8 @@ importers:
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0)
       '@fn-sphere/filter':
-        specifier: ^0.7.2
-        version: 0.7.2(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(zod@3.25.76)
+        specifier: ^1.0.0
+        version: 1.0.0(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(zod@4.1.12)
       '@mui/material':
         specifier: ^7.2.0
         version: 7.3.4(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -90,8 +90,8 @@ importers:
         specifier: 13.6.27
         version: 13.6.27
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@eslint-react/eslint-plugin':
         specifier: ^2.0.6
@@ -596,18 +596,18 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-  '@fn-sphere/core@0.6.0':
-    resolution: {integrity: sha512-3XvDjG5Qw54qFrzMtL4znL/S7ZhWN3jQJEJ0sqZnEe/xjSc0+6PCxdCULyXgjy/LxEIMjYbSorE26EeQVLcqAw==}
+  '@fn-sphere/core@1.0.0':
+    resolution: {integrity: sha512-2vYf+JsLgEMmNezj7m0/mJYjgd9GhwilCFwIjVyADX9pvXPON223NfICu90hoXo2+/1pCKUkQtDq+ICJxQVZCQ==}
     peerDependencies:
-      zod: ^3.0.0
+      zod: ^4.1.0
 
-  '@fn-sphere/filter@0.7.2':
-    resolution: {integrity: sha512-VAAhdnJ2WA9vFESkalhRu8dieNvBCbpg8SMDG3qPzKPvRzx/2bSUDEEiGiUVwRtFU3mdM+gt2WDlgkjrh/4IXg==}
+  '@fn-sphere/filter@1.0.0':
+    resolution: {integrity: sha512-nmmcew5laBaVwLN4iNOzxMc3Bprpj9O+TNGy+eHyHatKJeb8iZN+H36pTSMn2LHp6b/GBe6HeVagsMExfq8DSA==}
     peerDependencies:
       '@types/react': ^17.0.0 || ^18.0.0 || ^19.0.0
       react: ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
-      zod: ^3.0.0
+      zod: ^4.1.0
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -2602,11 +2602,11 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod-compare@0.3.1:
-    resolution: {integrity: sha512-e05e3zgEgDAGGCDSW3Td5aQXNBCEm1MvCyWgRHHLUT3YWAKI2F7aZ4DPXCXDFkCLCvbJbnY2KLxlXssnlOA/Tg==}
+  zod-compare@2.0.0:
+    resolution: {integrity: sha512-LGqcPk9ZiU4q355YI2LEPoFVD2UJSX5zmW4OfTdO/MBmRCIY68JxAKqyUgeLJ+37gS4jWODqJjoo9UCuWuW1rQ==}
     engines: {node: '>=20'}
     peerDependencies:
-      zod: ^3.22.4
+      zod: ^3.25.0 || ^4.0.0
 
   zod-validation-error@4.0.2:
     resolution: {integrity: sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ==}
@@ -3125,17 +3125,17 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fn-sphere/core@0.6.0(zod@3.25.76)':
+  '@fn-sphere/core@1.0.0(zod@4.1.12)':
     dependencies:
-      zod: 3.25.76
-      zod-compare: 0.3.1(zod@3.25.76)
+      zod: 4.1.12
+      zod-compare: 2.0.0(zod@4.1.12)
 
-  '@fn-sphere/filter@0.7.2(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(zod@3.25.76)':
+  '@fn-sphere/filter@1.0.0(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(zod@4.1.12)':
     dependencies:
-      '@fn-sphere/core': 0.6.0(zod@3.25.76)
+      '@fn-sphere/core': 1.0.0(zod@4.1.12)
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
-      zod: 3.25.76
+      zod: 4.1.12
     optionalDependencies:
       '@types/react': 19.2.2
 
@@ -4250,8 +4250,8 @@ snapshots:
       '@babel/parser': 7.28.4
       eslint: 9.37.0(jiti@2.6.1)
       hermes-parser: 0.25.1
-      zod: 3.25.76
-      zod-validation-error: 4.0.2(zod@3.25.76)
+      zod: 4.1.12
+      zod-validation-error: 4.0.2(zod@4.1.12)
     transitivePeerDependencies:
       - supports-color
 
@@ -5055,13 +5055,13 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-compare@0.3.1(zod@3.25.76):
+  zod-compare@2.0.0(zod@4.1.12):
     dependencies:
-      zod: 3.25.76
+      zod: 4.1.12
 
-  zod-validation-error@4.0.2(zod@3.25.76):
+  zod-validation-error@4.0.2(zod@4.1.12):
     dependencies:
-      zod: 3.25.76
+      zod: 4.1.12
 
   zod@3.25.76: {}
 
