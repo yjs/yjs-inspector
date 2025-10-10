@@ -14,5 +14,20 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: [
+            "react",
+            "react-dom",
+            "react/jsx-runtime",
+            "react-dom/client",
+          ],
+          yjs: ["yjs"],
+          lucide: ["lucide-react"],
+          "fn-sphere": ["@fn-sphere/filter", "zod"],
+        },
+      },
+    },
   },
 });
