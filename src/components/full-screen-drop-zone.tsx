@@ -66,10 +66,10 @@ export function FullScreenDropZone({
   const isDragging = useDropZone(onDrop);
   return (
     <div
-      className={`bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-gray-900 p-4 ${isDragging ? "bg-opacity-50" : "hidden"}`}
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${isDragging ? "bg-gray-100/80 dark:bg-gray-900/80" : "hidden"}`}
     >
-      <div className="flex h-full w-full items-center justify-center rounded-lg border-4 border-dashed border-white p-8">
-        <span className="text-2xl text-white">{text}</span>
+      <div className="flex h-full w-full items-center justify-center rounded-lg border-4 border-dashed border-gray-800 p-8 dark:border-white">
+        <span className="text-2xl text-gray-800 dark:text-white">{text}</span>
       </div>
     </div>
   );
