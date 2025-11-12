@@ -1,9 +1,9 @@
-import { Toaster } from "./components/ui/toaster";
-import { ThemeProvider } from "./components/theme-provider";
-import { Header } from "./components/site-header";
+import * as Y from "yjs";
 import { ConfigPanel } from "./components/config-panel";
 import { PreviewPanel } from "./components/preview-panel";
-import * as Y from "yjs";
+import { Header } from "./components/site-header";
+import { ThemeProvider } from "./components/theme-provider";
+import { Toaster } from "./components/ui/toaster";
 
 export function App() {
   return (
@@ -22,3 +22,4 @@ export function App() {
 
 // For debugging
 (globalThis as any).Y = Y;
+console.info("Tip: You can access Yjs via 'Y' in the console for debugging");
