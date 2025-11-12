@@ -32,7 +32,7 @@ function connectStatusIndicator(yDoc: Y.Doc, set: Setter) {
   });
 }
 
-const defaultYDoc = new Y.Doc();
+export const defaultYDoc = new Y.Doc();
 
 export const yDocAtom = atom(defaultYDoc, (get, set, newDoc: Y.Doc) => {
   if (newDoc === get(yDocAtom)) return;

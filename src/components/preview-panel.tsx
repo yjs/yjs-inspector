@@ -1,18 +1,10 @@
-import { JsonViewer, Path } from "@textea/json-viewer";
 import { Bug } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as Y from "yjs";
-import { yDataType } from "../data-types";
-import {
-  useConfig,
-  useFilterMap,
-  useIsFilterEnabled,
-  useYDoc,
-} from "../state/index";
-import { getYTypeFromPath, isYArray, isYDoc, isYMap } from "../y-shape";
-import { AddDataDialog } from "./add-data-dialog";
-import { DeleteDialog } from "./delete-dialog";
-import { useTheme } from "./theme-provider";
+import { useFilterMap, useIsFilterEnabled, useYDoc } from "../state/index";
+import { defaultYDoc } from "../state/ydoc";
+import { EmptyState } from "./empty-state";
+import { JsonViewerPanel } from "./json-viewer-panel";
 import { Button } from "./ui/button";
 
 function useYDocUpdates(yDoc: Y.Doc) {
@@ -41,13 +33,7 @@ function useYDocUpdates(yDoc: Y.Doc) {
 }
 
 export function PreviewPanel() {
-  const { resolvedTheme } = useTheme();
   const [yDoc] = useYDoc();
-  const [config] = useConfig();
-  const [addDialogOpen, setAddDialogOpen] = useState(false);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [path, setPath] = useState<Path>([]);
-  const [target, setTarget] = useState<unknown>(null);
 
   const filterMap = useFilterMap();
   const filterEnable = useIsFilterEnabled();
@@ -55,6 +41,8 @@ export function PreviewPanel() {
   const jsonViewerValue = filterEnable ? filterMap : yDoc;
 
   useYDocUpdates(yDoc);
+
+  const isDefaultYDoc = yDoc === defaultYDoc;
 
   return (
     <div className="flex flex-1 flex-col">
@@ -74,59 +62,16 @@ export function PreviewPanel() {
       </div>
 
       <div className="flex-1 overflow-auto rounded-md">
-        {/* See https://viewer.textea.io/apis */}
-        <JsonViewer
-          className="p-2"
-          value={jsonViewerValue}
-          // editable={true}
-          enableAdd={(_, value) => {
-            return (
-              config.editable &&
-              config.parseYDoc &&
-              // TODO support YArray/YText
-              (isYDoc(value) || isYMap(value))
-            );
-          }}
-          onAdd={(path) => {
-            const target = getYTypeFromPath(yDoc, path);
-            if (!target) {
-              console.error("Invalid target", path, target);
-              return;
-            }
-            setTarget(target);
-            setPath(path);
-            setAddDialogOpen(true);
-          }}
-          enableDelete={(path) => {
-            if (!config.editable || !config.parseYDoc) {
-              return false;
-            }
-            const parent = getYTypeFromPath(yDoc, path.slice(0, -1));
-            return isYMap(parent) || isYArray(parent);
-          }}
-          onDelete={(path, value) => {
-            setTarget(value);
-            setPath(path);
-            setDeleteDialogOpen(true);
-          }}
-          displaySize={config.showSize}
-          theme={resolvedTheme}
-          defaultInspectDepth={inspectDepth}
-          valueTypes={[yDataType]}
-        />
+        {isDefaultYDoc ? (
+          <EmptyState />
+        ) : (
+          <JsonViewerPanel
+            value={jsonViewerValue}
+            yDoc={yDoc}
+            inspectDepth={inspectDepth}
+          />
+        )}
       </div>
-      <AddDataDialog
-        target={target}
-        path={path}
-        open={addDialogOpen}
-        onOpenChange={setAddDialogOpen}
-      />
-      <DeleteDialog
-        value={target}
-        path={path}
-        open={deleteDialogOpen}
-        onOpenChange={setDeleteDialogOpen}
-      />
     </div>
   );
 }

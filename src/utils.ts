@@ -1,6 +1,6 @@
 import type { Path } from "@textea/json-viewer";
-import * as Y from "yjs";
 import { fromBase64, fromHexString } from "lib0/buffer";
+import * as Y from "yjs";
 
 const decoders = [
   {
@@ -96,3 +96,6 @@ export function unreachable(
 ): never {
   throw new Error(message);
 }
+
+export const ExampleYDocUrl =
+  "https://affine-reader.vercel.app/api/workspaces/af3478a2-9c9c-4d16-864d-bffa1eb10eb6/docs/-3bEQPBoOEkNH13ULW9Ed";

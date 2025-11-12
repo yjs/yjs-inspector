@@ -26,11 +26,8 @@ import {
 import { useState } from "react";
 import * as Y from "yjs";
 import { useYDoc } from "../state/index";
-import { fileToYDoc } from "../utils";
+import { ExampleYDocUrl, fileToYDoc } from "../utils";
 import { toast } from "./ui/use-toast";
-
-const ExampleYDocUrl =
-  "https://insider.affine.pro/api/workspaces/af3478a2-9c9c-4d16-864d-bffa1eb10eb6/docs/-3bEQPBoOEkNH13ULW9Ed";
 
 function LoadFromUrlDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
