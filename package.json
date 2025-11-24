@@ -33,27 +33,27 @@
     "cmdk": "1.1.1",
     "jotai": "^2.15.1",
     "lib0": "^0.2.114",
-    "lucide-react": "^0.553.0",
+    "lucide-react": "^0.554.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
     "y-websocket": "^3.0.0",
     "yjs": "13.6.27",
-    "zod": "^4.1.12"
+    "zod": "^4.1.13"
   },
   "devDependencies": {
-    "@eslint-react/eslint-plugin": "^2.3.1",
+    "@eslint-react/eslint-plugin": "^2.3.7",
     "@eslint/compat": "^2.0.0",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.39.1",
     "@tailwindcss/postcss": "^4.1.17",
-    "@types/node": "^24.10.0",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@typescript-eslint/eslint-plugin": "^8.46.3",
-    "@typescript-eslint/parser": "^8.46.3",
-    "@vitejs/plugin-react": "^5.1.0",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
@@ -63,9 +63,9 @@
     "prettier-plugin-tailwindcss": "^0.7.1",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.3",
+    "typescript-eslint": "^8.47.0",
     "unplugin-info": "^1.2.4",
-    "vite": "^7.2.2"
+    "vite": "^7.2.4"
   },
   "engines": {
     "node": ">=20.0.0"
