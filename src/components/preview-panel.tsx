@@ -8,7 +8,6 @@ import { JsonViewerPanel } from "./json-viewer-panel";
 import { Button } from "./ui/button";
 
 function useYDocUpdates(yDoc: Y.Doc) {
-  // eslint-disable-next-line @eslint-react/naming-convention/use-state
   const [, setCount] = useState(0);
 
   useEffect(() => {
