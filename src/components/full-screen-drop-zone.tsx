@@ -3,18 +3,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 // Ported from https://github.com/react-dropzone/react-dropzone/issues/753#issuecomment-774782919
 function useDropZone(callback: (files: FileList) => void | Promise<void>) {
   const [isDragging, setIsDragging] = useState(false);
-  const dragCounter = useRef(0);
+  const dragCounterRef = useRef(0);
 
   const onDragEnter = useCallback((event: DragEvent) => {
     event.preventDefault();
-    dragCounter.current++;
+    dragCounterRef.current++;
     setIsDragging(true);
   }, []);
 
   const onDragLeave = useCallback((event: DragEvent) => {
     event.preventDefault();
-    dragCounter.current--;
-    if (dragCounter.current > 0) return;
+    dragCounterRef.current--;
+    if (dragCounterRef.current > 0) return;
     setIsDragging(false);
   }, []);
 
@@ -31,7 +31,7 @@ function useDropZone(callback: (files: FileList) => void | Promise<void>) {
         event.dataTransfer.files &&
         event.dataTransfer.files.length > 0
       ) {
-        dragCounter.current = 0;
+        dragCounterRef.current = 0;
         await callback(event.dataTransfer.files);
         event.dataTransfer.clearData();
       }
