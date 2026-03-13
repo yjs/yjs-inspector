@@ -82,6 +82,34 @@ export function ConfigPanel() {
         <Label htmlFor="editable-switch">Editable</Label>
       </div>
 
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="show-json-export"
+          checked={config.showJsonExport}
+          onCheckedChange={(checked) =>
+            setConfig({
+              ...config,
+              showJsonExport: checked,
+            })
+          }
+        />
+        <Label htmlFor="show-json-export">Show JSON export</Label>
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="show-yaml-export"
+          checked={config.showYamlExport}
+          onCheckedChange={(checked) =>
+            setConfig({
+              ...config,
+              showYamlExport: checked,
+            })
+          }
+        />
+        <Label htmlFor="show-yaml-export">Show YAML export</Label>
+      </div>
+
       {config.editable && (
         <div className="flex items-center space-x-2">
           <Button

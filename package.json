@@ -40,6 +40,7 @@
     "tailwind-merge": "^3.5.0",
     "tailwindcss-animate": "^1.0.7",
     "y-websocket": "^3.0.0",
+    "yaml": "^2.7.0",
     "yjs": "13.6.29",
     "zod": "^4.3.6"
   },

@@ -1,8 +1,10 @@
 import { Bug } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as Y from "yjs";
-import { useFilterMap, useIsFilterEnabled, useYDoc } from "../state/index";
+import YAML from "yaml";
+import { useConfig, useFilterMap, useIsFilterEnabled, useYDoc } from "../state/index";
 import { defaultYDoc } from "../state/ydoc";
+import { yDocToPlainContent } from "../y-shape";
 import { EmptyState } from "./empty-state";
 import { JsonViewerPanel } from "./json-viewer-panel";
 import { Button } from "./ui/button";
@@ -33,6 +35,7 @@ function useYDocUpdates(yDoc: Y.Doc) {
 
 export function PreviewPanel() {
   const [yDoc] = useYDoc();
+  const [config] = useConfig();
 
   const filterMap = useFilterMap();
   const filterEnable = useIsFilterEnabled();
@@ -42,9 +45,14 @@ export function PreviewPanel() {
   useYDocUpdates(yDoc);
 
   const isDefaultYDoc = yDoc === defaultYDoc;
+  const plainContent = isDefaultYDoc ? {} : yDocToPlainContent(yDoc);
+  const jsonString = JSON.stringify(plainContent, (_, v) => (v === undefined ? null : v), 2);
+  const yamlString = isDefaultYDoc ? "" : YAML.stringify(plainContent);
+
+  const showExportRow = config.showJsonExport || config.showYamlExport;
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col min-h-0">
       <div className="flex content-center gap-4">
         <h2 className="mb-4 flex-1 text-xl">Inspect</h2>
 
@@ -60,7 +68,7 @@ export function PreviewPanel() {
         </Button>
       </div>
 
-      <div className="flex-1 overflow-auto rounded-md">
+      <div className="flex-1 overflow-auto rounded-md min-h-0">
         {isDefaultYDoc ? (
           <EmptyState />
         ) : (
@@ -71,6 +79,35 @@ export function PreviewPanel() {
           />
         )}
       </div>
+
+      {showExportRow && (
+        <div className="mt-4 grid grid-cols-1 gap-4 border-t border-border pt-4 sm:grid-cols-2">
+          {config.showJsonExport && (
+            <div className="flex flex-col rounded-md border border-border bg-muted/30 overflow-hidden min-h-0">
+              <h3 className="px-3 py-2 text-sm font-medium border-b border-border bg-muted/50">
+                JSON
+              </h3>
+              <div className="flex-1 min-h-[120px] overflow-auto p-3">
+                <pre className="text-muted-foreground m-0 font-mono text-sm whitespace-pre-wrap break-words">
+                  {jsonString}
+                </pre>
+              </div>
+            </div>
+          )}
+          {config.showYamlExport && (
+            <div className="flex flex-col rounded-md border border-border bg-muted/30 overflow-hidden min-h-0">
+              <h3 className="px-3 py-2 text-sm font-medium border-b border-border bg-muted/50">
+                YAML
+              </h3>
+              <div className="flex-1 min-h-[120px] overflow-auto p-3">
+                <pre className="text-muted-foreground m-0 font-mono text-sm whitespace-pre-wrap break-words">
+                  {yamlString}
+                </pre>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
