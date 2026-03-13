@@ -75,6 +75,49 @@ export function getHumanReadablePath(path: Path) {
   return ["root", ...path].join(".");
 }
 
+export type PrimitiveHint = "string" | "number" | "boolean";
+
+/**
+ * Parse a raw string into a primitive value for YMap/YArray.
+ * - With hint: respect type (string as-is, number via Number/JSON.parse, boolean via JSON.parse).
+ * - Without hint: try JSON.parse (handles 123, "foo", true, false, null), fallback to string.
+ */
+export function parsePrimitiveValue(
+  raw: string,
+  hint?: PrimitiveHint,
+): string | number | boolean | null {
+  const trimmed = raw.trim();
+  if (hint === "string") {
+    return trimmed;
+  }
+  if (hint === "number") {
+    const parsed = JSON.parse(trimmed);
+    if (typeof parsed === "number" && !Number.isNaN(parsed)) return parsed;
+    const n = Number(trimmed);
+    if (!Number.isNaN(n)) return n;
+    throw new Error("Invalid number");
+  }
+  if (hint === "boolean") {
+    const parsed = JSON.parse(trimmed);
+    if (typeof parsed === "boolean") return parsed;
+    throw new Error("Invalid boolean (use true or false)");
+  }
+  try {
+    const parsed = JSON.parse(trimmed);
+    if (
+      typeof parsed === "string" ||
+      typeof parsed === "number" ||
+      typeof parsed === "boolean" ||
+      parsed === null
+    ) {
+      return parsed;
+    }
+    return trimmed;
+  } catch {
+    return trimmed;
+  }
+}
+
 /**
  * This function should never be called. If it is called, it means that the
  * code has reached a point that should be unreachable.

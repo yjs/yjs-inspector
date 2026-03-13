@@ -36,8 +36,7 @@ export function JsonViewerPanel({
           return (
             config.editable &&
             config.parseYDoc &&
-            // TODO support YArray/YText
-            (isYDoc(value) || isYMap(value))
+            (isYDoc(value) || isYMap(value) || isYArray(value))
           );
         }}
         onAdd={(path) => {
