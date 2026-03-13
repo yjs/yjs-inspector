@@ -5,6 +5,7 @@ import {
   getYTypeFromPath,
   getYTypeName,
   isYArray,
+  isYDoc,
   isYMap,
   isYShape,
 } from "../y-shape";
@@ -33,7 +34,14 @@ export function DeleteDialog({
   const onConfirm = () => {
     const parent = getYTypeFromPath(yDoc, path.slice(0, -1));
     const key = path[path.length - 1];
-    if (isYMap(parent)) {
+    if (isYDoc(parent)) {
+      if (typeof key !== "string") {
+        throw new Error(
+          "Key must be a string, but got " + key + " of type " + typeof key,
+        );
+      }
+      parent.share.delete(key);
+    } else if (isYMap(parent)) {
       if (typeof key !== "string") {
         throw new Error(
           "Key must be a string, but got " + key + " of type " + typeof key,

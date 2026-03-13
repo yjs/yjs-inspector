@@ -4,6 +4,10 @@ import * as Y from "yjs";
 import { yDataType } from "../data-types";
 import { useConfig } from "../state/index";
 import { getYTypeFromPath, isYArray, isYDoc, isYMap } from "../y-shape";
+
+function canDeleteParent(parent: unknown): boolean {
+  return isYDoc(parent) || isYMap(parent) || isYArray(parent);
+}
 import { AddDataDialog } from "./add-data-dialog";
 import { DeleteDialog } from "./delete-dialog";
 import { useTheme } from "./theme-provider";
@@ -54,7 +58,7 @@ export function JsonViewerPanel({
             return false;
           }
           const parent = getYTypeFromPath(yDoc, path.slice(0, -1));
-          return isYMap(parent) || isYArray(parent);
+          return canDeleteParent(parent);
         }}
         onDelete={(path, value) => {
           setTarget(value);
