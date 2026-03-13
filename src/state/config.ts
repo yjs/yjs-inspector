@@ -6,12 +6,16 @@ export type Config = {
   showDelta: boolean;
   showSize: boolean;
   editable: boolean;
+  showJsonExport: boolean;
+  showYamlExport: boolean;
 };
 const defaultConfig = {
   parseYDoc: true,
   showDelta: true,
   showSize: true,
   editable: false,
+  showJsonExport: false,
+  showYamlExport: false,
 } satisfies Config;
 
 export const configAtom = atomWithStorage<Config>(

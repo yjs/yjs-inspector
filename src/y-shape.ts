@@ -260,6 +260,56 @@ export function yShapeToJSON(
   unreachable(value, "Unknown Yjs type");
 }
 
+/**
+ * Convert Y doc/content to plain JSON-serializable data (no Yjs internal fields).
+ * Use for clean JSON/YAML export of current document content.
+ */
+export function yDocToPlainContent(
+  value: Y.Doc | Y.AbstractType<unknown> | unknown,
+): unknown {
+  if (value === null || value === undefined) {
+    return value;
+  }
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return value;
+  }
+  if (isYDoc(value)) {
+    const keys = Array.from(value.share.keys());
+    const obj: Record<string, unknown> = {};
+    for (const key of keys) {
+      const type = guessType(value.get(key));
+      obj[key] = yDocToPlainContent(value.get(key, type));
+    }
+    return obj;
+  }
+  if (isYMap(value)) {
+    const obj: Record<string, unknown> = {};
+    for (const key of value.keys()) {
+      obj[key] = yDocToPlainContent(value.get(key));
+    }
+    return obj;
+  }
+  if (isYArray(value)) {
+    return value.toArray().map((item) => yDocToPlainContent(item));
+  }
+  if (isYText(value)) {
+    return value.toString();
+  }
+  if (isYXmlElement(value)) {
+    return { nodeName: value.nodeName, ...value.getAttributes(), text: value.toString() };
+  }
+  if (isYXmlFragment(value)) {
+    return value.toJSON();
+  }
+  if (isYXmlText(value)) {
+    return value.toString();
+  }
+  if (isYAbstractType(value)) {
+    return String(value);
+  }
+  return value;
+}
+
 export function getYTypeFromPath(yDoc: Y.Doc, path: Path): unknown {
   return getPathValue(yDoc, path, (obj: unknown, key) => {
     if (isYDoc(obj)) {

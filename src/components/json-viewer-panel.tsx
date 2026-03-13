@@ -1,12 +1,19 @@
 import { JsonViewer, Path } from "@textea/json-viewer";
 import { useState } from "react";
 import * as Y from "yjs";
+import { editablePrimitiveType } from "../editable-primitive-type";
 import { yDataType } from "../data-types";
 import { useConfig } from "../state/index";
 import { getYTypeFromPath, isYArray, isYDoc, isYMap } from "../y-shape";
 import { AddDataDialog } from "./add-data-dialog";
 import { DeleteDialog } from "./delete-dialog";
+import { EditPrimitiveDialog } from "./edit-primitive-dialog";
 import { useTheme } from "./theme-provider";
+import { YDocEditProvider } from "./ydoc-edit-context";
+
+function canDeleteParent(parent: unknown): boolean {
+  return isYDoc(parent) || isYMap(parent) || isYArray(parent);
+}
 
 interface JsonViewerPanelProps {
   value: unknown;
@@ -25,19 +32,26 @@ export function JsonViewerPanel({
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [path, setPath] = useState<Path>([]);
   const [target, setTarget] = useState<unknown>(null);
+  const [editPrimitiveOpen, setEditPrimitiveOpen] = useState(false);
+  const [editPrimitivePath, setEditPrimitivePath] = useState<Path>([]);
+  const [editPrimitiveValue, setEditPrimitiveValue] = useState<unknown>(null);
+
+  const openEditPrimitive = (editPath: Path, editValue: unknown) => {
+    setEditPrimitivePath(editPath);
+    setEditPrimitiveValue(editValue);
+    setEditPrimitiveOpen(true);
+  };
 
   return (
-    <>
+    <YDocEditProvider yDoc={yDoc} openEditPrimitive={openEditPrimitive}>
       <JsonViewer
         className="p-2"
         value={value}
-        // editable={true}
         enableAdd={(_, value) => {
           return (
             config.editable &&
             config.parseYDoc &&
-            // TODO support YArray/YText
-            (isYDoc(value) || isYMap(value))
+            (isYDoc(value) || isYMap(value) || isYArray(value))
           );
         }}
         onAdd={(path) => {
@@ -55,7 +69,7 @@ export function JsonViewerPanel({
             return false;
           }
           const parent = getYTypeFromPath(yDoc, path.slice(0, -1));
-          return isYMap(parent) || isYArray(parent);
+          return canDeleteParent(parent);
         }}
         onDelete={(path, value) => {
           setTarget(value);
@@ -65,7 +79,7 @@ export function JsonViewerPanel({
         displaySize={config.showSize}
         theme={resolvedTheme}
         defaultInspectDepth={inspectDepth}
-        valueTypes={[yDataType]}
+        valueTypes={[yDataType, editablePrimitiveType]}
       />
       <AddDataDialog
         target={target}
@@ -79,6 +93,14 @@ export function JsonViewerPanel({
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
       />
-    </>
+      <EditPrimitiveDialog
+        key={editPrimitiveOpen ? editPrimitivePath.join(".") : "closed"}
+        path={editPrimitivePath}
+        value={editPrimitiveValue}
+        yDoc={yDoc}
+        open={editPrimitiveOpen}
+        onOpenChange={setEditPrimitiveOpen}
+      />
+    </YDocEditProvider>
   );
 }
