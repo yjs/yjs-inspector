@@ -1,4 +1,4 @@
-import { Bug } from "lucide-react";
+import { Bug, Download } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as Y from "yjs";
 import YAML from "yaml";
@@ -51,6 +51,16 @@ export function PreviewPanel() {
 
   const showExportRow = config.showJsonExport || config.showYamlExport;
 
+  const downloadFile = (content: string, filename: string, mimeType: string) => {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="flex flex-1 flex-col min-h-0">
       <div className="flex content-center gap-4">
@@ -84,9 +94,16 @@ export function PreviewPanel() {
         <div className="mt-4 grid grid-cols-1 gap-4 border-t border-border pt-4 sm:grid-cols-2">
           {config.showJsonExport && (
             <div className="flex flex-col rounded-md border border-border bg-muted/30 overflow-hidden min-h-0">
-              <h3 className="px-3 py-2 text-sm font-medium border-b border-border bg-muted/50">
-                JSON
-              </h3>
+              <div className="flex items-center justify-between gap-2 px-3 py-2 border-b border-border bg-muted/50">
+                <h3 className="text-sm font-medium">JSON</h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => downloadFile(jsonString, "ydoc.json", "application/json")}
+                >
+                  <Download className="h-4 w-4" />
+                </Button>
+              </div>
               <div className="flex-1 min-h-[120px] overflow-auto p-3">
                 <pre className="text-muted-foreground m-0 font-mono text-sm whitespace-pre-wrap break-words">
                   {jsonString}
@@ -96,9 +113,16 @@ export function PreviewPanel() {
           )}
           {config.showYamlExport && (
             <div className="flex flex-col rounded-md border border-border bg-muted/30 overflow-hidden min-h-0">
-              <h3 className="px-3 py-2 text-sm font-medium border-b border-border bg-muted/50">
-                YAML
-              </h3>
+              <div className="flex items-center justify-between gap-2 px-3 py-2 border-b border-border bg-muted/50">
+                <h3 className="text-sm font-medium">YAML</h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => downloadFile(yamlString, "ydoc.yaml", "application/x-yaml")}
+                >
+                  <Download className="h-4 w-4" />
+                </Button>
+              </div>
               <div className="flex-1 min-h-[120px] overflow-auto p-3">
                 <pre className="text-muted-foreground m-0 font-mono text-sm whitespace-pre-wrap break-words">
                   {yamlString}
