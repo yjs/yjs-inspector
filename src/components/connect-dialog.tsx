@@ -115,6 +115,11 @@ export function ConnectDialog({
             value={provider}
             onValueChange={(value) => {
               setProvider(value);
+if (value === HOCUSPOCUS_NAME) {
+                setUrl("");
+                setToken("");
+                return;
+              }
               const demo = officialDemos.find((demo) => demo.name === value);
               if (demo) {
                 setUrl(demo.url);
