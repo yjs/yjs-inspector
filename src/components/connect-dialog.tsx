@@ -63,6 +63,12 @@ const officialDemos = [
     url: "wss://demos.yjs.dev/ws",
     demoUrl: "https://demos.yjs.dev/monaco/monaco.html",
   },
+  // {
+  //   name: "Monaco React",
+  //   room: createDailyRoom("monaco-react-demo"),
+  //   url: "wss://demos.yjs.dev/ws",
+  //   demoUrl: "https://demos.yjs.dev/monaco-react/index.html",
+  // },
   {
     name: "CodeMirror",
     room: createDailyRoom("codemirror-demo"),
@@ -75,6 +81,12 @@ const officialDemos = [
     url: "wss://demos.yjs.dev/ws",
     demoUrl: "https://demos.yjs.dev/codemirror.next/codemirror.next.html",
   },
+  // {
+  //   name: "ProseMirror React",
+  //   room: createDailyRoom("prosemirror-react-demo"),
+  //   url: "wss://demos.yjs.dev/ws",
+  //   demoUrl: "https://demos.yjs.dev/react-prosemirror/index.html",
+  // },
   {
     name: BLOCKSUITE_NAME,
     room: "",
@@ -115,7 +127,7 @@ export function ConnectDialog({
             value={provider}
             onValueChange={(value) => {
               setProvider(value);
-if (value === HOCUSPOCUS_NAME) {
+              if (value === HOCUSPOCUS_NAME) {
                 setUrl("");
                 setToken("");
                 return;
@@ -176,7 +188,7 @@ if (value === HOCUSPOCUS_NAME) {
             disabled={!!officialDemo}
             onInput={(e) => setUrl(e.currentTarget.value)}
             placeholder="wss://demos.yjs.dev/ws"
-            className="col-span-3"
+                        className="col-span-3"
           />
         </div>
 
@@ -195,20 +207,20 @@ if (value === HOCUSPOCUS_NAME) {
         </div>
 
         {provider === HOCUSPOCUS_NAME && (
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="token-input" className="text-right">
-              Token
-            </Label>
-            <Input
-              id="token-input"
-              type="password"
-              className="col-span-3"
-              value={token}
-              onInput={(e) => setToken(e.currentTarget.value)}
-              placeholder="Optional authentication token"
-            />
-          </div>
-        )}
+                      <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="token-input" className="text-right">
+                Token
+              </Label>
+              <Input
+                id="token-input"
+                type="password"
+                className="col-span-3"
+                value={token}
+                onInput={(e) => setToken(e.currentTarget.value)}
+                placeholder="Optional authentication token"
+              />
+            </div>
+                  )}
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Switch
