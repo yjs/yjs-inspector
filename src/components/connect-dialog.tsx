@@ -188,7 +188,7 @@ export function ConnectDialog({
             disabled={!!officialDemo}
             onInput={(e) => setUrl(e.currentTarget.value)}
             placeholder="wss://demos.yjs.dev/ws"
-                        className="col-span-3"
+            className="col-span-3"
           />
         </div>
 
@@ -207,20 +207,20 @@ export function ConnectDialog({
         </div>
 
         {provider === HOCUSPOCUS_NAME && (
-                      <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="token-input" className="text-right">
-                Token
-              </Label>
-              <Input
-                id="token-input"
-                type="password"
-                className="col-span-3"
-                value={token}
-                onInput={(e) => setToken(e.currentTarget.value)}
-                placeholder="Optional authentication token"
-              />
-            </div>
-                  )}
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="token-input" className="text-right">
+              Token
+            </Label>
+            <Input
+              id="token-input"
+              type="password"
+              className="col-span-3"
+              value={token}
+              onInput={(e) => setToken(e.currentTarget.value)}
+              placeholder="Optional authentication token"
+            />
+          </div>
+        )}
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Switch
