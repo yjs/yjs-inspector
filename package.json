@@ -34,7 +34,7 @@
     "cmdk": "1.1.1",
     "jotai": "^2.19.1",
     "lib0": "^0.2.117",
-    "lucide-react": "^0.575.0",
+    "lucide-react": "^1.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "tailwind-merge": "^3.5.0",
