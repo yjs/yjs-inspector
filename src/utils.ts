@@ -97,5 +97,4 @@ export function unreachable(
   throw new Error(message);
 }
 
-export const ExampleYDocUrl =
-  "https://affine-reader.vercel.app/api/workspaces/af3478a2-9c9c-4d16-864d-bffa1eb10eb6/docs/-3bEQPBoOEkNH13ULW9Ed";
+export const ExampleYDocUrl = "./example-doc.ydoc";
