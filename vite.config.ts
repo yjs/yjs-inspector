@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import Info from "unplugin-info/vite";
 import { defineConfig } from "vite";
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), Info()],
   base: "./",
@@ -14,18 +14,27 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          react: [
-            "react",
-            "react-dom",
-            "react/jsx-runtime",
-            "react-dom/client",
+        codeSplitting: {
+          groups: [
+            {
+              name: "react",
+              test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+            },
+            {
+              name: "yjs",
+              test: /[\\/]node_modules[\\/]yjs[\\/]/,
+            },
+            {
+              name: "lucide",
+              test: /[\\/]node_modules[\\/]lucide-react[\\/]/,
+            },
+            {
+              name: "fn-sphere",
+              test: /[\\/]node_modules[\\/](@fn-sphere[\\/]filter|zod)[\\/]/,
+            },
           ],
-          yjs: ["yjs"],
-          lucide: ["lucide-react"],
-          "fn-sphere": ["@fn-sphere/filter", "zod"],
         },
       },
     },
