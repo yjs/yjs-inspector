@@ -47,7 +47,7 @@
     "@eslint-react/eslint-plugin": "^2.13.0",
     "@eslint/compat": "^2.1.0",
     "@eslint/eslintrc": "^3.3.5",
-    "@eslint/js": "^9.39.4",
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/postcss": "^4.3.2",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.17",
