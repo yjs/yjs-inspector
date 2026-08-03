@@ -30,7 +30,6 @@ export function useSystemPreferenceDark() {
   const [isDark, setIsDark] = useState<boolean>(false);
   useEffect(() => {
     const listener = (e: MediaQueryListEvent) => setIsDark(e.matches);
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect -- shameful ignore for now
     setIsDark(window.matchMedia(query).matches);
     const queryMedia = window.matchMedia(query);
     queryMedia.addEventListener("change", listener);

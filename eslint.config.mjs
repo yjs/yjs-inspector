@@ -50,6 +50,9 @@ export default tseslint.config(
       "react-refresh/only-export-components": "off",
 
       "@typescript-eslint/no-explicit-any": "off",
+      "@eslint-react/set-state-in-effect": "off",
+      "@eslint-react/static-components": "off",
+      "@eslint-react/use-state": "off",
     },
   },
 );
