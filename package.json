@@ -32,7 +32,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.1.1",
-    "jotai": "^2.20.3",
+    "jotai": "^3.0.0",
     "lib0": "^0.2.118",
     "lucide-react": "^1.48.0",
     "react": "^19.3.0",
