@@ -8,6 +8,7 @@ import { JsonViewerPanel } from "./json-viewer-panel";
 import { Button } from "./ui/button";
 
 function useYDocUpdates(yDoc: Y.Doc) {
+  // eslint-disable-next-line @eslint-react/use-state -- The value is intentionally unused; incrementing it rerenders the Y.Doc preview.
   const [, setCount] = useState(0);
 
   useEffect(() => {

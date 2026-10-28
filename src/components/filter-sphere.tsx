@@ -172,6 +172,7 @@ export const createFlattenFilterGroup = () =>
     ],
   });
 
+/* eslint-disable @eslint-react/static-components -- useView returns stable component references from the module-scoped filter theme. */
 const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
   const {
     ruleState: { isLastRule, isValid, parentGroup },
@@ -230,6 +231,7 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
     </div>
   );
 };
+/* eslint-enable @eslint-react/static-components */
 
 const templatesSpec = {
   SingleFilter: SingleFilterView,
