@@ -172,6 +172,7 @@ export const createFlattenFilterGroup = () =>
     ],
   });
 
+/* eslint-disable @eslint-react/static-components -- useView returns stable component references from the module-scoped filter theme. */
 const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
   const {
     ruleState: { isLastRule, isValid, parentGroup },
@@ -179,9 +180,7 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
     appendRule,
   } = useFilterRule(rule);
   const { rootRule, numberOfRules, setRootRule } = useRootRule();
-  // eslint-disable-next-line @eslint-react/static-components -- useView returns stable component references from the module-scoped filter theme.
   const { Button: ButtonView } = useView("components");
-  // eslint-disable-next-line @eslint-react/static-components -- useView returns stable component references from the module-scoped filter theme.
   const { FieldSelect, FilterSelect, FilterDataInput } = useView("templates");
 
   const isLastRuleInGroup =
@@ -190,14 +189,10 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
 
   return (
     <div className="flex items-center gap-2">
-      {/* eslint-disable-next-line @eslint-react/static-components -- useView returns stable component references from the module-scoped filter theme. */}
       <FieldSelect rule={rule} />
-      {/* eslint-disable-next-line @eslint-react/static-components -- useView returns stable component references from the module-scoped filter theme. */}
       <FilterSelect rule={rule} />
-      {/* eslint-disable-next-line @eslint-react/static-components -- useView returns stable component references from the module-scoped filter theme. */}
       <FilterDataInput rule={rule} />
 
-      {/* eslint-disable-next-line @eslint-react/static-components -- useView returns stable component references from the module-scoped filter theme. */}
       <ButtonView
         onClick={() => {
           appendRule();
@@ -206,7 +201,6 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
         And
       </ButtonView>
       {isLastRuleInGroup && (
-        // eslint-disable-next-line @eslint-react/static-components -- useView returns stable component references from the module-scoped filter theme.
         <ButtonView
           onClick={() => {
             rootRule.conditions.push(
@@ -237,6 +231,7 @@ const SingleFilterView = ({ rule }: SingleFilterRuleProps) => {
     </div>
   );
 };
+/* eslint-enable @eslint-react/static-components */
 
 const templatesSpec = {
   SingleFilter: SingleFilterView,
