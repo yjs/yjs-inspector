@@ -1,0 +1,14 @@
+diff --git a/src/utils/function.ts b/src/utils/function.ts
+index 068622ac25a8c6bf50c133e6f4c152eab149f4fd..d5ecc6b2a052144380653f211431000c1116dc61 100644
+--- a/src/utils/function.ts
++++ b/src/utils/function.ts
+@@ -24,9 +24,7 @@ export function noop(_?: unknown) {
+ }
+ 
+ export async function nextTick() {
+-  // @ts-expect-error check window.scheduler
+   if ('scheduler' in window && 'yield' in window.scheduler) {
+-    // @ts-expect-error check window.scheduler.yield
+     return window.scheduler.yield();
+   } else if (typeof requestIdleCallback !== 'undefined') {
+     return new Promise(resolve => requestIdleCallback(resolve));

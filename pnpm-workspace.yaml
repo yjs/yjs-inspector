@@ -1,0 +1,2 @@
+patchedDependencies:
+  "@blocksuite/global@0.22.4": patches/@blocksuite__global@0.22.4.patch
